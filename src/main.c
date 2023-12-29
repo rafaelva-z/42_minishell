@@ -12,10 +12,7 @@
 
 #include "../include/minishell.h"
 
-/**
- * THIS IS FOR TESTING PURPOSES ONLY
-*/
-void	simple_prompt_checker(char *prompt)
+void	builtin_execute(char *prompt)
 {
 	if (ft_strncmp(prompt, "exit", 4) == 0)
 		exit_shell(0);
@@ -98,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 				free(clean_prompt);
 				continue ;
 			}
-			simple_prompt_checker(clean_prompt);
+			builtin_execute(clean_prompt); // temporary
 			//	char **tokens = Tokenizer(clean_prompt)
 			//	convert tokens to linked list
 			//	Executer
