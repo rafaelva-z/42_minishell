@@ -33,6 +33,17 @@
 // # define OUT		'>'
 // # define PIPE	'|'
 
+enum e_redir
+{
+	NONE,
+	RDIR_IN,
+	RDIR_OUT,
+	RDIR_PIPE,
+	RDIR_APP,
+	RDIR_HDOC,
+	RDIR_DPIPE
+};
+
 typedef struct s_envp
 {
 	t_env_var			*vars;								//  pointer to var_list
@@ -49,29 +60,17 @@ typedef struct s_envp
 															//		that was allocated
 }				t_envp;
 
-typedef struct		s_prompt 
-{
-	char			*str;
-	struct s_prompt	*next;
-}				t_prompt;
-
-enum e_redir
-{
-	NONE,
-	RDIR_IN,
-	RDIR_OUT,
-	RDIR_PIPE,
-	RDIR_APP,
-	RDIR_HDOC,
-	RDIR_DPIPE
-};
-
-// typedef struct		s_split
+// typedef struct s_commands
 // {
-// 	char			*str;									// Command + flags
-// 	t_redir			*redirects;
-// 	s_split			*next;
-// }				t_split;
+// 	char				**cmds;					//	[X] The command and it respective arguments
+// 	char				*cmd_path;				//	[ ] The path to the command's binary
+// 	t_redirection		*redirect;				//	[X] All redirections
+// 	int					hd_fd;					//	[ ] The fd corresponding to the here_doc
+// 	int					read_fd;				//	[ ] The fd corresponding to the read_fd
+// 	int					write_fd;				//	[ ] The fd corresponding to the write_fd
+// 	struct s_commands	*next;					//	[X] Next command in the pipeline
+	
+// }				t_commands;
 
 t_envp		*get_env_struct(void);
 void		set_signals(void);
@@ -83,6 +82,7 @@ void		echo(char *arg);
 void		print_env(void);
 void		exit_shell(int exit_code);
 void		export(const char *str);
+void		export_sort_print(void);
 void		pwd(void);
 void		unset(const char *str);
 void		pwd(void);
@@ -92,7 +92,6 @@ void		pwd(void);
 bool		var_name_check(const char *str);
 void		lst_insert_before(t_env_var *lst, t_env_var *new_lst);
 void		var_printcontent(void *content);
-void		export_sort_print(void);
 int			is_redir(char c);
 
 //	_env.c

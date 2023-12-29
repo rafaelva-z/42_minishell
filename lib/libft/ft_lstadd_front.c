@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:13:41 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/16 12:08:45 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/29 19:50:53 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_front(t_env_var **lst, t_env_var *new)
+void	ft_lstadd_front(t_env_var **lst, t_env_var *new_lst)
 {
-	new->next = *lst;
-	*lst = new;
+	new_lst->next = *lst;
+	*lst = new_lst;
 }

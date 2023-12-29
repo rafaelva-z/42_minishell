@@ -6,30 +6,30 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 23:57:46 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/20 18:34:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/29 19:47:11 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstadd_back(t_env_var **lst, t_env_var *new)
+void	ft_lstadd_back(t_env_var **lst, t_env_var *new_lst)
 {
 	t_env_var	*last;
 
-	if (!new)
+	if (!new_lst)
 		return ;
-	new->next = NULL;
+	new_lst->next = NULL;
 	if (!*lst)
 	{
-		*lst = new;
-		new->previous = NULL;
+		*lst = new_lst;
+		new_lst->previous = NULL;
 		return ;
 	}
 	else
 	{
 		last = ft_lstlast(*lst);
-		last->next = new;
-		new->previous = last;
+		last->next = new_lst;
+		new_lst->previous = last;
 	}
 }
 

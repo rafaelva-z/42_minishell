@@ -4,6 +4,8 @@
 		"readline.h": "c",
 		"stdbool.h": "c",
 		"random": "c",
-		"minishell.h": "c"
+		"minishell.h": "c",
+		"stdio.h": "c",
+		"history.h": "c"
 	}
 }

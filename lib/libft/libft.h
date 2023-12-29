@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:31:58 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/27 17:15:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/29 19:52:14 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ size_t	ft_strlen(const char *str);
 
 //	Part 3 - Bonus Functions
 t_env_var	*ft_lstnew(void *content);
-void		ft_lstadd_front(t_env_var **lst, t_env_var *new);
+void		ft_lstadd_front(t_env_var **lst, t_env_var *new_lst);
 int			ft_lstsize(t_env_var *lst);
 t_env_var	*ft_lstlast(t_env_var *lst);
-void		ft_lstadd_back(t_env_var **lst, t_env_var *new);
+void		ft_lstadd_back(t_env_var **lst, t_env_var *new_lst);
 void		ft_lstdelone(t_env_var *lst, void (*del)(void*));
 void		ft_lstclear(t_env_var **lst, void (*del)(void*));
 void		ft_lstiter(t_env_var *lst, void (*f)(void *));
