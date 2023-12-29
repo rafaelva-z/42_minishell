@@ -17,10 +17,6 @@
 */
 void	simple_prompt_checker(char *prompt)
 {
-	if (ft_strchr(prompt, '$'))
-	{
-		//expand variable
-	}
 	if (ft_strncmp(prompt, "exit", 4) == 0)
 		exit_shell(0);
 	else if (ft_strncmp(prompt, "env", 3) == 0)
@@ -36,13 +32,13 @@ void	simple_prompt_checker(char *prompt)
 	}
 	else if (ft_strncmp(prompt, "echo", 4) == 0)
 		echo("");
-	else if (ft_strncmp(prompt, "export", 7) == 0)
-		{
-			if(ft_strlen(prompt) > 6)
-				export(prompt + 7);
-			else
-				export(NULL);
-		}
+	else if (ft_strncmp(prompt, "export", 6) == 0)
+	{
+		if (ft_strlen(prompt) > 6)
+			export(prompt + 7);
+		else
+			export(NULL);
+	}
 	else if (ft_strncmp(prompt, "unset ", 5) == 0)
 		unset(prompt + 6);
 }
@@ -74,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 	prompt = NULL;
 	cursor = NULL;
 	init_env(envp);
-	get_prompt_cursor(&cursor); // Dont forget to free cursor
+	get_prompt_cursor(&cursor);
 	while (1)
 	{
 		set_signals();
@@ -82,21 +78,37 @@ int	main(int argc, char **argv, char **envp)
 			prompt = readline(cursor);
 		else
 			prompt = readline(CURSOR);
-		if (prompt && *prompt) //exists and is not empty " " case
+		if (prompt && *prompt)
 			add_history(prompt);
 		if (!prompt)
 			break ;
 		else
 		{
-			printf("PROMPT: %d\n", prompt_reader(prompt)); //DEBUG BEGIN HERE THE PARSING
-			//simple_prompt_checker(prompt);
+			if (quote_check(prompt))
+			{
+				printf("error: quotes open\n"); // Error
+				free(prompt);
+				continue ;
+			}
+			char *clean_prompt = prompt_cleaner(prompt);
+			if (redirection_check(clean_prompt))
+			{
+				printf("error: redirect error");
+				free(prompt);
+				free(clean_prompt);
+				continue ;
+			}
+			simple_prompt_checker(clean_prompt);
+			//	char **tokens = Tokenizer(clean_prompt)
+			//	convert tokens to linked list
+			//	Executer
 			free(prompt);
+			free(clean_prompt);
 		}
-	}
+	} 
 	printf("exit\n");
 	destroy_env();
 	free(cursor);
-	exit(0); // free
-
-	//rl_clear_history();				is this needed?
+	rl_clear_history();	//is this needed?
+	exit(0);
 }

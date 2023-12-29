@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/21 14:00:54 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/27 16:33:08 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static void	unset_env_var(const char *name)
 */
 void	unset(const char *str)
 {
-	t_envp		*shell;
 	char		*var_name;
 
 	var_name = ft_strjoin(str, "=");
@@ -53,7 +52,6 @@ void	unset(const char *str)
 		return ;
 	}
 	free(var_name);
-	shell = get_env_struct();
 	unset_env_var(str);
 }
 

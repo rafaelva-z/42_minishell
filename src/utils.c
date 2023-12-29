@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/11/06 15:17:57 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/28 17:43:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief print the given content (char *). To be used with ft_lstiter
  * @param content the content to print (char *)
 */
-void var_printcontent(void *content)
+void	var_printcontent(void *content)
 {
 	printf("%s\n", (char *)content);
 }
@@ -48,7 +48,7 @@ void	lst_insert_before(t_env_var *lst, t_env_var *new_lst)
 {
 	new_lst->previous = lst->previous;
 	new_lst->next = lst;
-	if(lst->previous)
+	if (lst->previous)
 	{
 		if (lst->previous->next)
 			lst->previous->next = new_lst;

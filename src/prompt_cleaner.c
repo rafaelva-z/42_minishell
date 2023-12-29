@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt_read.c                                      :+:      :+:    :+:   */
+/*   prompt_cleaner.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/04 21:31:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/28 19:23:57 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,119 +14,85 @@
 /**
  *	@brief checks if there are any quotations left unclosed
  *	@return (0) no quotes left open, (1) open single quote, (2) open double quote
- * 
 */
 int	quote_check(const char *str)
 {
-	int		i;
-	bool	dquote;
-	bool	squote;
+	char	c;
 
-	i = -1;
-	dquote = 0;
-	squote = 0;
-	while (str[++i])
+	c = 0;
+	if (!str)
+		return (0);
+	while (*str)
 	{
-		if (!squote && !dquote)
+		if (!c)
 		{
-			if (str[i] == '\"')
-				dquote = !dquote;
-			else if (str[i] == '\'')
-				squote = !squote;
-			continue ;	
+			if (*str == SQUOTE || *str == DQUOTE)
+				c = *str;
 		}
-		if (squote && str[i] == '\'') //USE TYPEDEF INSTEAD OF CHARACTERS
-			squote = !squote;
-		if (dquote && str[i] == '\"')
-			dquote = !dquote;
+		else if (c == *str)
+			c = 0;
+		str++;
 	}
-	return (squote + (dquote * 2));
+	return ((c == SQUOTE) + ((c == DQUOTE) * 2));
 }
 
 /**
  * @brief	removes extra spaces between arguments leaving only one where
  * 			there are more than one, leaving the spaces inside " or ' intact
 */
-char	*space_trim(const char *prompt)
+static char	*space_trim(const char *prompt)
 {
-	int	i;
-	int	j;
-	char *tmp;
-	
+	int		i;
+	int		j;
+	char	c;
+	char	*tmp;
+
 	i = 0;
 	j = 0;
 	tmp = ft_calloc(ft_strlen(prompt) + 1, 1);
+	if (!tmp)
+		return (NULL);
 	while (prompt[i])
 	{
-		while (prompt[i] && prompt[i] != '\"' && prompt[i] != '\'' 
-				&& prompt[i] != ' ')
+		while (prompt[i] && prompt[i] != DQUOTE && prompt[i] != SQUOTE
+			&& !ft_isspace(prompt[i]))
 			tmp[j++] = prompt[i++];
-		if (prompt[i] && prompt[i] == '\"')
+		if (prompt[i] == SQUOTE || prompt[i] == DQUOTE)
 		{
+			c = prompt[i];
 			tmp[j++] = prompt[i++];
-			while (prompt[i] && prompt[i] != '\"')
+			while (prompt[i] && prompt[i] != c)
 				tmp[j++] = prompt[i++];
-		}
-		else if (prompt[i] && prompt[i] == '\'') //USE TYPEDEF INSTEAD OF CHARACTERS
-		{
 			tmp[j++] = prompt[i++];
-			while (prompt[i] && prompt[i] != '\'')
-				tmp[j++] = prompt[i++];
 		}
-		if (prompt[i] && (prompt[i] == '\"' || prompt[i] == '\'' 
-				|| prompt[i] == ' '))
-			tmp[j++] = prompt[i++];
-		while (prompt[i] && prompt[i] == ' ')
+		if (prompt[i] && ft_isspace(prompt[i]))
+			tmp[j++] = ' ';
+		while (prompt[i] && ft_isspace(prompt[i]))
 			i++;
 	}
 	tmp[j] = '\0';
-	printf("%s\n", tmp);
 	return (tmp);
 }
-/*
-if (prompt[i])
-	if (prompt[i] =='\''  || prompt[i] == '\"')
-	{
-		char c = prompt[i];   // FIX THIS TO MAKE IT SHORTER
-		tmp[j++] = prompt[i++];
-		while (prompt[i] && prompt[i] != c)
-			tmp[j++] = prompt[i++];
-	}
 
+/**
+ * @brief	uses space_trim and ft_strtrim to clean the prompt form extra spaces
 */
-
-int	prompt_reader(const char *prompt)
+char *prompt_cleaner(const char *prompt)
 {
-	char *trim;
-	char *new_prompt;
-	t_prompt *prompt_list;
+	char	*trim;
+	char	*new_prompt;
 
 	if (!prompt)
-		return (0);
-	(void)prompt_list;
-	if (quote_check(prompt))
+		return (NULL);
+	trim = ft_strtrim(prompt, " "); // maybe switch trim to after space_trim, because there may be a space in the end after space_trim
+	if (!trim)
+		return (NULL);
+	new_prompt = space_trim(trim);
+	if (!new_prompt)
 	{
-		printf("error: quotes open"); // Error
-		return (-1);
-	}
-	trim = ft_strtrim(prompt, " ");
-	new_prompt = space_trim(trim); 
-	//split_prompt(new_prompt);
-	if (trim)
 		free(trim);
-	if (new_prompt)
-		free(new_prompt);
-	return (0);
+		return (NULL);
+	}
+	free(trim);
+	return (new_prompt);
 }
-
-// TODAYS WORK
-
-// void	split_prompt(char *prompt)
-// {
-
-// }
-
-// HEREDOC execution has priority over other redirections
-
-//expand // "$PWD" becomes ./path
-

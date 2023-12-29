@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/28 14:40:33 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/27 16:32:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	export_sort_print(void)
 	free(cont_str);
 }
 
-
 /**
  * @brief sets the env variable given
  * @param name the variable to set
@@ -123,13 +122,11 @@ static void	set_env_var(const char *name, const char *value)
 */
 void	export(const char *str)
 {
-	t_envp		*shell;
 	char		*var_value;
 	char		*var_name;
 	int			i;
 
 	i = 0;
-	shell = get_env_struct();
 	if (!str)
 	{
 		export_sort_print();

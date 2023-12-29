@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/16 13:50:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2023/12/29 16:51:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void	sighandler(int signal)
 		rl_redisplay();
 		return ;
 	}
-	
 }
 /**
  * @brief defines signal behaviour
