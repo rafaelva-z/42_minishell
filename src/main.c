@@ -12,34 +12,6 @@
 
 #include "../include/minishell.h"
 
-void	builtin_execute(char *prompt)
-{
-	if (ft_strncmp(prompt, "exit", 4) == 0)
-		exit_shell(0);
-	else if (ft_strncmp(prompt, "env", 3) == 0)
-		print_env();
-	else if (ft_strncmp(prompt, "pwd", 3) == 0)
-		pwd();
-	else if (ft_strncmp(prompt, "cd", 2) == 0)
-	{
-		if (ft_strlen(prompt) > 2)
-			cd(prompt + 3);
-		else
-			cd(NULL);
-	}
-	else if (ft_strncmp(prompt, "echo", 4) == 0)
-		echo("");
-	else if (ft_strncmp(prompt, "export", 6) == 0)
-	{
-		if (ft_strlen(prompt) > 6)
-			export(prompt + 7);
-		else
-			export(NULL);
-	}
-	else if (ft_strncmp(prompt, "unset ", 5) == 0)
-		unset(prompt + 6);
-}
-
 /**
  * @brief	Allocates the prompt cursor to param "char **cursor".
  * 			the cursor will be the username + the constant CURSOR
@@ -56,16 +28,102 @@ void	get_prompt_cursor(char **cursor)
 	}
 }
 
+//	TEST
+static void	print_commands_redirects(t_commands *commands)
+{
+	printf("\n_________________\nREDIRECTIONS\n");
+	t_commands		*test_c = commands;
+	t_redirection	*test_r;
+	while (test_c)
+	{
+		test_r = test_c->redirects;
+		while (test_r)
+		{
+			printf("__type: %d\n", test_r->type);
+			printf("__key_wrd: %s\n", test_r->key_wrd);
+			test_r = test_r->next;
+		}
+		test_c = test_c->next;
+		if (test_c)
+			printf("-|PIPE|-\n");
+	}
+	printf("\n_________________\nCOMMANDS\n");
+	test_c = commands;
+	while (test_c)
+	{
+		int	f = 0;
+		while (test_c->cmds[f])
+		{
+			printf("cmd: %s\n", test_c->cmds[f]);
+			f++;
+		}
+		test_c = test_c->next;
+		if (test_c)
+			printf("-|PIPE|-\n");
+	}
+}
+
+int	prompt_processing(char **prompt)
+{
+	char	*new_prompt;
+	char	*final_prompt;
+
+	if (quote_check(*prompt))
+	{
+		perror("error: quotes open\n"); // Error
+		free(*prompt);
+		*prompt = NULL;
+		return (1);
+	}
+	new_prompt = prompt_cleaner(*prompt);
+	if (!new_prompt)
+	{
+		perror("error: prompt cleaner error\n"); // Error
+		free(*prompt);
+		*prompt = NULL;
+		return (1);
+	}
+	if (redirection_check(new_prompt))
+	{
+		perror("error: redirect error");
+		free(*prompt);
+		*prompt = NULL;
+		free(new_prompt);
+		return (1);
+	}
+	final_prompt = add_spaces_redirections(new_prompt);
+	if (!final_prompt)
+	{
+		perror("error: space redirections error");
+		free(*prompt);
+		*prompt = NULL;
+		free(new_prompt);
+		return (1);
+	}
+	if (final_prompt != new_prompt)
+	{z
+		free(*prompt);
+		free(new_prompt);
+		*prompt = final_prompt;
+		return (0);
+	}
+	free(new_prompt);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	char	*prompt;
-	char	*cursor;
+	char		*prompt;
+	char		*cursor;
+	t_commands	*commands;
+	char		**tokens;
 
 	(void)argv;
 	if (argc != 1)
 		exit(0);
 	prompt = NULL;
 	cursor = NULL;
+	commands = NULL;
 	init_env(envp);
 	get_prompt_cursor(&cursor);
 	while (1)
@@ -81,26 +139,22 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		else
 		{
-			if (quote_check(prompt))
+			prompt_processing(&prompt);
+			if (!prompt)
 			{
-				printf("error: quotes open\n"); // Error
-				free(prompt);
-				continue ;
+				printf("error: prompt processing error\n"); // Error
+				break;
 			}
-			char *clean_prompt = prompt_cleaner(prompt);
-			if (redirection_check(clean_prompt))
-			{
-				printf("error: redirect error");
-				free(prompt);
-				free(clean_prompt);
-				continue ;
-			}
-			builtin_execute(clean_prompt); // temporary
-			//	char **tokens = Tokenizer(clean_prompt)
-			//	convert tokens to linked list
-			//	Executer
-			free(prompt);
-			free(clean_prompt);
+			commands = get_command_linkedlst(prompt);
+			tokens = tokenizer(prompt);
+			add_redirections(&commands, tokens);
+			add_commands(&commands, tokens);
+			print_commands_redirects(commands);
+			//		Executer
+
+			// free (tokens);
+			if (prompt)
+				free(prompt);	
 		}
 	} 
 	printf("exit\n");

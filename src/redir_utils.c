@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 17:55:32 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/28 19:33:22 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 13:16:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,16 @@ int	is_redir(char c)
 	return (0);
 }
 
+int	is_redir_val(char c)
+{
+	if (c && (c == RDIR_OUT || c == RDIR_IN || c == RDIR_PIPE
+			|| c == RDIR_HDOC || c == RDIR_APP || c == RDIR_DPIPE))
+		return (1);
+	return (0);
+}
+
 /**
- *	@brief	checks if the given prompt contains, redirections
+ *	@brief	checks if the given prompt contains redirections
 */
 int	hasredir(char *prompt)
 {
@@ -55,9 +63,9 @@ int	what_redir(char *str)
 		else
 		{
 			if (*str == '<')
-				return (RDIR_APP);
-			else if (*str == '>')
 				return (RDIR_HDOC);
+			else if (*str == '>')
+				return (RDIR_APP);
 			else if (*str == '|')
 				return (RDIR_DPIPE);
 		}

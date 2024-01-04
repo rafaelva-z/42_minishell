@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2023/12/29 20:00:07 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/04 14:44:27 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,16 @@ INCLUDES	=	./include
 LIBFT_PATH	=	./lib/libft/
 LIBFT		=	$(LIBFT_PATH)libft.a
 SRCS		=	$(addprefix ./src/,		\
-				_env.c					\
 				main.c					\
 				signals.c				\
 				prompt_cleaner.c		\
+				quote_check.c			\
+				redir_add_spaces.c		\
 				redir_check.c			\
 				redir_utils.c			\
+				tokenizer.c				\
 				utils.c					\
+				utils2.c				\
 				$(addprefix built-ins/, \
 				cd.c					\
 				echo.c					\
@@ -36,6 +39,12 @@ SRCS		=	$(addprefix ./src/,		\
 				export_sort.c 			\
 				pwd.c					\
 				unset.c					\
+				)						\
+				$(addprefix structs/,	\
+				commands.c				\
+				env.c					\
+				env2.c					\
+				redirections.c			\
 				))
 				
 CYAN		=	\033[96m

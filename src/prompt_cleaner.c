@@ -6,35 +6,11 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/28 19:23:57 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 16:02:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-/**
- *	@brief checks if there are any quotations left unclosed
- *	@return (0) no quotes left open, (1) open single quote, (2) open double quote
-*/
-int	quote_check(const char *str)
-{
-	char	c;
-
-	c = 0;
-	if (!str)
-		return (0);
-	while (*str)
-	{
-		if (!c)
-		{
-			if (*str == SQUOTE || *str == DQUOTE)
-				c = *str;
-		}
-		else if (c == *str)
-			c = 0;
-		str++;
-	}
-	return ((c == SQUOTE) + ((c == DQUOTE) * 2));
-}
 
 /**
  * @brief	removes extra spaces between arguments leaving only one where
@@ -77,22 +53,23 @@ static char	*space_trim(const char *prompt)
 /**
  * @brief	uses space_trim and ft_strtrim to clean the prompt form extra spaces
 */
-char *prompt_cleaner(const char *prompt)
+char	*prompt_cleaner(const char *prompt)
 {
 	char	*trim;
 	char	*new_prompt;
 
 	if (!prompt)
 		return (NULL);
-	trim = ft_strtrim(prompt, " "); // maybe switch trim to after space_trim, because there may be a space in the end after space_trim
-	if (!trim)
-		return (NULL);
-	new_prompt = space_trim(trim);
+	new_prompt = space_trim(prompt);
 	if (!new_prompt)
-	{
-		free(trim);
 		return (NULL);
+	trim = ft_strtrim(new_prompt, " \t");
+	if (!trim)
+	{
+		free(new_prompt);
+		perror("MEMORY ERROR");
+		exit(-1000);
 	}
-	free(trim);
-	return (new_prompt);
+	free(new_prompt);
+	return (trim);
 }

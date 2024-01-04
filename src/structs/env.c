@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _env.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 17:35:44 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/28 14:36:40 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 12:27:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /**
  * @brief returns a pointer to the static shell struct
 */
 t_envp	*get_env_struct(void)
 {
-	static t_envp shell;
+	static t_envp	shell;
 
 	return (&shell);
 }
@@ -40,7 +40,7 @@ void	create_env_list(char **envp)
 		ft_lstadd_back(&shell->vars, ft_lstnew(strdup(envp[i])));
 }
 
-char	**create_env_array()
+char	**create_env_array(void)
 {
 	t_envp		*shell;
 	t_env_var	*tmp;
@@ -68,7 +68,7 @@ char	**create_env_array()
 	return (shell->env_array);
 }
 
-void	destroy_env_array()
+void	destroy_env_array(void)
 {
 	t_envp	*shell;
 	int		i;
@@ -102,73 +102,4 @@ void	init_env(char **envp)
 	shell->destroy = destroy_env;
 
 	create_env_list(envp);
-}
-
-/**
- * @brief frees everything
-*/
-void	destroy_env()
-{
-	t_envp	*shell;
-
-	shell = get_env_struct();
-	if (shell->vars)
-		ft_lstclear(&shell->vars, free);
-	if (shell->env_array)
-		destroy_env_array();
-}
-
-/**
- * @brief looks for a env variable and returns it
- * @param str the variable to find
- * @return pointer to the env variable, NULL if can't find
- * @example find_env_var("PATH");
-*/
-t_env_var	*get_env_var(const char *str)
-{
-	t_envp		*shell;
-	t_env_var	*current;
-	char		*var_name;
-
-	if (!str)
-		return (NULL);
-	shell = get_env_struct();
-	current = shell->vars;
-	var_name = ft_strjoin(str, "=");
-	if (!var_name)
-		return (NULL);
-	while (current)
-	{
-		if (!ft_strncmp(var_name, current->content, ft_strlen(var_name)))
-		{
-			free(var_name);
-			return (current);
-		}
-		current = current->next;
-	}
-	free(var_name);
-	return (NULL);
-}
-
-/**
- * @brief looks for a env variable and returns it's value
- * @param str the variable to get the value
- * @return pointer to the variable's value, NULL if can't find it
- * @example get_env_var_value("PATH");
-*/
-char	*get_env_var_value(const char *str)
-{
-	int		i;
-	char	*var;
-
-	i = 0;
-	if (!str || !get_env_var(str))
-		return (NULL);
-	var = get_env_var(str)->content;
-	if (!var)
-		return (NULL);
-	var = ft_strchr(var, '=') + 1;
-	if (!var[i])
-		return (NULL);
-	return (&var[i]);
 }

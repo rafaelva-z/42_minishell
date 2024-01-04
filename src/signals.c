@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/29 16:51:56 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 12:14:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	sighandler(int signal)
 		return ;
 	}
 }
+
 /**
  * @brief defines signal behaviour
 */

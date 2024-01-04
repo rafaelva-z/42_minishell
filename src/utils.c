@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/12/28 17:43:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/03 18:44:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,32 @@ void	lst_insert_before(t_env_var *lst, t_env_var *new_lst)
 			lst->previous->next = new_lst;
 		lst->previous = new_lst;
 	}
+}
+
+/**
+ * @brief	checks if the given character is inside quotes
+ * @return	0 if the character is not inside quotes, 1 if it is inside single quotes
+ * 			2 if it is inside double quotes.
+*/
+int	is_inside_quotes(char *str, size_t index)
+{
+	char	c;
+
+	c = 0;
+	if (!str || index > ft_strlen(str))
+		return (0);
+	while (*str && index--)
+	{
+		if (!c)
+		{
+			if (*str == SQUOTE || *str == DQUOTE)
+				c = *str;
+		}
+		else if (c == *str)
+			c = 0;
+		str++;
+	}
+	if (c == *str)
+		c = 0;
+	return ((c == SQUOTE) + ((c == DQUOTE) * 2));
 }
