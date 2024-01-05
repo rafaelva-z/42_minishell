@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:41:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 14:48:09 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 19:40:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	what_redir_token(char *str)
 		else
 		{
 			if (*str == '<' * -1)
-				return (RDIR_APP);
-			else if (*str == '>' * -1)
 				return (RDIR_HDOC);
+			else if (*str == '>' * -1)
+				return (RDIR_APP);
 			else if (*str == '|' * -1)
 				return (RDIR_DPIPE);
 		}

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 19:11:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 12:05:10 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 17:56:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static int	get_pipe_count(char *str)
 {
 	int	pipe_count;
-	int i;
+	int	i;
 
 	pipe_count = 0;
 	i = 0;
@@ -62,7 +62,9 @@ static t_commands	*create_command_linkedlist(int node_amount)
 {
 	t_commands	*commands;
 	t_commands	*node;
+	t_envp		*shell;
 
+	shell = get_env_struct();
 	commands = NULL;
 	while (node_amount)
 	{
@@ -72,6 +74,8 @@ static t_commands	*create_command_linkedlist(int node_amount)
 			perror("MEMORY ERROR");
 			exit(-10000);
 		}
+		if (shell->first_cmd_struct == NULL)
+			shell->first_cmd_struct = node;
 		initialize_command_struct(node);
 		if (!commands)
 			commands = node;
@@ -91,12 +95,14 @@ static t_commands	*create_command_linkedlist(int node_amount)
 t_commands	*get_command_linkedlst(char *prompt)
 {
 	t_commands	*commands;
-	int			pipe_count;
+	t_envp		*shell;
 
+	shell = get_env_struct();
 	if (!prompt)
 		return (NULL);
-	pipe_count = get_pipe_count(prompt);
-	commands = create_command_linkedlist(pipe_count + 1);
+	shell->nbr_cmds = get_pipe_count(prompt) + 1;
+	commands = create_command_linkedlist(shell->nbr_cmds);
+	
 	if (!commands)
 	{
 		perror("MEMORY ERROR");
@@ -145,7 +151,13 @@ void	add_commands(t_commands **command_struct, char **tokens)
 		return ;
 	while (command_node)
 	{
-		command_node->cmds = malloc((count_commands(tokens, pipe_count++) + 1) * sizeof(char *));
+		command_node->cmds = malloc((count_commands(tokens, pipe_count++) + 1)
+				* sizeof(char *));
+		if (!command_node->cmds)
+		{
+			perror("MEMORY ERROR");
+			exit(-10000);
+		}
 		j = 0;
 		while (tokens[++i] && tokens[i][0] != RDIR_PIPE)
 		{

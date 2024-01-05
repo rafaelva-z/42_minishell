@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/29 19:59:02 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 19:32:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,32 @@ static void	set_env_var(const char *name, const char *value)
  *	@brief set the export attribute for variables
  *	@example export("VAR_NAME=VAR_VALUE");
 */
-void	export(const char *str)
+void	export(char **cmds)
 {
-	char		*var_value;
-	char		*var_name;
-	int			i;
+	char	*var_value;
+	char	*var_name;
+	int		i;
+	int		j;
 
-	i = 0;
-	if (!str)
+	i = -1;
+	if (!cmds[0])
 	{
 		export_sort_print();
 		return ;
 	}
-	if (!var_name_check(str))
-		return ;
-	while (str[i] != '=')
-		i++;
-	var_name = ft_substr(str, 0, i);
-	var_value = ft_substr(str, i + 1, ft_strlen(str)
-			- (ft_strlen(var_name) + 1));
-	set_env_var(var_name, var_value);
-	free(var_name);
-	free(var_value);
+	while (cmds[++i])
+	{
+		j = 0;
+		if (!var_name_check(cmds[i]))
+			continue ;
+		while (cmds[i][j] != '=')
+			j++;
+		var_name = ft_substr(cmds[i], 0, j);
+		var_value = ft_substr(cmds[i], j + 1, ft_strlen(&(cmds[i][j + 1])));
+		set_env_var(var_name, var_value);
+		free(var_name);
+		free(var_value);
+	}
 }
 
 /**

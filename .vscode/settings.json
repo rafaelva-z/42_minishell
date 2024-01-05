@@ -6,6 +6,7 @@
 		"random": "c",
 		"minishell.h": "c",
 		"stdio.h": "c",
-		"history.h": "c"
+		"history.h": "c",
+		"stdarg.h": "c"
 	}
 }

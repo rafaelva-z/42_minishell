@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/04 14:44:27 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/04 16:45:37 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS		=	$(addprefix ./src/,		\
 				tokenizer.c				\
 				utils.c					\
 				utils2.c				\
+				here_doc.c				\
 				$(addprefix built-ins/, \
 				cd.c					\
 				echo.c					\
@@ -45,7 +46,14 @@ SRCS		=	$(addprefix ./src/,		\
 				env.c					\
 				env2.c					\
 				redirections.c			\
-				))
+				)						\
+				$(addprefix executor/,	\
+				executor.c				\
+				exec_utils.c		\
+				path_handeling.c		\
+				redirections.c			\
+				)						\
+				)						\
 				
 CYAN		=	\033[96m
 RESET		=	\033[0m

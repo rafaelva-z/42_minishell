@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:31:58 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/29 19:52:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 18:27:55 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
+
+# define HEXA_LOW "0123456789abcdef"
+# define HEXA_UP "0123456789ABCDEF"
 
 typedef struct s_env_var
 {
@@ -73,5 +83,30 @@ void		ft_lstdelone(t_env_var *lst, void (*del)(void*));
 void		ft_lstclear(t_env_var **lst, void (*del)(void*));
 void		ft_lstiter(t_env_var *lst, void (*f)(void *));
 t_env_var	*ft_lstmap(t_env_var *lst, void *(*f)(void *), void (*del)(void *));
+
+
+// get_next_line
+char	*get_next_line(int fd);
+char	*ft_cleaner(char *str);
+int		nlcheck(char *str);
+char	*splitter(char *save);
+char	*ft_strjoin_gnl(char *dest, char *src, int toread);
+void	saver(char *content, char *save);
+char	*stringbuilder(char *content, int toread, int fd);
+
+//	Printf
+int			ft_printf(const char *str, ...);
+void	ft_param(va_list *arg, char type, int *len);
+void	ft_putchar(char c, int *len);
+void	ft_putstr(char *str, int *len);
+void	ft_putnbr(long int nbr, int *len);
+void	ft_putnbrhexa(unsigned int nbr, int *len, int lowup);
+void	ft_putunsigned(unsigned int nbr, int *len);
+void	ft_adress(unsigned long int ad, int *len);
+
+//	Extra Functions
+
+void	matrix_deleter(char **mtx);
+char	*ft_strjoin_free(char const *s1, char const *s2, int tofree);
 
 #endif

@@ -29,39 +29,39 @@ void	get_prompt_cursor(char **cursor)
 }
 
 //	TEST
-static void	print_commands_redirects(t_commands *commands)
-{
-	printf("\n_________________\nREDIRECTIONS\n");
-	t_commands		*test_c = commands;
-	t_redirection	*test_r;
-	while (test_c)
-	{
-		test_r = test_c->redirects;
-		while (test_r)
-		{
-			printf("__type: %d\n", test_r->type);
-			printf("__key_wrd: %s\n", test_r->key_wrd);
-			test_r = test_r->next;
-		}
-		test_c = test_c->next;
-		if (test_c)
-			printf("-|PIPE|-\n");
-	}
-	printf("\n_________________\nCOMMANDS\n");
-	test_c = commands;
-	while (test_c)
-	{
-		int	f = 0;
-		while (test_c->cmds[f])
-		{
-			printf("cmd: %s\n", test_c->cmds[f]);
-			f++;
-		}
-		test_c = test_c->next;
-		if (test_c)
-			printf("-|PIPE|-\n");
-	}
-}
+// static void	print_commands_redirects(t_commands *commands)
+// {
+// 	printf("\n_________________\nREDIRECTIONS\n");
+// 	t_commands		*test_c = commands;
+// 	t_redirection	*test_r;
+// 	while (test_c)
+// 	{
+// 		test_r = test_c->redirects;
+// 		while (test_r)
+// 		{
+// 			printf("__type: %d\n", test_r->type);
+// 			printf("__key_wrd: %s\n", test_r->key_wrd);
+// 			test_r = test_r->next;
+// 		}
+// 		test_c = test_c->next;
+// 		if (test_c)
+// 			printf("-|PIPE|-\n");
+// 	}
+// 	printf("\n_________________\nCOMMANDS\n");
+// 	test_c = commands;
+// 	while (test_c)
+// 	{
+// 		int	f = 0;
+// 		while (test_c->cmds[f])
+// 		{
+// 			printf("cmd: %s\n", test_c->cmds[f]);
+// 			f++;
+// 		}
+// 		test_c = test_c->next;
+// 		if (test_c)
+// 			printf("-|PIPE|-\n");
+// 	}
+// }
 
 int	prompt_processing(char **prompt)
 {
@@ -101,7 +101,7 @@ int	prompt_processing(char **prompt)
 		return (1);
 	}
 	if (final_prompt != new_prompt)
-	{z
+	{
 		free(*prompt);
 		free(new_prompt);
 		*prompt = final_prompt;
@@ -139,24 +139,29 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		else
 		{
+			commands = NULL; //testing
+			tokens = NULL; //testing
+			get_env_struct()->first_cmd_struct = NULL; //testing
 			prompt_processing(&prompt);
 			if (!prompt)
 			{
 				printf("error: prompt processing error\n"); // Error
-				break;
+				break ;
 			}
 			commands = get_command_linkedlst(prompt);
 			tokens = tokenizer(prompt);
+			if (prompt)
+				free(prompt);
 			add_redirections(&commands, tokens);
 			add_commands(&commands, tokens);
-			print_commands_redirects(commands);
-			//		Executer
-
+			//print_commands_redirects(commands);
+			here_doc_manager();
+			process_generator();
 			// free (tokens);
-			if (prompt)
-				free(prompt);	
+			// free (commands->redirections)
+			// free (commands);
 		}
-	} 
+	}
 	printf("exit\n");
 	destroy_env();
 	free(cursor);

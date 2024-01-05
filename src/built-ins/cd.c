@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/23 15:11:54 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 19:42:11 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,25 @@ void	set_pwd(char *oldpwd)
 /**
  * @brief change the working directory
 */
-void	cd(char *path)
+void	cd(char **cmds)
 {
 	int		r;
 	char	*home;
 	char	*oldpwd;
 	t_envp	*shell;
 
-	
 	shell = get_env_struct();
+	if (shell->nbr_cmds > 2)
+	{
+		perror("cd: too many arguments\n");
+		return ;
+	}
 	home = shell->get_value("HOME");
 	r = -1;
-	if ((!path && !home) || (path && !*path))
+	if (!cmds[0] && !home)
 		return ;
 	oldpwd = getcwd(NULL, 0);
-	if (!path)
+	if (!cmds[0])
 		r = chdir(home);
 	// else if (*path == '~')
 	// {
@@ -63,7 +67,7 @@ void	cd(char *path)
 	// 		perror("insert error message here");
 	// }
 	else
-		r = chdir(path);
+		r = chdir(cmds[0]);
 	if (r < 0)
 		perror(""); // how do i make this work properly?
 	else

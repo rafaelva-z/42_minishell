@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:06:56 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 12:53:57 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 18:27:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,6 @@
 # define STRUCTS_H
 
 # include "minishell.h"
-
-typedef struct s_envp
-{
-	t_env_var			*vars;								//  pointer to var_list
-	char				**env_array;						//	array with env
-	int					exit_status;
-	t_env_var			*(*get)(const char *name);			//  (F) get env var struct 
-	char				**(*make_array)(void);				//  (F) create env var array
-	char				*(*get_value)(const char *name);	//  (F) get env var value
-	void				(*set)(const char *str);			//  (F) add var to envp
-	void				(*unset)(const char *name);			//  (F) remove var from envp
-	void				(*print)(void);						//  (F) print all env vars
-	void				(*print_alpha)(void);				//	(F) prints variables sorted alphabetically
-	void				(*destroy)();						//	(F) properly frees everything
-															//		that was allocated
-}				t_envp;
 
 typedef struct s_redirection
 {
@@ -51,13 +35,31 @@ typedef struct s_commands
 	
 }				t_commands;
 
-typedef struct s_data
+typedef struct s_data //DELETE THIS
 {
 	t_commands	*first_cmd;						//	[X] Pointer to the struct of fist command in the pipeline
 	char		**env;							//	[X] Environment variables
 	int			nbr_cmds;						//	[X] Number of commands
-	int			exit_status;					//	[ ] Exit status of the last child process
+	int			exit_status;					//	Delete this
 }				t_data;
+
+typedef struct s_envp
+{
+	t_env_var			*vars;								//  pointer to var_list
+	char				**env_array;						//	array with env
+	int					exit_status;
+	t_commands			*first_cmd_struct;					//Pointer to the struct of fist command in the pipeline
+	int					nbr_cmds;
+	t_env_var			*(*get)(const char *name);			//  (F) get env var struct 
+	char				**(*make_array)(void);				//  (F) create env var array
+	char				*(*get_value)(const char *name);	//  (F) get env var value
+	void				(*set)(const char *str);			//  (F) add var to envp
+	void				(*unset)(const char *name);			//  (F) remove var from envp
+	void				(*print)(void);						//  (F) print all env vars
+	void				(*print_alpha)(void);				//	(F) prints variables sorted alphabetically
+	void				(*destroy)();						//	(F) properly frees everything
+															//		that was allocated
+}				t_envp;
 
 typedef struct s_exec
 {
@@ -66,8 +68,10 @@ typedef struct s_exec
 	int				fd[2];						//	pipe's file descriptors (in front)
 	int				remainder_fd;				//	reading end of the back pipe
 	pid_t			*pid;						//	pids of the command's processes
-	struct s_data	*data;						//	pointer to the data struct
+	t_envp			*envp;						//	pointer to envp struct
 }				t_exec;
+
+t_envp		*get_env_struct(void);
 
 // commands.c
 

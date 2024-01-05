@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 17:35:44 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 12:27:29 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 19:27:02 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,13 @@ void	init_env(char **envp)
 
 	shell = get_env_struct();
 	shell->env_array = NULL;
+	shell->exit_status = 0;
+	shell->first_cmd_struct = NULL;
+	shell->nbr_cmds = 0;
 	shell->make_array = create_env_array;
 	shell->get = get_env_var;
 	shell->get_value = get_env_var_value;
-	shell->set = export;
-	shell->unset = unset;
+	//shell->unset = unset;
 	shell->print = print_env;
 	shell->print_alpha = export_sort_print;
 	shell->destroy = destroy_env;

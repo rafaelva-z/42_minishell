@@ -16,6 +16,7 @@
 # define _XOPEN_SOURCE 700							// Dunno what this is but now sigaction works on my home pc
 # include "../lib/libft/libft.h"
 # include "structs.h"
+# include <sys/wait.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -52,20 +53,18 @@ enum e_negative_prompt
 	DOUBQ = -34,
 };
 
-t_envp		*get_env_struct(void);
 void		set_signals(void);
 
 //	Built-ins
 
-void		cd(char *path);
-void		echo(char *arg);
+void		cd(char **cmds);
+void		echo(char **prompt);
 void		print_env(void);
 void		exit_shell(int exit_code);
-void		export(const char *str);
+void		export(char **cmds);
 void		export_sort_print(void);
 void		pwd(void);
-void		unset(const char *str);
-void		pwd(void);
+void		unset(char **cmds);
 
 //	utils.c
 
@@ -92,7 +91,6 @@ char		*add_spaces_redirections(char *prompt);
 // redir_check.c
 
 int			redirection_check(char *prompt);
-int			pipe_count(char *str);
 
 // redir_utils.c
 
@@ -104,5 +102,31 @@ int			hasredir(char *prompt);
 // tokenizer.c
 
 char		**tokenizer(char *s);
+
+// here_doc.c
+
+void		here_doc_manager(void);
+
+// executor
+
+void		process_generator(void);
+
+// path_handeling.c
+
+void		bin_finder(t_exec *exec);
+void		path_finder(t_exec *exec, t_commands *cmd);
+
+// redirections.c
+
+void		redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir);
+void		redir_out_trunc(t_exec *exec, t_commands *cmd,
+				t_redirection *redir);
+void		redir_out_append(t_exec *exec, t_commands *cmd,
+				t_redirection *redir);
+void		redirect(t_exec *exec, t_commands *cmd);
+
+// exec_utils.c
+void		builtin_check(t_exec *exec, t_commands *cmd);
+
 
 #endif

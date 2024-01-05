@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/27 16:33:08 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 19:16:37 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,26 @@ static void	unset_env_var(const char *name)
 /**
  *	@brief unset values and attributes of variables and functions
 */
-void	unset(const char *str)
+void	unset(char **cmds)
 {
-	char		*var_name;
+	char	*var_name;
+	int		i;
 
-	var_name = ft_strjoin(str, "=");
-	if (!var_name)
-		return ;
-	if (!var_name_check(var_name))
+	i = 0;
+	while (cmds[i])
 	{
-		perror("unset: not a valid identifier");
+		var_name = ft_strjoin(cmds[i], "=");
+		if (!var_name)
+			return ; // Memory error
+		if (!var_name_check(var_name))
+		{
+			perror("unset: not a valid identifier");
+			free(var_name);
+			return ;
+		}
 		free(var_name);
-		return ;
+		unset_env_var(cmds[i++]);
 	}
-	free(var_name);
-	unset_env_var(str);
 }
 
 /**
