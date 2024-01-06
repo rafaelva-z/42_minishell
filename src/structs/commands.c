@@ -166,7 +166,7 @@ void	add_commands(t_commands **command_struct, char **tokens)
 			else if (is_redir_val(tokens[i][0]))
 				i++;
 		}
-		command_node->cmds[j] = '\0';
+		command_node->cmds[j] = NULL;
 		command_node = command_node->next;
 	}
 }

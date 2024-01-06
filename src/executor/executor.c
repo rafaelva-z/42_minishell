@@ -96,13 +96,13 @@ static void	fd_handeler_out(t_exec *exec)
 * @brief Waits for all children processes to finish their execution,
 * recording the latest exit status
 */
-static void	wait_loop(t_envp *shell)
+static void	wait_loop(t_exec *exec)
 {
 	int	i;
 
 	i = -1;
-	while (++i < shell->nbr_cmds)
-		wait(&(shell->exit_status));
+	while (++i < exec->envp->nbr_cmds)
+		waitpid(exec->pid[i], &(exec->envp->exit_status), 0);
 }
 
 /*
@@ -120,6 +120,11 @@ void	process_generator(void)
 	i = -1;
 	while (current)
 	{
+		if (exec.envp->nbr_cmds == 1)
+		{
+			builtin_check(&exec, current);
+			break ;
+		}
 		if (current->next && pipe(exec.fd) != 0)
 			ft_printf("Error1\n"); //	Error handeling
 		fd_handeler_in(&exec, current);
@@ -129,9 +134,7 @@ void	process_generator(void)
 		fd_handeler_out(&exec);
 		current = current->next;
 	}
-	wait_loop(exec.envp);
-	//	Wait func
-
+	wait_loop(&exec);
 }
 /* EXECUTOR
 			[ ]	verifies if files path exists
