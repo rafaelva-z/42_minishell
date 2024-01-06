@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/06 19:49:56 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/06 21:23:53 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,7 @@ void	exec_destroy(t_exec *exec)
 		matrix_deleter(exec->bin_dir);
 	if (exec->pid)
 		free (exec->pid);
+	exec->fd[0] = to_close(exec->fd[0]);
+	exec->fd[1] = to_close(exec->fd[1]);
+	exec->remainder_fd = to_close(exec->remainder_fd);
 }

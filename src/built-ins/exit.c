@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:29 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/06 19:49:22 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/06 21:42:19 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ void	exit_shell(t_exec *exec)
 
 	shell = get_env_struct();
 	exit_status = shell->exit_status;
-	destroy_all(exec);
-	exit(exit_status);
+	destroy_all(exec, "exit\n", shell->exit_status);
 }

@@ -32,6 +32,11 @@
 # define DQUOTE		'\"'
 # define SQUOTE		'\''
 
+// Error handling
+
+# define ES_PIPE 4
+# define CMD_N_FOUND 127
+
 enum e_redir
 {
 	NONE,
@@ -130,6 +135,7 @@ int			builtin_check(t_exec *exec, t_commands *cmd);
 void		exec_destroy(t_exec *exec);
 
 // destroyer
-void		destroy_all(t_exec *exec);
+void		destroy_all(t_exec *exec, char *message, int exit_status);
+void		desplay_error(char *error_msg);
 
 #endif

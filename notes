@@ -36,11 +36,13 @@
 	se não hover argumentos suficientes nas redireções ou pipes exit status é 2 
 	se for uma pasta ou não houver permissão é 1
 
+=>  Makefile esta a dar relink
+
 
     ================| T O   S O L V E |================
 
 =>  There's a problem with the cursor when you do a ctr + C during the
     execution of a process (ex: sleep 5)
-    
+
 =>  set the ignals right for the children processes of here doc and
     commands

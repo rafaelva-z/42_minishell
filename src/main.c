@@ -157,15 +157,12 @@ int	main(int argc, char **argv, char **envp)
 				free(prompt);
 			add_redirections(&commands, tokens);
 			add_commands(&commands, tokens);
-			matrix_deleter(tokens);
 			//print_commands_redirects(commands);
-
 			here_doc_manager();
 			process_generator();
-
+			matrix_deleter(tokens);
 			free_commands(&commands);
 		}
 	}
-	printf("exit\n");
-	destroy_all(NULL);
+	exit_shell(NULL);
 }
