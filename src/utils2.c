@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:41:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 19:40:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 22:16:09 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,3 +67,41 @@ int	what_redir_token(char *str)
 	}
 	return (str[0]);
 }
+/**
+ *	@brief Sets the SHLVL enviroment variable to the apropriate value
+ *	contains non-numbr				shlvl = 1
+ *	not set							shlvl = 1
+ *	int btween 0 & 2147483645		shlvl = int++
+ *	numbers like 0000005			shlvl = 6 (5++)
+ *	negative int					shlvl = 0
+ *	999 to 2147483646				shlvl = 1 + error message
+ *	bash: warning: shell level (2147483647) too high, resetting to 1
+ *	bigger than 2147483646			shlvl = 0
+*/
+void	set_shlvl()
+{
+	long int		i;
+	int		shlvl;
+	char	*shlvl_val;
+	
+	i = 0;
+	shlvl_val = get_env_var_value("SHLVL");
+	if (shlvl_val && contains_only_nbr(shlvl_val))
+	{
+		shlvl = ft_atoi(shlvl_val);
+		if (shlvl >= 999 && shlvl <= 2147483646)
+			perror("warning: shell level (insert value here) too high, resetting to 1"); // Join
+		else if (shlvl < 0 || shlvl > 2147483646)
+		{
+			set_env_var("SHLVL", "0");
+			return ;
+		}
+		else if (shlvl > 0 && shlvl < 999)
+		{
+			set_env_var("SHLVL", ft_itoa(++shlvl));
+			return ;
+		}
+	}
+	set_env_var("SHLVL", "1");
+}
+

@@ -26,5 +26,5 @@ int	ft_atoi(const char *nptr)
 	result = 0;
 	while (nptr[i] && ft_isdigit(nptr[i]))
 		result = (result * 10) + (nptr[i++] - '0');
-	return ((int)result * signal);
+	return (result * signal);
 }

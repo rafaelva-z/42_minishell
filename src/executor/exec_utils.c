@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/05 19:08:11 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 19:03:28 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	builtin_check(t_exec *exec, t_commands *cmd)
 	else if (ft_strncmp("env", cmd->cmds[0], 4) == 0)
 		print_env();		// Está a executar duas vezes (probably o builtin e o exec)
 	else if (ft_strncmp("exit", cmd->cmds[0], 5) == 0)
-		exit(0); // Not working
+		exit(0);
 	else
 		return (0);
 	if (exec->envp->nbr_cmds > 1)

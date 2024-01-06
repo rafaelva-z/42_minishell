@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/05 19:42:11 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 18:45:17 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	cd(char **cmds)
 	if (!cmds[0] && !home)
 		return ;
 	oldpwd = getcwd(NULL, 0);
+	printf("oldpwd: %s", oldpwd);
 	if (!cmds[0])
 		r = chdir(home);
 	// else if (*path == '~')
@@ -70,7 +71,7 @@ void	cd(char **cmds)
 		r = chdir(cmds[0]);
 	if (r < 0)
 		perror(""); // how do i make this work properly?
-	else
+	else if (oldpwd)
 		set_pwd(oldpwd);
 	if (oldpwd)
 		free(oldpwd);
