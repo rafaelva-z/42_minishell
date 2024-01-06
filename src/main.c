@@ -129,6 +129,7 @@ int	main(int argc, char **argv, char **envp)
 	init_env(envp);
 	get_prompt_cursor();
 	shell = get_env_struct();
+	set_shlvl();
 	while (1)
 	{
 		set_signals();
@@ -142,6 +143,11 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		else
 		{
+			if (!*prompt)
+			{
+				free(prompt);
+				continue ;
+			}
 			commands = NULL; //testing
 			tokens = NULL; //testing
 			get_env_struct()->first_cmd_struct = NULL; //testing

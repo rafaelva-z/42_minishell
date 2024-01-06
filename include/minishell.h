@@ -67,6 +67,7 @@ void		echo(char **prompt);
 void		print_env(void);
 void		exit_shell(t_exec *exec);
 void		export(char **cmds);
+void		set_env_var(const char *name, const char *value);
 void		export_sort_print(void);
 void		pwd(void);
 void		unset(char **cmds);
@@ -78,11 +79,13 @@ void		lst_insert_before(t_env_var *lst, t_env_var *new_lst);
 void		var_printcontent(void *content);
 int			is_redir(char c);
 int			is_inside_quotes(char *str, size_t index);
+int			contains_only_nbr(char *str);
 
 //	utils2.c
 
 int			to_close(int fd);
 int			what_redir_token(char *str);
+void		set_shlvl();
 
 // quote_check.c
 

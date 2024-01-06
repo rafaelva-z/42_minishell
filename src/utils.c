@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/03 18:44:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 21:53:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,21 @@ int	is_inside_quotes(char *str, size_t index)
 	if (c == *str)
 		c = 0;
 	return ((c == SQUOTE) + ((c == DQUOTE) * 2));
+}
+
+int	contains_only_nbr(char *str)
+{
+	int	i;
+
+	i = -1;
+	if (!str)
+		return (0);
+	while (str[++i])
+	{
+		if (str[0] == '-')
+			continue;
+		if (!ft_isdigit(*str))
+			return (0);
+	}
+	return (1);
 }

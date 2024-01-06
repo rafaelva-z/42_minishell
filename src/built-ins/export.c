@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/05 19:32:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 19:45:53 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * @param name the variable to set
  * @example set_env_var("PATH", "/bin:/usr/bin");
 */
-static void	set_env_var(const char *name, const char *value)
+void	set_env_var(const char *name, const char *value)
 {
 	t_envp		*shell;
 	t_env_var	*current;
