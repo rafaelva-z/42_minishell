@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:00:15 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 12:27:42 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 21:24:30 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,21 @@ void	addback_redirection(t_redirection **lst, t_redirection *new_redir)
 			last = last->next;
 		last->next = new_redir;
 	}
+}
+
+void	free_redirections(t_redirection **redirections)
+{
+	t_redirection	*tmp;
+	t_redirection	*node;
+
+	if (!redirections)
+		return ;
+	node = *redirections;
+	while (node)
+	{
+		tmp = node->next;
+		free(node);
+		node = tmp;
+	}
+	*redirections = NULL;
 }

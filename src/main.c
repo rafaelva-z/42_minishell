@@ -155,11 +155,12 @@ int	main(int argc, char **argv, char **envp)
 			add_redirections(&commands, tokens);
 			add_commands(&commands, tokens);
 			//print_commands_redirects(commands);
+
 			here_doc_manager();
 			process_generator();
-			// free (tokens);
-			// free (commands->redirections)
-			// free (commands);
+
+			matrix_deleter(tokens);
+			free_commands(&commands);
 		}
 	}
 	printf("exit\n");

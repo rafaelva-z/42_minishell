@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 19:11:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 17:56:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 21:36:09 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ t_commands	*get_command_linkedlst(char *prompt)
 		return (NULL);
 	shell->nbr_cmds = get_pipe_count(prompt) + 1;
 	commands = create_command_linkedlist(shell->nbr_cmds);
-	
 	if (!commands)
 	{
 		perror("MEMORY ERROR");
@@ -192,7 +191,28 @@ void	addback_commandstruct(t_commands **lst, t_commands *new_commands)
 	}
 }
 
+void	free_commands(t_commands **command_struct)
+{
+	t_commands	*tmp;
+	t_commands	*node;
 
+	if (!command_struct)
+		return ;
+	node = *command_struct;
+	while (node)
+	{
+		tmp = node->next;
+		if (node->cmds)
+			free(node->cmds);
+		if (node->cmd_path)
+			free(node->cmd_path);
+		if (node->redirects)
+			free_redirections(&node->redirects);
+		free(node);
+		node = tmp;
+	}
+	*command_struct = NULL;
+}
 
 
 

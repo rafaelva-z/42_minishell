@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 12:14:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 21:38:33 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	set_signals(void)
 	sigemptyset(&sig_d.sa_mask);
 	sig_c.sa_handler = sighandler;
 	sig_d.sa_handler = SIG_IGN;
+	sig_c.sa_flags = 0;
+	sig_d.sa_flags = 0;
 	sigaction(SIGINT, &sig_c, NULL);
 	sigaction(SIGQUIT, &sig_d, NULL);
 }
