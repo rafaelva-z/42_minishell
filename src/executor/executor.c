@@ -120,11 +120,8 @@ void	process_generator(void)
 	i = -1;
 	while (current)
 	{
-		if (exec.envp->nbr_cmds == 1)
-		{
-			builtin_check(&exec, current);
-			break ;
-		}
+		if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
+			return ;
 		if (current->next && pipe(exec.fd) != 0)
 			ft_printf("Error1\n"); //	Error handeling
 		fd_handeler_in(&exec, current);
