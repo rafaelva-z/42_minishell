@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 19:11:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/05 21:36:09 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 22:12:00 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,9 @@ void	free_commands(t_commands **command_struct)
 	while (node)
 	{
 		tmp = node->next;
+		node->hd_fd = to_close(node->hd_fd);
+		node->read_fd = to_close(node->read_fd);
+		node->write_fd = to_close(node->write_fd);
 		if (node->cmds)
 			free(node->cmds);
 		if (node->cmd_path)

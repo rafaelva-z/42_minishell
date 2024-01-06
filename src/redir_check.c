@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 03:02:07 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/03 18:40:31 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 21:05:22 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	redirection_check(char *prompt)
 	i = 0;
 	if (prompt[i] == '|')
 	{
-		perror("-minishell: syntax error near unexpected token 'insert token?'"); // this couple lines could be in a error handler func;
+		desplay_error("-minishell: syntax error near unexpected token 'insert token?'");
 		return (2);
 	}
 	while (prompt[i])
@@ -53,7 +53,7 @@ int	redirection_check(char *prompt)
 			redir_type = what_redir(&prompt[i]);
 			if (redir_type == RDIR_DPIPE) // double pipe
 			{
-				perror("-minishell: Double pipe"); // this couple lines could be in a error handler func;
+				desplay_error("-minishell: Double pipe");
 				return (2);
 			}
 			else if (redir_type == RDIR_APP || redir_type == RDIR_HDOC || redir_type == RDIR_DPIPE)
@@ -67,13 +67,13 @@ int	redirection_check(char *prompt)
 					continue ;
 				else
 				{
-					perror("-minishell: syntax error near unexpected token 'insert token?'"); // this couple lines could be in a error handler func;
+					desplay_error("-minishell: syntax error near unexpected token 'insert token?'");
 					return (2);
 				}
 			}
 			else if (after_redir_type == -1 || after_redir_type == RDIR_PIPE || after_redir_type == RDIR_DPIPE) // found a '\0' || found a pipe redirect
 			{
-				perror("-minishell: syntax error near unexpected token 'insert token?'"); // this couple lines could be in a error handler func;
+				desplay_error("-minishell: syntax error near unexpected token 'insert token?'");
 				return (2);
 			}
 		}

@@ -1,0 +1,48 @@
+	===================================================
+	==================|| N O T E S ||==================
+	===================================================
+
+=>	The space_function should also substitute tabs by spaces
+	when not inside quotes.
+
+=>	What should be used on here_doc: gnl or readline?
+
+=>	To do: Error handeling
+
+=> 	Here document also expands environment variables, but first
+	it compares with the limiter and then expands. The limiter
+	itself its not expansible.
+
+=>	All builtins should exit at the end. (with
+	exit status)
+
+=>	Test if the builtins are redirecting properly (ex: pwd > file)
+
+=>	the exit status that is considered is the one from the last
+	command of the pipeline
+
+
+
+	==================|| T O   D O ||==================
+
+=>	expansao
+=>	exit status
+=>	error handling
+
+=>	redirection (access)
+	if the "file name" is a directory or a already created file
+	
+=>	exit status
+	se não hover argumentos suficientes nas redireções ou pipes exit status é 2 
+	se for uma pasta ou não houver permissão é 1
+
+=>  Makefile esta a dar relink
+
+
+    ================| T O   S O L V E |================
+
+=>  There's a problem with the cursor when you do a ctr + C during the
+    execution of a process (ex: sleep 5)
+
+=>  set the ignals right for the children processes of here doc and
+    commands

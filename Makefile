@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
+#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/04 16:45:37 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/06 19:55:40 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS		=	$(addprefix ./src/,		\
 				utils.c					\
 				utils2.c				\
 				here_doc.c				\
+				destroyer.c				\
 				$(addprefix built-ins/, \
 				cd.c					\
 				echo.c					\

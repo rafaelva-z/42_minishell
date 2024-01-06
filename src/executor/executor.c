@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/05 19:43:17 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 22:01:13 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,18 @@ static void	dupper(t_commands *cmd)
 */
 static void	executor(t_exec *exec, t_commands *cmd)
 {
+	if (!cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
+		destroy_all(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
 	dupper(cmd);
 	close(exec->remainder_fd);
 	builtin_check(exec, cmd);
-	if (cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
-	{									// it will execute without any errors
-		path_finder(exec, cmd);
-		create_env_array();
-		execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
-		printf("Error2\n");				//	Error handeling
-	}
+	path_finder(exec, cmd);
+	create_env_array();
+	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	exit(0);							//	Exit function to clean all memory, put a proper exit status
+	destroy_all(exec, "command could not execute\n", CMD_N_FOUND);
 }
 
 /*
@@ -123,7 +121,7 @@ void	process_generator(void)
 		if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
 			return ;
 		if (current->next && pipe(exec.fd) != 0)
-			ft_printf("Error1\n"); //	Error handeling
+			destroy_all(&exec, "Pipe error\n", ES_PIPE);
 		fd_handeler_in(&exec, current);
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)
@@ -132,6 +130,7 @@ void	process_generator(void)
 		current = current->next;
 	}
 	wait_loop(&exec);
+	exec_destroy(&exec);
 }
 /* EXECUTOR
 			[ ]	verifies if files path exists

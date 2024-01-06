@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 17:35:44 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/05 19:27:02 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 19:59:56 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	init_env(char **envp)
 	t_envp		*shell;
 
 	shell = get_env_struct();
+	shell->cursor = NULL;
 	shell->env_array = NULL;
 	shell->exit_status = 0;
 	shell->first_cmd_struct = NULL;

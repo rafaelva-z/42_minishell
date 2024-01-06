@@ -32,6 +32,11 @@
 # define DQUOTE		'\"'
 # define SQUOTE		'\''
 
+// Error handling
+
+# define ES_PIPE 4
+# define CMD_N_FOUND 127
+
 enum e_redir
 {
 	NONE,
@@ -60,7 +65,7 @@ void		set_signals(void);
 void		cd(char **cmds);
 void		echo(char **prompt);
 void		print_env(void);
-void		exit_shell(int exit_code);
+void		exit_shell(t_exec *exec);
 void		export(char **cmds);
 void		set_env_var(const char *name, const char *value);
 void		export_sort_print(void);
@@ -130,6 +135,10 @@ void		redirect(t_exec *exec, t_commands *cmd);
 
 // exec_utils.c
 int			builtin_check(t_exec *exec, t_commands *cmd);
+void		exec_destroy(t_exec *exec);
 
+// destroyer
+void		destroy_all(t_exec *exec, char *message, int exit_status);
+void		desplay_error(char *error_msg);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:22:08 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 12:23:58 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 20:00:50 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	destroy_env(void)
 		ft_lstclear(&shell->vars, free);
 	if (shell->env_array)
 		destroy_env_array();
+	if (shell->cursor)
+		free (shell->cursor);
 }
 
 /**

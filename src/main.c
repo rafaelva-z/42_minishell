@@ -17,14 +17,17 @@
  * 			the cursor will be the username + the constant CURSOR
  * 			or just the constant CURSOR if there is no USER variable
 */
-void	get_prompt_cursor(char **cursor)
+static void	get_prompt_cursor(void)
 {
-	if (*cursor)
-		free(*cursor);
+	t_envp	*shell;
+
+	shell = get_env_struct();
+	if (shell->cursor)
+		free(shell->cursor);
 	if (get_env_var("USER"))
 	{
-		*cursor = get_env_var("USER")->content + 5;
-		*cursor = ft_strjoin(*cursor, CURSOR);
+		shell->cursor = get_env_var("USER")->content + 5;
+		shell->cursor = ft_strjoin(shell->cursor, CURSOR);
 	}
 }
 
@@ -114,24 +117,24 @@ int	prompt_processing(char **prompt)
 int	main(int argc, char **argv, char **envp)
 {
 	char		*prompt;
-	char		*cursor;
 	t_commands	*commands;
 	char		**tokens;
+	t_envp		*shell;
 
 	(void)argv;
 	if (argc != 1)
 		exit(0);
 	prompt = NULL;
-	cursor = NULL;
 	commands = NULL;
 	init_env(envp);
+	get_prompt_cursor();
+	shell = get_env_struct();
 	set_shlvl();
-	get_prompt_cursor(&cursor);
 	while (1)
 	{
 		set_signals();
-		if (cursor)
-			prompt = readline(cursor);
+		if (shell->cursor)
+			prompt = readline(shell->cursor);
 		else
 			prompt = readline(CURSOR);
 		if (prompt && *prompt)
@@ -161,17 +164,11 @@ int	main(int argc, char **argv, char **envp)
 			add_redirections(&commands, tokens);
 			add_commands(&commands, tokens);
 			//print_commands_redirects(commands);
-
 			here_doc_manager();
 			process_generator();
-
 			matrix_deleter(tokens);
 			free_commands(&commands);
 		}
 	}
-	printf("exit\n");
-	destroy_env();
-	free(cursor);
-	rl_clear_history();	//is this needed?
-	exit(0);
+	exit_shell(NULL);
 }

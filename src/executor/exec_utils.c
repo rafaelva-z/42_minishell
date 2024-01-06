@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/06 19:03:28 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 21:23:53 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	builtin_check(t_exec *exec, t_commands *cmd)
 	else if (ft_strncmp("env", cmd->cmds[0], 4) == 0)
 		print_env();		// Está a executar duas vezes (probably o builtin e o exec)
 	else if (ft_strncmp("exit", cmd->cmds[0], 5) == 0)
-		exit(0);
+		exit_shell(exec); // Not working
 	else
 		return (0);
 	if (exec->envp->nbr_cmds > 1)
@@ -40,4 +40,15 @@ int	builtin_check(t_exec *exec, t_commands *cmd)
 	}
 	else
 		return (1);
+}
+
+void	exec_destroy(t_exec *exec)
+{
+	if (exec->bin_dir)
+		matrix_deleter(exec->bin_dir);
+	if (exec->pid)
+		free (exec->pid);
+	exec->fd[0] = to_close(exec->fd[0]);
+	exec->fd[1] = to_close(exec->fd[1]);
+	exec->remainder_fd = to_close(exec->remainder_fd);
 }

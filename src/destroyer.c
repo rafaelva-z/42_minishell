@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   destroyer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 14:28:29 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/06 21:42:19 by fda-estr         ###   ########.fr       */
+/*   Created: 2024/01/06 19:36:08 by fda-estr          #+#    #+#             */
+/*   Updated: 2024/01/06 21:40:47 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-/**
- *	@brief exit the minishell
- *	-1 -128 kernel stopped the program 
- *	0 sucessful
- *	1-127 error
-*/
-void	exit_shell(t_exec *exec)
+void    destroy_all(t_exec *exec, char *message, int exit_status)
 {
-	int		exit_status;
 	t_envp	*shell;
-
+	
+	if (message)
+		ft_putstr_fd(message, 2);
 	shell = get_env_struct();
-	exit_status = shell->exit_status;
-	destroy_all(exec, "exit\n", shell->exit_status);
+	shell->exit_status = exit_status;
+	if (exec)
+		exec_destroy(exec);
+	if (shell->first_cmd_struct)
+		free_commands(&shell->first_cmd_struct);
+	if (shell)
+		destroy_env();
+	exit (exit_status);
+}
+
+void	desplay_error(char *error_msg)
+{
+	if (error_msg)
+		ft_putstr_fd(error_msg, 2);
 }
