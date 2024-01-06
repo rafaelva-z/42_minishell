@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:06:56 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 18:27:56 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 21:19:55 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ typedef struct s_redirection
 	char					*key_wrd;			//	[X]	The key word after the operand: limiter or file name
 	int						type;				//	[X]	Redirection type (t_redir_type)
 	struct s_redirection	*next;	 			//	[X]	Pointer to the next redirection struct
-	
 }				t_redirection;
 
 typedef struct s_commands
@@ -34,14 +33,6 @@ typedef struct s_commands
 	struct s_commands	*next;					//	[X] Next command in the pipeline
 	
 }				t_commands;
-
-typedef struct s_data //DELETE THIS
-{
-	t_commands	*first_cmd;						//	[X] Pointer to the struct of fist command in the pipeline
-	char		**env;							//	[X] Environment variables
-	int			nbr_cmds;						//	[X] Number of commands
-	int			exit_status;					//	Delete this
-}				t_data;
 
 typedef struct s_envp
 {
@@ -79,6 +70,7 @@ void			add_commands(t_commands **command_struct, char **tokens);
 t_commands		*get_command_linkedlst(char *prompt);
 void			addback_commandstruct(t_commands **lst,
 					t_commands *new_commands);
+void	free_commands(t_commands **command_struct);
 
 //	env.c
 void			init_env(char **envp);
@@ -94,4 +86,5 @@ void			add_redirections(t_commands **command_struct, char **tokens);
 t_redirection	*new_redirection(int type, char *key_wrd);
 void			addback_redirection(t_redirection **head,
 					t_redirection *new_redir);
+void			free_redirections(t_redirection **redirections);
 #endif
