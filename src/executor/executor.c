@@ -132,6 +132,7 @@ void	process_generator(void)
 		current = current->next;
 	}
 	wait_loop(&exec);
+	exec_destroy(&exec);
 }
 /* EXECUTOR
 			[ ]	verifies if files path exists

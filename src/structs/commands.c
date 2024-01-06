@@ -203,7 +203,7 @@ void	free_commands(t_commands **command_struct)
 	{
 		tmp = node->next;
 		if (node->cmds)
-			free(node->cmds);
+			matrix_deleter(node->cmds);
 		if (node->cmd_path)
 			free(node->cmd_path);
 		if (node->redirects)

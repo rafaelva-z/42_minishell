@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   destroyer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 14:28:29 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/06 19:49:22 by fda-estr         ###   ########.fr       */
+/*   Created: 2024/01/06 19:36:08 by fda-estr          #+#    #+#             */
+/*   Updated: 2024/01/06 20:11:47 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-/**
- *	@brief exit the minishell
- *	-1 -128 kernel stopped the program 
- *	0 sucessful
- *	1-127 error
-*/
-void	exit_shell(t_exec *exec)
+void    destroy_all(t_exec *exec)
 {
-	int		exit_status;
 	t_envp	*shell;
-
+	int		exit_status;
+	
 	shell = get_env_struct();
 	exit_status = shell->exit_status;
-	destroy_all(exec);
-	exit(exit_status);
+	if (exec)
+		exec_destroy(exec);
+	if (shell->first_cmd_struct)
+		free_commands(&shell->first_cmd_struct);
+	if (shell)
+		destroy_env();
+	exit (exit_status);
 }

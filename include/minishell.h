@@ -60,7 +60,7 @@ void		set_signals(void);
 void		cd(char **cmds);
 void		echo(char **prompt);
 void		print_env(void);
-void		exit_shell(int exit_code);
+void		exit_shell(t_exec *exec);
 void		export(char **cmds);
 void		export_sort_print(void);
 void		pwd(void);
@@ -127,6 +127,9 @@ void		redirect(t_exec *exec, t_commands *cmd);
 
 // exec_utils.c
 int			builtin_check(t_exec *exec, t_commands *cmd);
+void		exec_destroy(t_exec *exec);
 
+// destroyer
+void		destroy_all(t_exec *exec);
 
 #endif
