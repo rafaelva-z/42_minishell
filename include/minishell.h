@@ -126,7 +126,7 @@ void		redir_out_append(t_exec *exec, t_commands *cmd,
 void		redirect(t_exec *exec, t_commands *cmd);
 
 // exec_utils.c
-void		builtin_check(t_exec *exec, t_commands *cmd);
+int			builtin_check(t_exec *exec, t_commands *cmd);
 
 
 #endif

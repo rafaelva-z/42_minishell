@@ -17,46 +17,27 @@
 */
 int	builtin_check(t_exec *exec, t_commands *cmd)
 {
-	int	flag;
-
-	flag = 0;	
 	if (ft_strncmp("echo", cmd->cmds[0], 5) == 0)
-	{
 		echo(&cmd->cmds[1]);
-		flag = 1;
-	}
 	else if (ft_strncmp("cd", cmd->cmds[0], 3) == 0)
-	{
 		cd(&cmd->cmds[1]); // Não está a funcionar corretamente porque está a ser executado dentro de um fork
-		flag = 1;
-	}
 	else if (ft_strncmp("pwd", cmd->cmds[0], 4) == 0)
-	{
 		pwd();				// Está a executar duas vezes (probably o builtin e o exec)
-		flag = 1;
-	}
 	else if (ft_strncmp("export", cmd->cmds[0], 7) == 0)
-	{
 		export(&cmd->cmds[1]);
-		flag = 1;
-	}
 	else if (ft_strncmp("unset", cmd->cmds[0], 6) == 0)
-	{
 		unset(&cmd->cmds[1]);
-		flag = 1;
-	}
 	else if (ft_strncmp("env", cmd->cmds[0], 4) == 0)
-	{
 		print_env();		// Está a executar duas vezes (probably o builtin e o exec)
-		flag = 1;
-	}
 	else if (ft_strncmp("exit", cmd->cmds[0], 5) == 0)
 		exit(0); // Not working
 	else
-		return ;
+		return (0);
 	if (exec->envp->nbr_cmds > 1)
 	{
-		//	free everything
+		//	free everythig
 		exit(0);
 	}
+	else
+		return (1);
 }
