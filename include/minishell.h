@@ -34,7 +34,9 @@
 
 // Error handling
 
+# define OP_N_PERM 1
 # define ES_PIPE 4
+# define K_N_AVAIL 126
 # define CMD_N_FOUND 127
 
 enum e_redir
@@ -140,5 +142,9 @@ void		exec_destroy(t_exec *exec);
 // destroyer
 void		destroy_all(t_exec *exec, char *message, int exit_status);
 void		desplay_error(char *error_msg);
+
+// error_handling
+
+char		*message_joiner(int nbr, ...);
 
 #endif

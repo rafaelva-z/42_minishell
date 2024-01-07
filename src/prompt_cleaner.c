@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_cleaner.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 15:11:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 16:02:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
 /**
  * @brief	removes extra spaces between arguments leaving only one where

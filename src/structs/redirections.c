@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:00:15 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 15:58:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/05 21:24:30 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ void	add_redirections(t_commands **command_struct, char **tokens)
 			i++;
 		if (tokens[i] && is_redir_val(tokens[i][0]))
 		{
-			if (tokens[i][0] == RDIR_PIPE)
-			{
-				command_node = command_node->next;
-				i++;
-				continue ;
-			}
 			redirect = new_redirection(0, NULL);
 			if (!redirect)
 			{
 				perror("MEMORY ERROR");
 				exit(-10000);
+			}
+			if (tokens[i][0] == RDIR_PIPE)
+			{
+				command_node = command_node->next;
+				i++;
+				continue ;
 			}
 			if (tokens[i][0] == RDIR_IN || tokens[i][0] == RDIR_OUT) // Dont forget to convert the enum to negative values
 				redirect->type = tokens[i][0]; // Tokenizer will have changed the redirection to a neg value

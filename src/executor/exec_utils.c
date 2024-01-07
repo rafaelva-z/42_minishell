@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 00:31:04 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/07 20:50:48 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,8 @@ int	builtin_check(t_exec *exec, t_commands *cmd)
 	else
 		return (0);
 	if (exec->envp->nbr_cmds > 1)
-	{
-		//	free everythig
-		exit(0);
-	}
-	else
-		return (1);
+		destroy_all(exec, NULL, get_env_struct()->exit_status);
+	return (1);
 }
 
 void	exec_destroy(t_exec *exec)

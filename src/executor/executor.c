@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/01/07 15:19:54 by rvaz             ###   ########.fr       */
-=======
-/*   Updated: 2024/01/07 00:27:26 by fda-estr         ###   ########.fr       */
->>>>>>> parent of be6bbbb (error handling still in process)
+/*   Updated: 2024/01/07 20:49:57 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,18 +51,19 @@ static void	dupper(t_commands *cmd)
 */
 static void	executor(t_exec *exec, t_commands *cmd)
 {
+	printf("Entered child process\n");
 	if (!cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
 	dupper(cmd);
-	close(exec->remainder_fd);
+	exec->remainder_fd = to_close(exec->remainder_fd);
 	builtin_check(exec, cmd);
 	path_finder(exec, cmd);
 	create_env_array();
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	destroy_all(exec, "command could not execute\n", CMD_N_FOUND);
+	destroy_all(exec, ft_strdup("command could not execute\n"), CMD_N_FOUND);
 }
 
 /*
@@ -107,6 +104,14 @@ static void	wait_loop(t_exec *exec)
 		waitpid(exec->pid[i], &(exec->envp->exit_status), 0);
 }
 
+static void	builtin_destroy(t_exec *exec, t_commands *cmd)
+{
+	if (exec)
+		exec_destroy(exec);
+	if (cmd)
+		free_commands(&cmd);
+}
+
 /*
 * @brief Manages the creation of the children processes and its
 * pipes
@@ -123,9 +128,12 @@ void	process_generator(void)
 	while (current)
 	{
 		if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
+		{
+			builtin_destroy(&exec, current);
 			return ;
+		}
 		if (current->next && pipe(exec.fd) != 0)
-			destroy_all(&exec, "Pipe error\n", ES_PIPE);
+			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handeler_in(&exec, current);
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)

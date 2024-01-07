@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir_add_spaces.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:32:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 15:11:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 15:21:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
 void	space_toadd_count_helper(char *prompt, int *i, int *space_count)
 {

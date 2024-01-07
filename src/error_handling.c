@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 14:28:29 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 17:06:58 by fda-estr         ###   ########.fr       */
+/*   Created: 2024/01/07 15:05:22 by fda-estr          #+#    #+#             */
+/*   Updated: 2024/01/07 17:05:14 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "../include/minishell.h"
 
-/**
- *	@brief exit the minishell
- *	-1 -128 kernel stopped the program 
- *	0 sucessful
- *	1-127 error
-*/
-void	exit_shell(t_exec *exec)
+//	(6, "ola", "cuntao", ...)
+
+char	*message_joiner(int nbr, ...)
 {
-	t_envp	*shell;
+	va_list arg;
+	int		i;
+	char	*str;
 
-	shell = get_env_struct();
-	destroy_all(exec, ft_strdup("exit\n"), shell->exit_status);
+	str = ft_strdup("");
+	i = -1;
+	va_start(arg, nbr);
+	while (++i < nbr)
+		str = ft_strjoin_free(str, va_arg(arg, char *), 1);
+	va_end(arg);
+	return (str);	
 }
