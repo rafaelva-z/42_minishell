@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 19:05:03 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/07 22:06:38 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	dupper(t_commands *cmd)
 */
 static void	executor(t_exec *exec, t_commands *cmd)
 {
+	// printf("Entered child process\n");
 	if (!cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
@@ -103,6 +104,14 @@ static void	wait_loop(t_exec *exec)
 		waitpid(exec->pid[i], &(exec->envp->exit_status), 0);
 }
 
+static void	builtin_destroy(t_exec *exec, t_commands *cmd)
+{
+	if (exec)
+		exec_destroy(exec);
+	if (cmd)
+		free_commands(&cmd);
+}
+
 /*
 * @brief Manages the creation of the children processes and its
 * pipes
@@ -121,7 +130,10 @@ void	process_generator(void)
 	while (current)
 	{
 		if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
+		{
+			builtin_destroy(&exec, current);
 			return ;
+		}
 		if (current->next && pipe(exec.fd) != 0)
 			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handler_in(&exec, current);

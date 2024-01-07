@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 18:21:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/07 21:59:04 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@
 */
 void	redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
-	(void) exec;		//it should be passed as an argument, so the memory can be freed in case of process termination
 	if (access(redir->key_wrd, F_OK) == -1)
-		ft_printf("Error4\n");		//	Error handling
+		destroy_all(exec, message_joiner(3 ,"minishell: ", redir->key_wrd,
+				": No such file or directory\n"), OP_N_PERM);
 	if (access(redir->key_wrd, R_OK) == -1)
-		ft_printf("Error5\n");		//	Error handling
+		destroy_all(exec, message_joiner(3 ,"minishell: ", redir->key_wrd,
+				": Permission denied\n"), OP_N_PERM);
 	if (cmd->read_fd > 2)
 		cmd->read_fd = to_close(cmd->hd_fd);
 	cmd->read_fd = open(redir->key_wrd, O_RDONLY);
@@ -35,7 +36,6 @@ void	redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir)
 */
 void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
-	(void)exec;		//it should be passed as an argument, so the memory can be freed in case of process termination
 	if (access(redir->key_wrd, F_OK) == -1)
 	{
 		if (cmd->write_fd > 2)
@@ -44,7 +44,8 @@ void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 		return ;
 	}
 	if (access(redir->key_wrd, W_OK) == -1)
-		ft_printf("Error6\n");		//	Error handling
+		destroy_all(exec, message_joiner(3 ,"minishell: ", redir->key_wrd,
+				": Permission denied\n"), OP_N_PERM);
 	if (cmd->write_fd > 2)
 		cmd->write_fd = to_close(cmd->write_fd);
 	cmd->write_fd = open(redir->key_wrd, O_RDONLY, O_TRUNC);
@@ -55,7 +56,6 @@ void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 */
 void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
-	(void)exec;		//it should be passed as an argument, so the memory can be freed in case of process termination
 	if (access(redir->key_wrd, F_OK) == -1)
 	{
 		if (cmd->write_fd > 2)
@@ -64,7 +64,8 @@ void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 		return ;
 	}
 	if (access(redir->key_wrd, W_OK) == -1)
-		ft_printf("Error7\n");		//	Error handling
+		destroy_all(exec, message_joiner(3 ,"minishell: ", redir->key_wrd,
+				": Permission denied\n"), OP_N_PERM);
 	if (cmd->write_fd > 2)
 		cmd->write_fd = to_close(cmd->write_fd);
 	cmd->write_fd = open(redir->key_wrd, O_RDONLY, O_APPEND);

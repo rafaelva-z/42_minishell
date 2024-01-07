@@ -34,7 +34,9 @@
 
 // Error handling
 
+# define OP_N_PERM 1
 # define ES_PIPE 4
+# define K_N_AVAIL 126
 # define CMD_N_FOUND 127
 
 extern int	g_signal;

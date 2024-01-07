@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 19:17:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/07 21:58:18 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ void	bin_finder(t_exec *exec)
 {
 	int	i;
 
+	if (!exec->envp->get_value("PATH"))
+	{
+		// printf("aqui\n");
+		exec->bin_dir = NULL;
+		return ;
+	}
+	// printf("nao era suporto vir parar aqui\n");
 	exec->bin_dir = ft_split(exec->envp->get_value("PATH"), ':');
 	if (!exec->bin_dir)
 		return ;
@@ -41,9 +48,9 @@ void	path_finder(t_exec *exec, t_commands *cmd)
 
 	i = -1;
 	bin_amt = 0;
-	while (exec->bin_dir[bin_amt])
+	while (exec->bin_dir && exec->bin_dir[bin_amt])
 		bin_amt++;
-	while (exec->bin_dir[++i])
+	while (exec->bin_dir && exec->bin_dir[++i])
 	{
 		cmd->cmd_path = ft_strjoin(exec->bin_dir[i], cmd->cmds[0]);
 		if (access(cmd->cmd_path, F_OK) == 0)
@@ -58,7 +65,9 @@ void	path_finder(t_exec *exec, t_commands *cmd)
 			cmd->cmd_path = ft_strdup(cmd->cmds[0]);
 			return ;
 		}
+		destroy_all(exec, message_joiner(3 ,"minishell: ", cmd->cmds[0],
+					": Permission denied\n"), K_N_AVAIL);
 	}
-	destroy_all(exec, message_joiner(2, cmd->cmds[0], ": command not found"),
-			CMD_N_FOUND);
+	destroy_all(exec, message_joiner(2 , cmd->cmds[0], ": command not found\n")
+			, CMD_N_FOUND);
 }
