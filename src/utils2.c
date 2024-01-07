@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:41:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/06 22:16:09 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/07 01:03:17 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 */
 int	to_close(int fd)
 {
-	if (fd > 0)
+	if (fd > 2)
 		close(fd);
 	return (-1);
 }
@@ -80,11 +80,11 @@ int	what_redir_token(char *str)
 */
 void	set_shlvl()
 {
-	long int		i;
+	// long int		i;		set but not used
 	int		shlvl;
 	char	*shlvl_val;
 	
-	i = 0;
+	// i = 0;
 	shlvl_val = get_env_var_value("SHLVL");
 	if (shlvl_val && contains_only_nbr(shlvl_val))
 	{
