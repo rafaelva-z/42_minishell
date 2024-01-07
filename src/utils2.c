@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:41:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 01:03:17 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:36:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ void	set_shlvl()
 		}
 		else if (shlvl > 0 && shlvl < 999)
 		{
-			set_env_var("SHLVL", ft_itoa(++shlvl));
+			shlvl_val = ft_itoa(++shlvl);
+			set_env_var("SHLVL", shlvl_val);
+			free(shlvl_val);
 			return ;
 		}
 	}

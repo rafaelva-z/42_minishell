@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 00:27:26 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:19:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
 	dupper(cmd);
-	close(exec->remainder_fd);
+	exec->remainder_fd = to_close(exec->remainder_fd);
 	builtin_check(exec, cmd);
 	path_finder(exec, cmd);
 	create_env_array();

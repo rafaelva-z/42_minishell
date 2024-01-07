@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/06 19:55:40 by fda-estr         ###   ########.fr        #
+#    Updated: 2024/01/07 15:10:00 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,42 +19,44 @@ RM			=	/bin/rm -f
 INCLUDES	=	./include
 LIBFT_PATH	=	./lib/libft/
 LIBFT		=	$(LIBFT_PATH)libft.a
-SRCS		=	$(addprefix ./src/,		\
-				main.c					\
-				signals.c				\
-				prompt_cleaner.c		\
-				quote_check.c			\
-				redir_add_spaces.c		\
-				redir_check.c			\
-				redir_utils.c			\
-				tokenizer.c				\
-				utils.c					\
-				utils2.c				\
-				here_doc.c				\
-				destroyer.c				\
-				$(addprefix built-ins/, \
-				cd.c					\
-				echo.c					\
-				env.c					\
-				exit.c					\
-				export.c				\
-				export_sort.c 			\
-				pwd.c					\
-				unset.c					\
-				)						\
-				$(addprefix structs/,	\
-				commands.c				\
-				env.c					\
-				env2.c					\
-				redirections.c			\
-				)						\
-				$(addprefix executor/,	\
-				executor.c				\
-				exec_utils.c		\
-				path_handeling.c		\
-				redirections.c			\
-				)						\
-				)						\
+SRCS		=	$(addprefix ./src/,				\
+				main.c							\
+				signals.c						\
+				redir_utils.c					\
+				utils.c							\
+				utils2.c						\
+				here_doc.c						\
+				destroyer.c						\
+				$(addprefix built-ins/, 		\
+				cd.c							\
+				echo.c							\
+				env.c							\
+				exit.c							\
+				export.c						\
+				export_sort.c 					\
+				pwd.c							\
+				unset.c							\
+				)								\
+				$(addprefix structs/,			\
+				commands.c						\
+				env.c							\
+				env2.c							\
+				redirections.c					\
+				)								\
+				$(addprefix executor/,			\
+				executor.c						\
+				exec_utils.c					\
+				path_handeling.c				\
+				redirections.c					\
+				)								\
+				$(addprefix prompt-processing/,	\
+				prompt_cleaner.c				\
+				quote_check.c					\
+				redir_add_spaces.c				\
+				redir_check.c					\
+				tokenizer.c						\
+				)								\
+				)								\
 				
 CYAN		=	\033[96m
 RESET		=	\033[0m
