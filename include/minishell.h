@@ -141,4 +141,8 @@ void		exec_destroy(t_exec *exec);
 void		destroy_all(t_exec *exec, char *message, int exit_status);
 void		desplay_error(char *error_msg);
 
+// error_handling
+
+char		*message_joiner(int nbr, ...);
+
 #endif

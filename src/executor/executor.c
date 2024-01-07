@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 00:27:26 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/07 17:07:40 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static void	executor(t_exec *exec, t_commands *cmd)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
 	dupper(cmd);
-	close(exec->remainder_fd);
+	exec->remainder_fd = to_close(exec->remainder_fd);
 	builtin_check(exec, cmd);
 	path_finder(exec, cmd);
 	create_env_array();
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	destroy_all(exec, "command could not execute\n", CMD_N_FOUND);
+	destroy_all(exec, ft_strdup("command could not execute\n"), CMD_N_FOUND);
 }
 
 /*
@@ -121,7 +121,7 @@ void	process_generator(void)
 		if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
 			return ;
 		if (current->next && pipe(exec.fd) != 0)
-			destroy_all(&exec, "Pipe error\n", ES_PIPE);
+			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handeler_in(&exec, current);
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)
