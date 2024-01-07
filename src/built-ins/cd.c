@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/06 18:45:17 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/07 20:45:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,28 @@
 
 void	set_pwd(char *oldpwd)
 {
-	char	*oldpwd_var;
-	char	*pwd_var;
 	char	*cwd;
 	t_envp	*shell;
 
 	shell = get_env_struct();
-	oldpwd_var = ft_strjoin("OLDPWD=", oldpwd);
-	if (!oldpwd_var)
-		return ;
 	cwd = getcwd(NULL, 0);
-	pwd_var = ft_strjoin("PWD=", cwd);
-	if (!pwd_var)
-		return ;
-	shell->set(oldpwd_var);
-	shell->set(pwd_var);
-	free(oldpwd_var);
-	free(pwd_var);
 	if (cwd)
+	{
+		shell->set("PWD", cwd);
 		free(cwd);
+	}
+	if (oldpwd)
+		shell->set("OLDPWD=", oldpwd);
+}
+
+static int	count_cmds(char **cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i])
+		i++;
+	return (i);
 }
 
 /**
@@ -43,30 +46,19 @@ void	cd(char **cmds)
 	int		r;
 	char	*home;
 	char	*oldpwd;
-	t_envp	*shell;
-
-	shell = get_env_struct();
-	if (shell->nbr_cmds > 2)
+	
+	if (count_cmds(cmds) > 1)
 	{
 		perror("cd: too many arguments\n");
 		return ;
 	}
-	home = shell->get_value("HOME");
+	home = get_env_struct()->get_value("HOME");
 	r = -1;
 	if (!cmds[0] && !home)
 		return ;
 	oldpwd = getcwd(NULL, 0);
-	printf("oldpwd: %s", oldpwd);
 	if (!cmds[0])
 		r = chdir(home);
-	// else if (*path == '~')
-	// {
-	// 	path = ft_strjoin(home, path + 1);
-	// 	r = chdir(path);
-	// 	free(path);
-	// 	if (r < 0)
-	// 		perror("insert error message here");
-	// }
 	else
 		r = chdir(cmds[0]);
 	if (r < 0)
@@ -76,8 +68,6 @@ void	cd(char **cmds)
 	if (oldpwd)
 		free(oldpwd);
 }
-
-//	do we have to define tab key behaviour?
 
 /**
  * 	CD =============================

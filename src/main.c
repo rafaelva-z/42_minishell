@@ -12,6 +12,8 @@
 
 #include "../include/minishell.h"
 
+int	g_signal;
+
 /**
  * @brief	Allocates the prompt cursor to param "char **cursor".
  * 			the cursor will be the username + the constant CURSOR
@@ -64,6 +66,34 @@ static void	get_prompt_cursor(void)
 // 		if (test_c)
 // 			printf("-|PIPE|-\n");
 // 	}
+// }
+
+// void	expand(char *)
+// {
+
+// }
+
+// void	expansions(char *prompt)
+// {
+// 	int		i;
+// 	char	*expanded_str;
+
+// 	i = -1;
+// 	expanded_str = NULL;
+// 	while (prompt[++i] && prompt[i] != '$' && is_inside_quotes(prompt, i) != 2)
+// 	{
+// 		if (prompt[i + 1] == '?')
+// 		{
+// 			expanded_str = ft_itoa(get_env_struct()->exit_status);
+// 			break ;
+// 		}
+// 		else if (!(prompt[i + 1]))
+		
+// 	}
+// 	if (expanded_str)
+// 		expand(prompt[i]);
+// 	if (prompt[i])
+// 		expansions(&prompt[i]);
 // }
 
 int	prompt_processing(char **prompt)
@@ -132,6 +162,7 @@ int	main(int argc, char **argv, char **envp)
 	set_shlvl();
 	while (1)
 	{
+		g_signal = 0;
 		set_signals();
 		if (shell->cursor)
 			prompt = readline(shell->cursor);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/05 21:38:33 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/07 19:58:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	sighandler(int signal)
 	//	wait pid for pipe
 	if (signal == SIGINT)
 	{
+		g_signal = 2;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

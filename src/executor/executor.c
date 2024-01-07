@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 15:19:54 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/07 19:05:03 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 /*
 * @brief Managed all open file descriptors at the begging of the execution
 */
-static void	fd_handeler_in(t_exec *exec, t_commands *cmd)
+static void	fd_handler_in(t_exec *exec, t_commands *cmd)
 {
 	if (exec->remainder_fd > 0)
 		cmd->read_fd = exec->remainder_fd;
@@ -83,7 +83,7 @@ static void	fd_handeler_in(t_exec *exec, t_commands *cmd)
 /*
 * @brief Managed all open file descriptors at the end of the execution
 */
-static void	fd_handeler_out(t_exec *exec)
+static void	fd_handler_out(t_exec *exec)
 {
 	exec->remainder_fd = to_close(exec->remainder_fd);
 	exec->remainder_fd = exec->fd[0];
@@ -113,6 +113,8 @@ void	process_generator(void)
 	t_commands	*current;
 	int			i;
 
+	if (g_signal == 2)
+		return ;
 	initializer_exec(&exec);
 	current = exec.envp->first_cmd_struct;
 	i = -1;
@@ -122,11 +124,11 @@ void	process_generator(void)
 			return ;
 		if (current->next && pipe(exec.fd) != 0)
 			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
-		fd_handeler_in(&exec, current);
+		fd_handler_in(&exec, current);
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)
 			executor(&exec, current);
-		fd_handeler_out(&exec);
+		fd_handler_out(&exec);
 		current = current->next;
 	}
 	wait_loop(&exec);
@@ -147,5 +149,5 @@ void	process_generator(void)
 			create array with binary directories
 			wait for the exit status of every child process
 			free all the memory and close all fds; (Maybe do it inside
-				of the fd_handeling function)
+				of the fd_handling function)
 */

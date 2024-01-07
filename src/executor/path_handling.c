@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_handeling.c                                   :+:      :+:    :+:   */
+/*   path_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 17:18:17 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/07 19:17:24 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	path_finder(t_exec *exec, t_commands *cmd)
 		if (access(cmd->cmd_path, F_OK) == 0)
 			return ;
 		free (cmd->cmd_path);
+		cmd->cmd_path = NULL;
 	}
 	if (access(cmd->cmds[0], F_OK) == 0)
 	{
