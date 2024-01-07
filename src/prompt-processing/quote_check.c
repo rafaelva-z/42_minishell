@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:52:10 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/04 12:52:28 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/07 15:11:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /**
  *	@brief checks if there are any quotations left unclosed

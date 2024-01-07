@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 19:11:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 01:03:50 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:38:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void	free_commands(t_commands **command_struct)
 	t_commands	*tmp;
 	t_commands	*node;
 
-	if (!command_struct)
+	if (!command_struct || !*command_struct)
 		return ;
 	node = *command_struct;
 	while (node)
@@ -214,6 +214,7 @@ void	free_commands(t_commands **command_struct)
 		free(node);
 		node = tmp;
 	}
+	get_env_struct()->first_cmd_struct = NULL;
 	*command_struct = NULL;
 }
 

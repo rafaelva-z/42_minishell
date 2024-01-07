@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 03:02:07 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/06 21:05:22 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/07 15:12:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /**
  *	@brief	checks on the given string what is the next character type ignoring
