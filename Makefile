@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/07 15:10:00 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/07 16:54:28 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS		=	$(addprefix ./src/,				\
 				utils2.c						\
 				here_doc.c						\
 				destroyer.c						\
+        error_handling.c		\
 				$(addprefix built-ins/, 		\
 				cd.c							\
 				echo.c							\

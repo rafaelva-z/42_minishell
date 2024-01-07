@@ -62,7 +62,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	destroy_all(exec, "command could not execute\n", CMD_N_FOUND);
+	destroy_all(exec, ft_strdup("command could not execute\n"), CMD_N_FOUND);
 }
 
 /*
@@ -121,7 +121,7 @@ void	process_generator(void)
 		if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
 			return ;
 		if (current->next && pipe(exec.fd) != 0)
-			destroy_all(&exec, "Pipe error\n", ES_PIPE);
+			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handeler_in(&exec, current);
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)
