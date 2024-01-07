@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 17:35:44 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 20:16:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 19:59:56 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ void	init_env(char **envp)
 	shell->make_array = create_env_array;
 	shell->get = get_env_var;
 	shell->get_value = get_env_var_value;
-	shell->set = set_env_var;
 	//shell->unset = unset;
 	shell->print = print_env;
 	shell->print_alpha = export_sort_print;

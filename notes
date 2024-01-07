@@ -7,7 +7,7 @@
 
 =>	What should be used on here_doc: gnl or readline?
 
-=>	To do: Error handling
+=>	To do: Error handeling
 
 => 	Here document also expands environment variables, but first
 	it compares with the limiter and then expands. The limiter

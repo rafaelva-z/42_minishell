@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/07 18:22:48 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/06 19:55:40 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ RM			=	/bin/rm -f
 INCLUDES	=	./include
 LIBFT_PATH	=	./lib/libft/
 LIBFT		=	$(LIBFT_PATH)libft.a
+<<<<<<< HEAD
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
 				signals.c						\
@@ -27,7 +28,7 @@ SRCS		=	$(addprefix ./src/,				\
 				utils2.c						\
 				here_doc.c						\
 				destroyer.c						\
-     			error_handling.c				\
+        error_handling.c		\
 				$(addprefix built-ins/, 		\
 				cd.c							\
 				echo.c							\
@@ -47,7 +48,7 @@ SRCS		=	$(addprefix ./src/,				\
 				$(addprefix executor/,			\
 				executor.c						\
 				exec_utils.c					\
-				path_handling.c					\
+				path_handeling.c				\
 				redirections.c					\
 				)								\
 				$(addprefix prompt-processing/,	\
@@ -58,6 +59,44 @@ SRCS		=	$(addprefix ./src/,				\
 				tokenizer.c						\
 				)								\
 				)								\
+=======
+SRCS		=	$(addprefix ./src/,		\
+				main.c					\
+				signals.c				\
+				prompt_cleaner.c		\
+				quote_check.c			\
+				redir_add_spaces.c		\
+				redir_check.c			\
+				redir_utils.c			\
+				tokenizer.c				\
+				utils.c					\
+				utils2.c				\
+				here_doc.c				\
+				destroyer.c				\
+				$(addprefix built-ins/, \
+				cd.c					\
+				echo.c					\
+				env.c					\
+				exit.c					\
+				export.c				\
+				export_sort.c 			\
+				pwd.c					\
+				unset.c					\
+				)						\
+				$(addprefix structs/,	\
+				commands.c				\
+				env.c					\
+				env2.c					\
+				redirections.c			\
+				)						\
+				$(addprefix executor/,	\
+				executor.c				\
+				exec_utils.c		\
+				path_handeling.c		\
+				redirections.c			\
+				)						\
+				)						\
+>>>>>>> parent of be6bbbb (error handling still in process)
 				
 CYAN		=	\033[96m
 RESET		=	\033[0m

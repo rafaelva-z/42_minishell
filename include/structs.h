@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:06:56 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 20:18:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/06 19:59:00 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,21 +36,21 @@ typedef struct s_commands
 
 typedef struct s_envp
 {
-	t_env_var			*vars;											//  pointer to var_list
-	char				**env_array;									//	array with env
+	t_env_var			*vars;								//  pointer to var_list
+	char				**env_array;						//	array with env
 	int					exit_status;
-	t_commands			*first_cmd_struct;								//Pointer to the struct of fist command in the pipeline
+	t_commands			*first_cmd_struct;					//Pointer to the struct of fist command in the pipeline
 	char				*cursor;
 	int					nbr_cmds;
-	t_env_var			*(*get)(const char *name);						//  (F) get env var struct 
-	char				**(*make_array)(void);							//  (F) create env var array
-	char				*(*get_value)(const char *name);				//  (F) get env var value
-	void				(*set)(const char *name, const char *value);	//  (F) add var to envp
-	void				(*unset)(const char *name);						//  (F) remove var from envp
-	void				(*print)(void);									//  (F) print all env vars
-	void				(*print_alpha)(void);							//	(F) prints variables sorted alphabetically
-	void				(*destroy)();									//	(F) properly frees everything
-																		//		that was allocated
+	t_env_var			*(*get)(const char *name);			//  (F) get env var struct 
+	char				**(*make_array)(void);				//  (F) create env var array
+	char				*(*get_value)(const char *name);	//  (F) get env var value
+	void				(*set)(const char *str);			//  (F) add var to envp
+	void				(*unset)(const char *name);			//  (F) remove var from envp
+	void				(*print)(void);						//  (F) print all env vars
+	void				(*print_alpha)(void);				//	(F) prints variables sorted alphabetically
+	void				(*destroy)();						//	(F) properly frees everything
+															//		that was allocated
 }				t_envp;
 
 typedef struct s_exec

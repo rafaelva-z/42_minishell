@@ -1,16 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path_handling.c                                    :+:      :+:    :+:   */
+/*   path_handeling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 19:17:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 18:49:42 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/* ATENTION! Still to do the error handeling */
 
 /*
 * @brief Creates an array with the directories to the binaries. If
@@ -46,11 +48,12 @@ void	path_finder(t_exec *exec, t_commands *cmd)
 	while (exec->bin_dir[++i])
 	{
 		cmd->cmd_path = ft_strjoin(exec->bin_dir[i], cmd->cmds[0]);
-		if (access(cmd->cmd_path, F_OK) == 0)
-			return ;
+		if (access(cmd->cmd_path, F_OK) == 0 || i == bin_amt - 1)
+			break ;
 		free (cmd->cmd_path);
-		cmd->cmd_path = NULL;
 	}
+	if (access(cmd->cmd_path, F_OK) == 0)
+		return ;
 	if (access(cmd->cmds[0], F_OK) == 0)
 	{
 		if (access(cmd->cmds[0], X_OK) == 0)
@@ -59,6 +62,29 @@ void	path_finder(t_exec *exec, t_commands *cmd)
 			return ;
 		}
 	}
-	destroy_all(exec, message_joiner(2, cmd->cmds[0], ": command not found"),
-			CMD_N_FOUND);
+	// you have to make it so that it executes a file in the current directory. ex: ./minishell
+		ft_printf("Error3\n") ;			// Error handeling
 }
+
+// /*
+// * @brief takes the environment array and atributes to each command the
+// * correct path to it's binary
+// */
+// void	command_path(t_data *data, t_exec *exec)
+// {
+// 	t_commands *current;
+
+// 	current = data->first_cmd;
+// 	bin_finder(exec);
+// 	while (current)
+// 	{
+// 		if (!exec->bin_dir)
+// 		{
+// 			current->cmd_path = ft_strdup(current->cmds[0]);
+// 			continue ;
+// 		}
+// 		path_finder(exec, current);
+// 	}
+
+// }
+

@@ -37,8 +37,6 @@
 # define ES_PIPE 4
 # define CMD_N_FOUND 127
 
-extern int	g_signal;
-
 enum e_redir
 {
 	NONE,
@@ -121,7 +119,7 @@ void		here_doc_manager(void);
 
 void		process_generator(void);
 
-// path_handling.c
+// path_handeling.c
 
 void		bin_finder(t_exec *exec);
 void		path_finder(t_exec *exec, t_commands *cmd);
@@ -142,9 +140,5 @@ void		exec_destroy(t_exec *exec);
 // destroyer
 void		destroy_all(t_exec *exec, char *message, int exit_status);
 void		desplay_error(char *error_msg);
-
-// error_handling
-
-char		*message_joiner(int nbr, ...);
 
 #endif

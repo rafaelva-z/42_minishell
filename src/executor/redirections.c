@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 18:21:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/04 19:43:39 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
 	(void) exec;		//it should be passed as an argument, so the memory can be freed in case of process termination
 	if (access(redir->key_wrd, F_OK) == -1)
-		ft_printf("Error4\n");		//	Error handling
+		ft_printf("Error4\n");		//	Error handeling
 	if (access(redir->key_wrd, R_OK) == -1)
-		ft_printf("Error5\n");		//	Error handling
+		ft_printf("Error5\n");		//	Error handeling
 	if (cmd->read_fd > 2)
 		cmd->read_fd = to_close(cmd->hd_fd);
 	cmd->read_fd = open(redir->key_wrd, O_RDONLY);
@@ -44,7 +44,7 @@ void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 		return ;
 	}
 	if (access(redir->key_wrd, W_OK) == -1)
-		ft_printf("Error6\n");		//	Error handling
+		ft_printf("Error6\n");		//	Error handeling
 	if (cmd->write_fd > 2)
 		cmd->write_fd = to_close(cmd->write_fd);
 	cmd->write_fd = open(redir->key_wrd, O_RDONLY, O_TRUNC);
@@ -64,7 +64,7 @@ void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 		return ;
 	}
 	if (access(redir->key_wrd, W_OK) == -1)
-		ft_printf("Error7\n");		//	Error handling
+		ft_printf("Error7\n");		//	Error handeling
 	if (cmd->write_fd > 2)
 		cmd->write_fd = to_close(cmd->write_fd);
 	cmd->write_fd = open(redir->key_wrd, O_RDONLY, O_APPEND);
