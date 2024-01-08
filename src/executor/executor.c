@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/08 18:59:54 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/08 19:43:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ static void	dupper(t_commands *cmd)
 static void	executor(t_exec *exec, t_commands *cmd)
 {
 	redirect(exec, cmd);
-	if (!cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
+	if (!cmd->cmds)			//	this has to be here in case
+							//  theres no command (ex: << EOF)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
-	// printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
+	// Need to copy Here_doc input text to commands
+	//printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
 	dupper(cmd);
 	exec->remainder_fd = to_close(exec->remainder_fd);
 	builtin_exec_child(exec, cmd);
@@ -122,8 +124,12 @@ void	process_generator(void)
 	i = -1;
 	while (current)
 	{
-		if (exec.envp->nbr_cmds == 1 && builtin_exec_parent(&exec, current))					// ATENTION: there's stuff to consider here when merging!!!!!
-			return ;													// ATENTION: there's stuff to consider here when merging!!!!
+		if(current->cmds[0])	// fix this by allocating the correct ammount of cmds
+								// when there are no redirections!! commands.c
+		{
+			if (exec.envp->nbr_cmds == 1 && builtin_exec_parent(&exec, current))					// ATENTION: there's stuff to consider here when merging!!!!!
+				return ;													// ATENTION: there's stuff to consider here when merging!!!!
+		}
 		if (current->next && pipe(exec.fd) != 0)
 			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handler_in(&exec, current);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/08 17:18:46 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/08 19:35:36 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	builtin_exec_child(t_exec *exec, t_commands *cmd)
 {
 	if (ft_strncmp("echo", cmd->cmds[0], 5) == 0)
+	{
+		printf("bltin_exec_child. cmd: %s\n", cmd->cmds[1]);
 		echo(&cmd->cmds[1]);
+	}
 	else if (ft_strncmp("pwd", cmd->cmds[0], 4) == 0)
 		pwd();				// Está a executar duas vezes (probably o builtin e o exec)
 	else if (ft_strncmp("env", cmd->cmds[0], 4) == 0)
