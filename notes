@@ -46,3 +46,11 @@
 
 =>  set the ignals right for the children processes of here doc and
     commands
+
+=>	corrigir quando a prompt eh so redirections o prompt da na mesma um
+	comando
+
+	==========| F A I L E D    P R O M P T S|==========
+
+=>	echo HI >    > out		|->|			bash: syntax error near
+	unexpected token `>'

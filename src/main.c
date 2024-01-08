@@ -180,14 +180,12 @@ int	main(int argc, char **argv, char **envp)
 				free(prompt);
 				continue ;
 			}
-			commands = NULL; //testing
-			tokens = NULL; //testing
-			get_env_struct()->first_cmd_struct = NULL; //testing
 			prompt_processing(&prompt);
 			if (!prompt)
 			{
 				printf("error: prompt processing error\n"); // Error
-				break ;
+				free (prompt);
+				continue ;
 			}
 			commands = get_command_linkedlst(prompt);
 			tokens = tokenizer(prompt);

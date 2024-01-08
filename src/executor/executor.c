@@ -54,10 +54,11 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	redirect(exec, cmd);
 	if (!cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
+	redirect(exec, cmd);
+	// printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
 	dupper(cmd);
 	exec->remainder_fd = to_close(exec->remainder_fd);
-	if (cmd->cmds[0]) // may not be needed
-		builtin_check(exec, cmd);
+	builtin_exec_child(exec, cmd);
 	path_finder(exec, cmd);
 	create_env_array();
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
@@ -79,16 +80,16 @@ static void	fd_handler_in(t_exec *exec, t_commands *cmd)
 		cmd->write_fd = exec->fd[1];
 	else
 		cmd->write_fd = STDOUT_FILENO;
+	exec->remainder_fd = exec->fd[0];
 }
 
 /*
 * @brief Managed all open file descriptors at the end of the execution
 */
-static void	fd_handler_out(t_exec *exec)
+static void	fd_handler_out(t_commands *cmd)
 {
-	exec->remainder_fd = to_close(exec->remainder_fd);
-	exec->remainder_fd = exec->fd[0];
-	exec->fd[1] = to_close(exec->fd[1]);
+	cmd->read_fd = to_close(cmd->read_fd);
+	cmd->write_fd = to_close(cmd->write_fd);
 }
 
 /*
@@ -102,14 +103,6 @@ static void	wait_loop(t_exec *exec)
 	i = -1;
 	while (++i < exec->envp->nbr_cmds)
 		waitpid(exec->pid[i], &(exec->envp->exit_status), 0);
-}
-
-static void	builtin_destroy(t_exec *exec, t_commands *cmd)
-{
-	if (exec)
-		exec_destroy(exec);
-	if (cmd)
-		free_commands(&cmd);
 }
 
 /*
@@ -129,21 +122,15 @@ void	process_generator(void)
 	i = -1;
 	while (current)
 	{
-		if (current->cmds[0])
-		{
-			if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
-			{
-				builtin_destroy(&exec, current);
-				return ;
-			}
-		}
+		if (exec.envp->nbr_cmds == 1 && builtin_exec_parent(&exec, current))					// ATENTION: there's stuff to consider here when merging!!!!!
+			return ;													// ATENTION: there's stuff to consider here when merging!!!!
 		if (current->next && pipe(exec.fd) != 0)
 			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handler_in(&exec, current);
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)
 			executor(&exec, current);
-		fd_handler_out(&exec);
+		fd_handler_out(current);
 		current = current->next;
 	}
 	wait_loop(&exec);

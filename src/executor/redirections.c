@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 21:59:04 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:30:40 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 		cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_CREAT , S_IRUSR | S_IWUSR);
 		return ;
 	}
+	printf("file exits\n");
 	if (access(redir->key_wrd, W_OK) == -1)
 		destroy_all(exec, message_joiner(3 ,"minishell: ", redir->key_wrd,
 				": Permission denied\n"), OP_N_PERM);
+	printf("permission ok\n");
 	if (cmd->write_fd > 2)
 		cmd->write_fd = to_close(cmd->write_fd);
-	cmd->write_fd = open(redir->key_wrd, O_RDONLY, O_TRUNC);
+	cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_TRUNC);
 }
 
 /*
@@ -56,11 +58,12 @@ void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 */
 void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
+	printf("Is append\n");
 	if (access(redir->key_wrd, F_OK) == -1)
 	{
 		if (cmd->write_fd > 2)
 			cmd->write_fd = to_close(cmd->write_fd);
-		cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_CREAT , S_IRUSR | S_IWUSR | O_APPEND);
+		cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_CREAT , S_IRUSR | S_IWUSR);
 		return ;
 	}
 	if (access(redir->key_wrd, W_OK) == -1)
@@ -68,7 +71,8 @@ void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 				": Permission denied\n"), OP_N_PERM);
 	if (cmd->write_fd > 2)
 		cmd->write_fd = to_close(cmd->write_fd);
-	cmd->write_fd = open(redir->key_wrd, O_RDONLY, O_APPEND);
+	printf("here\n");
+	cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_APPEND);
 }
 
 /*
