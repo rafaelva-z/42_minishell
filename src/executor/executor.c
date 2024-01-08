@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/08 17:18:42 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/08 18:50:12 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,16 @@ static void	fd_handler_in(t_exec *exec, t_commands *cmd)
 		cmd->write_fd = exec->fd[1];
 	else
 		cmd->write_fd = STDOUT_FILENO;
+	exec->remainder_fd = exec->fd[0];
 }
 
 /*
 * @brief Managed all open file descriptors at the end of the execution
 */
-static void	fd_handler_out(t_exec *exec)
+static void	fd_handler_out(t_commands *cmd)
 {
-	exec->remainder_fd = to_close(exec->remainder_fd);
-	exec->remainder_fd = exec->fd[0];
-	exec->fd[1] = to_close(exec->fd[1]);
+	cmd->read_fd = to_close(cmd->read_fd);
+	cmd->write_fd = to_close(cmd->write_fd);
 }
 
 /*
@@ -130,7 +130,7 @@ void	process_generator(void)
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)
 			executor(&exec, current);
-		fd_handler_out(&exec);
+		fd_handler_out(current);
 		current = current->next;
 	}
 	wait_loop(&exec);
