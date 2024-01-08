@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 03:02:07 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 15:12:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/08 20:43:10 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_after_redir(char *str)
 	if (is_redir(*str))
 		return (what_redir(str));
 	else if (*str == '\0')
-		return (-1);
+		return (-99999);
 	return (0);
 }
 
@@ -61,7 +61,7 @@ int	redirection_check(char *prompt)
 			else if (redir_type == RDIR_IN || redir_type == RDIR_OUT || redir_type == RDIR_PIPE)
 				i++;
 			after_redir_type = check_after_redir(&prompt[i]);
-			if (after_redir_type > 0 && after_redir_type != RDIR_PIPE && after_redir_type != RDIR_DPIPE) // found a non pipe redirect
+			if (after_redir_type < 0 && redir_type != RDIR_PIPE && redir_type != RDIR_DPIPE) // found a non pipe redirect
 			{
 				if (redir_type == RDIR_PIPE)
 					continue ;
