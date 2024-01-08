@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/08 18:50:12 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/08 18:59:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ static void	dupper(t_commands *cmd)
 */
 static void	executor(t_exec *exec, t_commands *cmd)
 {
-	// printf("Entered child process\n");
+	redirect(exec, cmd);
 	if (!cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
-	printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
+	// printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
 	dupper(cmd);
 	exec->remainder_fd = to_close(exec->remainder_fd);
 	builtin_exec_child(exec, cmd);
@@ -115,7 +115,7 @@ void	process_generator(void)
 	t_commands	*current;
 	int			i;
 
-	if (g_signal == 2)
+	if (g_signal == SIGINT) // test this
 		return ;
 	initializer_exec(&exec);
 	current = exec.envp->first_cmd_struct;
@@ -123,7 +123,7 @@ void	process_generator(void)
 	while (current)
 	{
 		if (exec.envp->nbr_cmds == 1 && builtin_exec_parent(&exec, current))					// ATENTION: there's stuff to consider here when merging!!!!!
-			return ;													// ATENTION: there's stuff to consider here when merging!!!!!
+			return ;													// ATENTION: there's stuff to consider here when merging!!!!
 		if (current->next && pipe(exec.fd) != 0)
 			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handler_in(&exec, current);
