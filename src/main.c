@@ -183,7 +183,8 @@ int	main(int argc, char **argv, char **envp)
 			if (!prompt)
 			{
 				printf("error: prompt processing error\n"); // Error
-				break ;
+				free (prompt);
+				continue ;
 			}
 			commands = get_command_linkedlst(prompt);
 			tokens = tokenizer(prompt);

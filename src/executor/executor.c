@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/08 15:13:01 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/08 17:18:42 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
 	dupper(cmd);
 	exec->remainder_fd = to_close(exec->remainder_fd);
-	builtin_check(exec, cmd);
+	builtin_exec_child(exec, cmd);
 	path_finder(exec, cmd);
 	create_env_array();
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
@@ -122,11 +122,8 @@ void	process_generator(void)
 	i = -1;
 	while (current)
 	{
-		if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
-		{
-			exec_destroy(&exec);
-			return ;
-		}
+		if (exec.envp->nbr_cmds == 1 && builtin_exec_parent(&exec, current))					// ATENTION: there's stuff to consider here when merging!!!!!
+			return ;													// ATENTION: there's stuff to consider here when merging!!!!!
 		if (current->next && pipe(exec.fd) != 0)
 			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handler_in(&exec, current);

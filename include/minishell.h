@@ -138,7 +138,8 @@ void		redir_out_append(t_exec *exec, t_commands *cmd,
 void		redirect(t_exec *exec, t_commands *cmd);
 
 // exec_utils.c
-int			builtin_check(t_exec *exec, t_commands *cmd);
+void		builtin_exec_child(t_exec *exec, t_commands *cmd);
+int			builtin_exec_parent(t_exec *exec, t_commands *cmd);
 void		exec_destroy(t_exec *exec);
 
 // destroyer
