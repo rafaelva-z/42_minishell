@@ -46,3 +46,6 @@
 
 =>  set the ignals right for the children processes of here doc and
     commands
+
+=>	corrigir quando a prompt eh so redirections o prompt da na mesma um
+	comando
