@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/08 14:02:48 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/08 15:13:01 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	if (!cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
+	printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
 	dupper(cmd);
 	exec->remainder_fd = to_close(exec->remainder_fd);
 	builtin_check(exec, cmd);
