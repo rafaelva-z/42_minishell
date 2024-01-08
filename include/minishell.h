@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scosta-j <scosta-j@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/07 15:33:05 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/07 15:33:05 by scosta-j         ###   ########.fr       */
+/*   Created: 2024/01/08 18:57:24 by rvaz              #+#    #+#             */
+/*   Updated: 2024/01/08 18:57:24 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -41,6 +42,13 @@
 
 extern int	g_signal;
 
+enum e_signalhandlers
+{
+	HNDLR_MAIN,
+	HNDLR_CHILD_HD,
+	HNDLR_LOOP
+};
+
 enum e_redir
 {
 	NONE,
@@ -52,7 +60,7 @@ enum e_redir
 	RDIR_DPIPE = -6
 };
 
-enum e_negative_prompt
+enum e_negative_char_prompt
 {
 	GREAT = -62,
 	MINOR = -60,
@@ -62,7 +70,9 @@ enum e_negative_prompt
 	DOUBQ = -34,
 };
 
-void		set_signals(void);
+
+
+void		set_signals(int process);
 
 //	Built-ins
 

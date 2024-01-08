@@ -163,7 +163,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		g_signal = 0;
-		set_signals();
+		set_signals(HNDLR_MAIN);
 		if (shell->cursor)
 			prompt = readline(shell->cursor);
 		else
@@ -174,6 +174,7 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		else
 		{
+			set_signals(HNDLR_LOOP);
 			if (!*prompt)
 			{
 				free(prompt);

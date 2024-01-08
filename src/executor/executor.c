@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 22:06:38 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/08 18:59:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ static void	dupper(t_commands *cmd)
 */
 static void	executor(t_exec *exec, t_commands *cmd)
 {
-	// printf("Entered child process\n");
+	redirect(exec, cmd);
 	if (!cmd->cmds)						//	this has to be here in case theres no command (ex: << EOF)
 		destroy_all(exec, NULL, get_env_struct()->exit_status);
-	redirect(exec, cmd);
 	dupper(cmd);
 	exec->remainder_fd = to_close(exec->remainder_fd);
-	builtin_check(exec, cmd);
+	if (cmd->cmds[0]) // may not be needed
+		builtin_check(exec, cmd);
 	path_finder(exec, cmd);
 	create_env_array();
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
@@ -122,17 +122,20 @@ void	process_generator(void)
 	t_commands	*current;
 	int			i;
 
-	if (g_signal == 2)
+	if (g_signal == SIGINT) // test this
 		return ;
 	initializer_exec(&exec);
 	current = exec.envp->first_cmd_struct;
 	i = -1;
 	while (current)
 	{
-		if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
+		if (current->cmds[0])
 		{
-			builtin_destroy(&exec, current);
-			return ;
+			if (exec.envp->nbr_cmds == 1 && builtin_check(&exec, current))
+			{
+				builtin_destroy(&exec, current);
+				return ;
+			}
 		}
 		if (current->next && pipe(exec.fd) != 0)
 			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/04 19:41:01 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/08 19:01:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static void	here_doc(t_redirection *rdir, int fd[2])
 {
 	char	*s;
 	int		len;
-
+	
+	set_signals(HNDLR_CHILD_HD);
 	len = ft_strlen(rdir->key_wrd);
 	while (1)
 	{
-		ft_printf(">");
-		s = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(rdir->key_wrd, s, len)
-			== 0 && len == (int)(ft_strlen(s) - 1))
+		s = readline(">");
+		if (g_signal == SIGINT || (ft_strncmp(rdir->key_wrd, s, len)
+			== 0 && len == (int)(ft_strlen(s))))
 			break ;
 		write(fd[1], s, ft_strlen(s));
 		free (s);
@@ -49,6 +49,7 @@ static void	here_doc_check(t_commands *cmd)
 	pid_t			pid;
 	t_redirection	*redir;
 
+	set_signals(HNDLR_LOOP); // apparently redundant, done after prompt is valid on main
 	redir = cmd->redirects;
 	while (redir)
 	{
@@ -80,10 +81,11 @@ void	here_doc_manager(void)
 
 	shell = get_env_struct();
 	current = shell->first_cmd_struct;
-	while (current)
+	while (current && g_signal == 0)
 	{
 		if (current->redirects)
 			here_doc_check(current);
 		current = current->next;
 	}
+	set_signals(HNDLR_MAIN); //probably needs to be HNDLR_LOOP
 }
