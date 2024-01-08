@@ -179,9 +179,6 @@ int	main(int argc, char **argv, char **envp)
 				free(prompt);
 				continue ;
 			}
-			commands = NULL; //testing
-			tokens = NULL; //testing
-			get_env_struct()->first_cmd_struct = NULL; //testing
 			prompt_processing(&prompt);
 			if (!prompt)
 			{
