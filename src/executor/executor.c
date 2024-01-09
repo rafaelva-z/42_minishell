@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/09 12:45:37 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 18:25:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	redirect(exec, cmd);
 	if (!cmd->cmds)			//	this has to be here in case
 							//  theres no command (ex: << EOF)
-		destroy_all(exec, NULL, get_env_struct()->exit_status);
+		free_and_exit(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
 	// Need to copy Here_doc input text to commands
 	//printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
@@ -66,7 +66,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	destroy_all(exec, ft_strdup("command could not execute\n"), CMD_N_FOUND);
+	free_and_exit(exec, ft_strdup("command could not execute\n"), ES_CMD_N_FOUND);
 }
 
 /*
@@ -120,7 +120,7 @@ void	process_generator(void)
 	if (g_signal == SIGINT) // test this
 		return ;
 	initializer_exec(&exec);
-	current = exec.envp->first_cmd_struct;
+	current = exec.envp->commands;
 	i = -1;
 	while (current)
 	{
@@ -129,7 +129,7 @@ void	process_generator(void)
 			if (exec.envp->nbr_cmds == 1 && builtin_exec_parent(&exec, current))
 				return ;
 		if (current->next && pipe(exec.fd) != 0)
-			destroy_all(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
+			free_and_exit(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
 		fd_handler_in(&exec, current);
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)
@@ -138,7 +138,7 @@ void	process_generator(void)
 		current = current->next;
 	}
 	wait_loop(&exec);
-	exec_destroy(&exec);
+	free_exec(&exec);
 }
 /* EXECUTOR
 			[ ]	verifies if files path exists

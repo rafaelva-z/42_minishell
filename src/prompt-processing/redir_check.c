@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 03:02:07 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/08 20:43:10 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 19:32:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_after_redir(char *str)
 	if (is_redir(*str))
 		return (what_redir(str));
 	else if (*str == '\0')
-		return (-99999);
+		return (-1);
 	return (0);
 }
 
@@ -41,8 +41,8 @@ int	redirection_check(char *prompt)
 	i = 0;
 	if (prompt[i] == '|')
 	{
-		desplay_error("-minishell: syntax error near unexpected token 'insert token?'");
-		return (2);
+		//display_error("-minishell: syntax error near unexpected token 'insert token?'");
+		return (-1);
 	}
 	while (prompt[i])
 	{
@@ -53,8 +53,8 @@ int	redirection_check(char *prompt)
 			redir_type = what_redir(&prompt[i]);
 			if (redir_type == RDIR_DPIPE) // double pipe
 			{
-				desplay_error("-minishell: Double pipe");
-				return (2);
+				//display_error("-minishell: Double pipe");
+				return (-1);
 			}
 			else if (redir_type == RDIR_APP || redir_type == RDIR_HDOC || redir_type == RDIR_DPIPE)
 				i += 2;
@@ -67,14 +67,14 @@ int	redirection_check(char *prompt)
 					continue ;
 				else
 				{
-					desplay_error("-minishell: syntax error near unexpected token 'insert token?'");
-					return (2);
+					//display_error("-minishell: syntax error near unexpected token 'insert token?'");
+					return (-1);
 				}
 			}
 			else if (after_redir_type == -1 || after_redir_type == RDIR_PIPE || after_redir_type == RDIR_DPIPE) // found a '\0' || found a pipe redirect
 			{
-				desplay_error("-minishell: syntax error near unexpected token 'insert token?'");
-				return (2);
+				//display_error("-minishell: syntax error near unexpected token 'insert token?'");
+				return (-1);
 			}
 		}
 		if (prompt[i])

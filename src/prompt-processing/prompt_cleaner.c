@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 15:11:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 19:18:30 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*space_trim(const char *prompt)
 	j = 0;
 	tmp = ft_calloc(ft_strlen(prompt) + 1, 1);
 	if (!tmp)
-		return (NULL);
+		free_and_exit(NULL, "MEMORY ERROR", -999);
 	while (prompt[i])
 	{
 		while (prompt[i] && prompt[i] != DQUOTE && prompt[i] != SQUOTE
@@ -53,23 +53,19 @@ static char	*space_trim(const char *prompt)
 /**
  * @brief	uses space_trim and ft_strtrim to clean the prompt form extra spaces
 */
-char	*prompt_cleaner(const char *prompt)
+int	prompt_cleaner(char **prompt)
 {
 	char	*trim;
-	char	*new_prompt;
+	char	*spc_trim;
 
-	if (!prompt)
-		return (NULL);
-	new_prompt = space_trim(prompt);
-	if (!new_prompt)
-		return (NULL);
-	trim = ft_strtrim(new_prompt, " \t");
+	if (!*prompt)
+		return (-1);
+	spc_trim = space_trim(*prompt);
+	trim = ft_strtrim(spc_trim, " \t");
+	free(spc_trim);
+	free(*prompt);
 	if (!trim)
-	{
-		free(new_prompt);
-		perror("MEMORY ERROR");
-		exit(-1000);
-	}
-	free(new_prompt);
-	return (trim);
+		free_and_exit(NULL, "MEMORY ERROR", -999);
+	*prompt = trim;
+	return (0);
 }

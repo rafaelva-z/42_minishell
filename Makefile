@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/09 15:42:09 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/09 21:35:07 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,12 +21,12 @@ LIBFT_PATH	=	./lib/libft/
 LIBFT		=	$(LIBFT_PATH)libft.a
 SRCS		=	$(addprefix ./src/,				\
 				main.c							\
+				free_memory.c					\
 				signals.c						\
 				redir_utils.c					\
 				utils.c							\
 				utils2.c						\
 				here_doc.c						\
-				destroyer.c						\
      			error_handling.c				\
 				$(addprefix built-ins/, 		\
 				cd.c							\
@@ -94,6 +94,6 @@ readline.supp:
 	wget https://raw.githubusercontent.com/benjaminbrassart/minishell/master/readline.supp
 
 runvg: $(NAME) readline.supp
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --suppressions=readline.supp ./$(NAME)
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=readline.supp ./$(NAME)
 
 .PHONY: all clean fclean re

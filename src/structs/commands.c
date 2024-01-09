@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 19:11:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/08 13:49:13 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/09 17:44:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ static void	initialize_command_struct(t_commands *node)
 */
 static t_commands	*create_command_linkedlist(int node_amount)
 {
-	t_commands	*commands;
+	t_commands	*commands_2;
 	t_commands	*node;
 	t_envp		*shell;
 
 	shell = get_env_struct();
-	commands = NULL;
+	commands_2 = NULL;
 	while (node_amount)
 	{
 		node = malloc(sizeof(t_commands));
@@ -74,16 +74,16 @@ static t_commands	*create_command_linkedlist(int node_amount)
 			perror("MEMORY ERROR");
 			exit(-10000);
 		}
-		if (shell->first_cmd_struct == NULL)
-			shell->first_cmd_struct = node;
+		if (shell->commands == NULL)
+			shell->commands = node;
 		initialize_command_struct(node);
-		if (!commands)
-			commands = node;
+		if (!commands_2)
+			commands_2 = node;
 		else
-			addback_commandstruct(&commands, node);
+			addback_commandstruct(&commands_2, node);
 		node_amount--;
 	}
-	return (commands);
+	return (commands_2);
 }
 
 /**
@@ -214,7 +214,7 @@ void	free_commands(t_commands **command_struct)
 		free(node);
 		node = tmp;
 	}
-	get_env_struct()->first_cmd_struct = NULL;
+	get_env_struct()->commands = NULL;
 	*command_struct = NULL;
 }
 

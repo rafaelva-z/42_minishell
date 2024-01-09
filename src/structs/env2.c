@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:22:08 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/06 20:00:50 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:07:33 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief frees everything
 */
-void	destroy_env(void)
+void	free_env(void)
 {
 	t_envp	*shell;
 
@@ -23,7 +23,7 @@ void	destroy_env(void)
 	if (shell->vars)
 		ft_lstclear(&shell->vars, free);
 	if (shell->env_array)
-		destroy_env_array();
+		free_env_array();
 	if (shell->cursor)
 		free (shell->cursor);
 }

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:06:56 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 11:52:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 18:07:33 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_envp
 	t_env_var			*vars;											//  pointer to var_list
 	char				**env_array;									//	array with env
 	int					exit_status;
-	t_commands			*first_cmd_struct;								//Pointer to the struct of fist command in the pipeline
+	t_commands			*commands;								//Pointer to the struct of fist command in the pipeline
 	char				*cursor;
 	int					nbr_cmds;
 	char				**tokens;
@@ -76,11 +76,11 @@ void			free_commands(t_commands **command_struct);
 
 //	env.c
 void			init_env(char **envp);
-void			destroy_env(void);
+void			free_env(void);
 t_env_var		*get_env_var(const char *str);
 char			*get_env_var_value(const char *str);
 char			**create_env_array(void);
-void			destroy_env_array(void);
+void			free_env_array(void);
 
 // redirections.c
 

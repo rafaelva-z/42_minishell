@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/09 15:48:43 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 18:02:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 		free (s);
 	close(fd[0]);
 	close(fd[1]);
-	destroy_all(NULL, NULL, 0);
+	free_and_exit(NULL, NULL, 0);
 }
 
 /*
@@ -81,7 +81,7 @@ void	here_doc_manager(void)
 	t_commands	*current;
 
 	shell = get_env_struct();
-	current = shell->first_cmd_struct;
+	current = shell->commands;
 	while (current && g_signal == 0)
 	{
 		if (current->redirects)

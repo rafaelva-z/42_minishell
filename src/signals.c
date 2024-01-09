@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 15:17:17 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 20:58:14 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ void	set_signals(int process)
 	sigemptyset(&sig_int.sa_mask);
 	sigemptyset(&sig_quit.sa_mask);
 	if (process == HNDLR_MAIN)
+	{
 		sig_int.sa_handler = sighandler_main;
+		g_signal = 0;
+	}
 	else if (process == HNDLR_CHILD_HD)
 		sig_int.sa_handler = sighandler_child_heredoc;
 	else if (process == HNDLR_LOOP)

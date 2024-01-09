@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:05:22 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 17:05:14 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/09 21:34:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,13 @@ char	*message_joiner(int nbr, ...)
 		str = ft_strjoin_free(str, va_arg(arg, char *), 1);
 	va_end(arg);
 	return (str);	
+}
+
+void	display_error(char *error_msg)
+{
+	if (error_msg)
+	{
+		ft_putstr_fd(error_msg, 2);
+		ft_putstr_fd("\n", 1);
+	}
 }

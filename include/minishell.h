@@ -33,12 +33,17 @@
 # define DQUOTE		'\"'
 # define SQUOTE		'\''
 
-// Error handling
+// Exit Status
 
-# define OP_N_PERM 1
+# define ES_OP_N_PERM 1
 # define ES_PIPE 4
-# define K_N_AVAIL 126
-# define CMD_N_FOUND 127
+# define ES_K_N_AVAIL 126
+# define ES_CMD_N_FOUND 127
+
+// Error Messages
+
+# define ERR_QUOTES	"error: quotes open" 
+# define ERR_RDIR "-minishell: syntax error near unexpected token 'insert token?'"
 
 extern int	g_signal;
 
@@ -79,12 +84,16 @@ void		set_signals(int process);
 void		cd(char **cmds);
 void		echo(char **prompt);
 void		print_env(void);
-void		exit_shell(t_exec *exec);
 void		export(char **cmds);
 void		set_env_var(const char *name, const char *value);
 void		export_sort_print(void);
 void		pwd(void);
 void		unset(char **cmds);
+
+//	free_memory.c
+
+void		free_matrix_and_commands(void);
+void		free_and_exit(t_exec *exec, char *message, int exit_status);
 
 //	utils.c
 
@@ -107,8 +116,8 @@ int			quote_check(const char *str);
 
 //	prompt_cleaner.c
 
-char		*prompt_cleaner(const char *prompt);
-char		*add_spaces_redirections(char *prompt);
+int			prompt_cleaner(char **prompt);
+void		add_spaces_redirections(char **prompt);
 
 // redir_check.c
 
@@ -150,11 +159,10 @@ void		redirect(t_exec *exec, t_commands *cmd);
 // exec_utils.c
 void		builtin_exec_child(t_exec *exec, t_commands *cmd);
 int			builtin_exec_parent(t_exec *exec, t_commands *cmd);
-void		exec_destroy(t_exec *exec);
+void		free_exec(t_exec *exec);
 
 // destroyer
-void		destroy_all(t_exec *exec, char *message, int exit_status);
-void		desplay_error(char *error_msg);
+void		display_error(char *error_msg);
 
 // error_handling
 
