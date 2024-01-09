@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/06 22:06:54 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/09 12:43:28 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,25 @@ void	echo(char **prompt)
 {
 	int	nl;
 	int	i;
-	int	tok_nbr;
+	int	token_nbr;
 
 	nl = 0;
 	i = -1;
-	tok_nbr = 0;
-	while (prompt[tok_nbr])
-		tok_nbr++;
+	token_nbr = 0;
+	if (!prompt || !*prompt)
+		return;
+	while (prompt[token_nbr])
+		token_nbr++;
 	while (prompt[++i] && is_flag(prompt[i]) == 0)
 		nl = 1;
 	if (is_flag(prompt[i]) == 0)
 		return ;
-	while (i < tok_nbr - 1)
+	while (i < token_nbr - 1)
 	{
 		ft_printf("%s ", prompt[i]);
 		i++;
 	}
-	if (i == tok_nbr - 1)
+	if (i == token_nbr - 1)
 		ft_printf("%s", prompt[i]);
 	if (nl == 0)
 		printf("\n");

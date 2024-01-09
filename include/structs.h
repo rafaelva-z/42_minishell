@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:06:56 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 20:18:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 11:52:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_envp
 	t_commands			*first_cmd_struct;								//Pointer to the struct of fist command in the pipeline
 	char				*cursor;
 	int					nbr_cmds;
+	char				**tokens;
 	t_env_var			*(*get)(const char *name);						//  (F) get env var struct 
 	char				**(*make_array)(void);							//  (F) create env var array
 	char				*(*get_value)(const char *name);				//  (F) get env var value

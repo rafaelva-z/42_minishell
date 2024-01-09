@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/07 18:22:48 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/09 15:42:09 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,14 +86,14 @@ re: fclean all
 	@echo "$(TAG) Recompiling."
 	@make -C $(LIBFT_PATH) re
 
-run: re
+run: $(NAME)
 	@clear
 	./$(NAME)
 
 readline.supp:
 	wget https://raw.githubusercontent.com/benjaminbrassart/minishell/master/readline.supp
 
-runvg: re readline.supp
-	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=readline.supp ./$(NAME)
+runvg: $(NAME) readline.supp
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --trace-children=yes --suppressions=readline.supp ./$(NAME)
 
 .PHONY: all clean fclean re

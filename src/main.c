@@ -148,7 +148,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	char		*prompt;
 	t_commands	*commands;
-	char		**tokens;
 	t_envp		*shell;
 
 	(void)argv;
@@ -188,16 +187,21 @@ int	main(int argc, char **argv, char **envp)
 				continue ;
 			}
 			commands = get_command_linkedlst(prompt);
-			tokens = tokenizer(prompt);
+			shell->tokens = tokenizer(prompt);
 			if (prompt)
 				free(prompt);
-			add_redirections(&commands, tokens);
-			add_commands(&commands, tokens);
+			add_redirections(&commands, shell->tokens);
+			add_commands(&commands, shell->tokens);
 			//print_commands_redirects(commands);
 			here_doc_manager();
 			process_generator();
-			matrix_deleter(tokens);
-			free_commands(&commands);
+			if (shell->tokens)
+			{
+				matrix_deleter(shell->tokens);
+				shell->tokens = NULL;
+			}
+			if (commands)
+				free_commands(&commands);	
 		}
 	}
 	exit_shell(NULL);

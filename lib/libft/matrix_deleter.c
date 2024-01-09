@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix_deleter.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 21:04:04 by fda-estr          #+#    #+#             */
-/*   Updated: 2023/11/21 19:10:38 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:12:38 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ void	matrix_deleter(char **mtx)
 		return ;
 	while (mtx[i])
 	{
-		if (mtx[i])
-			free (mtx[i]);
-		mtx[i] = NULL;
-		i++;
+		free (mtx[i]);
+		mtx[i++] = NULL;
 	}
 	free (mtx[i]);
 	mtx[i] = NULL;

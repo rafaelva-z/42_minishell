@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/08 19:16:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 15:17:17 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	sighandler_loop(int signal) // inside LOOP
 {
 	(void)signal;
 	g_signal = SIGINT;
-	rl_on_new_line(); // HDOC
+	//write(1, "\n", 1);
 	return ;
 }
 

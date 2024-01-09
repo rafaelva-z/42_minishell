@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 22:30:35 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 15:11:33 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 12:20:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	prompt_neutralizer(char *s)
 *	@brief Removes all marked quotes
 *	@param token pointer to the token
 */
-static char	*unquoter(char *token)
+static void	unquoter(char **token)
 {
 	int		nbr_quotes;
 	int		i;
@@ -66,26 +66,26 @@ static char	*unquoter(char *token)
 
 	nbr_quotes = 0;
 	i = -1;
-	while (token[++i])
+	while ((*token)[++i])
 	{
-		if (token[i] == SINGQ || token[i] == DOUBQ)
+		if ((*token)[i] == SINGQ || (*token)[i] == DOUBQ)
 			nbr_quotes++;
 	}
-	prod = malloc(ft_strlen(token) - nbr_quotes + 1);
+	prod = malloc(ft_strlen(*token) - nbr_quotes + 1);
 	i = -1;
 	j = 0;
-	while (token[++i])
+	while ((*token)[++i])
 	{
-		if (token[i] == SINGQ || token[i] == DOUBQ)
+		if ((*token)[i] == SINGQ || (*token)[i] == DOUBQ)
 		{
 			j++;
 			continue ;
 		}
-		prod[i - j] = token[i];
+		prod[i - j] = (*token)[i];
 	}
 	prod[i - j] = 0;
-	free(token);
-	return (prod);
+	free(*token);
+	*token = prod;
 }
 
 /**
@@ -102,7 +102,7 @@ char	**tokenizer(char *s)
 	tokens = ft_split(s, SPC);
 	while (tokens[++i])
 	{
-		tokens[i] = unquoter(tokens[i]);
+		unquoter(&tokens[i]);
 		tokens[i][0] = what_redir_token(tokens[i]);
 	}
 	return (tokens);

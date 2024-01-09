@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroyer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/06 19:36:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/07 17:06:17 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/09 14:48:30 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void    destroy_all(t_exec *exec, char *message, int exit_status)
 	shell->exit_status = exit_status;
 	if (exec)
 		exec_destroy(exec);
+	if (shell->tokens)
+	{
+		matrix_deleter(shell->tokens);
+		shell->tokens = NULL;
+	}
 	if (shell->first_cmd_struct)
 		free_commands(&shell->first_cmd_struct);
 	if (shell)

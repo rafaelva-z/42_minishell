@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/06 19:45:53 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 12:12:56 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,15 @@
 */
 void	set_env_var(const char *name, const char *value)
 {
-	t_envp		*shell;
 	t_env_var	*current;
 	char		*var_name;
 
 	if (!name)
 		return ;
-	shell = get_env_struct();
 	current = get_env_var(name);
 	var_name = ft_strjoin(name, "=");
 	if (!current)
-		ft_lstadd_back(&shell->vars, ft_lstnew(ft_strjoin(var_name, value)));
+		ft_lstadd_back(&get_env_struct()->vars, ft_lstnew(ft_strjoin(var_name, value)));
 	else
 	{
 		free(current->content);
