@@ -68,108 +68,60 @@ static void	get_prompt_cursor(void)
 // 	}
 // }
 
-// void	expand(char *)
-// {
-
-// }
-
-// void	expansions(char *prompt)
-// {
-// 	int		i;
-// 	char	*expanded_str;
-
-// 	i = -1;
-// 	expanded_str = NULL;
-// 	while (prompt[++i] && prompt[i] != '$' && is_inside_quotes(prompt, i) != 2)
-// 	{
-// 		if (prompt[i + 1] == '?')
-// 		{
-// 			expanded_str = ft_itoa(get_env_struct()->exit_status);
-// 			break ;
-// 		}
-// 		else if (!(prompt[i + 1]))
-		
-// 	}
-// 	if (expanded_str)
-// 		expand(prompt[i]);
-// 	if (prompt[i])
-// 		expansions(&prompt[i]);
-// }
-
 int	prompt_processing(char **prompt)
 {
-	char	*new_prompt;
-	char	*final_prompt;
-
 	if (quote_check(*prompt))
 	{
-		perror("error: quotes open\n"); // Error
 		free(*prompt);
-		*prompt = NULL;
-		return (1);
+		display_error(ERR_QUOTES);
+		return (-1);
 	}
-	new_prompt = prompt_cleaner(*prompt);
-	if (!new_prompt)
-	{
-		perror("error: prompt cleaner error\n"); // Error
-		free(*prompt);
-		*prompt = NULL;
-		return (1);
-	}
-	if (redirection_check(new_prompt))
-	{
-		perror("error: redirect error");
-		free(*prompt);
-		*prompt = NULL;
-		free(new_prompt);
-		return (1);
-	}
-	final_prompt = add_spaces_redirections(new_prompt);
-	if (!final_prompt)
-	{
-		perror("error: space redirections error");
-		free(*prompt);
-		*prompt = NULL;
-		free(new_prompt);
-		return (1);
-	}
-	if (final_prompt != new_prompt)
+	prompt_cleaner(prompt);
+	if (redirection_check(*prompt))
 	{
 		free(*prompt);
-		free(new_prompt);
-		*prompt = final_prompt;
-		return (0);
+		display_error(ERR_RDIR);
+		return (-2);
 	}
-	free(new_prompt);
+	add_spaces_redirections(prompt);
 	return (0);
 }
 
-int	main(int argc, char **argv, char **envp)
+static void	get_prompt(char **prompt)
 {
-	char		*prompt;
-	t_commands	*commands;
-	char		**tokens;
-	t_envp		*shell;
+	t_envp *shell;
 
-	(void)argv;
-	if (argc != 1)
-		exit(0);
-	prompt = NULL;
-	commands = NULL;
-	init_env(envp);
-	get_prompt_cursor();
 	shell = get_env_struct();
-	set_shlvl();
+	set_signals(HNDLR_MAIN);
+	if (shell->cursor)
+		*prompt = readline(shell->cursor);
+	else
+		*prompt = readline(CURSOR);
+	if (*prompt && **prompt)
+		add_history(*prompt);
+}
+
+static void	create_commands_and_redirections_struct(char **prompt)
+{
+	t_envp *shell;
+
+	shell = get_env_struct();
+	shell->commands = get_command_linkedlst(*prompt);
+	shell->tokens = tokenizer(*prompt);
+	free(*prompt);
+	add_redirections(&shell->commands, shell->tokens);
+	add_commands(&shell->commands, shell->tokens);
+}
+
+static void	shell_loop()
+{
+	t_envp	*shell;
+	char	*prompt;
+
+	shell = get_env_struct();
 	while (1)
 	{
-		g_signal = 0;
-		set_signals(HNDLR_MAIN);
-		if (shell->cursor)
-			prompt = readline(shell->cursor);
-		else
-			prompt = readline(CURSOR);
-		if (prompt && *prompt)
-			add_history(prompt);
+		get_prompt(&prompt);
 		if (!prompt)
 			break ;
 		else
@@ -180,25 +132,24 @@ int	main(int argc, char **argv, char **envp)
 				free(prompt);
 				continue ;
 			}
-			prompt_processing(&prompt);
-			if (!prompt)
-			{
-				printf("error: prompt processing error\n"); // Error
-				free (prompt);
+			if (prompt_processing(&prompt))
 				continue ;
-			}
-			commands = get_command_linkedlst(prompt);
-			tokens = tokenizer(prompt);
-			if (prompt)
-				free(prompt);
-			add_redirections(&commands, tokens);
-			add_commands(&commands, tokens);
-			//print_commands_redirects(commands);
+			create_commands_and_redirections_struct(&prompt);
 			here_doc_manager();
 			process_generator();
-			matrix_deleter(tokens);
-			free_commands(&commands);
+			free_matrix_and_commands();
 		}
 	}
-	exit_shell(NULL);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argv;
+	if (argc != 1)
+		exit(0);
+	init_env(envp);
+	get_prompt_cursor();
+	set_shlvl();
+	shell_loop();
+	free_and_exit(NULL, NULL, 0);
 }

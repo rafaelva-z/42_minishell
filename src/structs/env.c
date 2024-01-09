@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 17:35:44 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 20:16:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 18:09:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	**create_env_array(void)
 	i = 0;
 	env_len = ft_lstsize(shell->vars);
 	if (shell->env_array)
-		destroy_env_array();
+		free_env_array();
 	shell->env_array = malloc((env_len + 1) * sizeof(char *));
 	if (!shell->env_array)
 		exit(0);
@@ -68,7 +68,7 @@ char	**create_env_array(void)
 	return (shell->env_array);
 }
 
-void	destroy_env_array(void)
+void	free_env_array(void)
 {
 	t_envp	*shell;
 	int		i;
@@ -93,8 +93,9 @@ void	init_env(char **envp)
 	shell = get_env_struct();
 	shell->cursor = NULL;
 	shell->env_array = NULL;
+	shell->tokens = NULL;
 	shell->exit_status = 0;
-	shell->first_cmd_struct = NULL;
+	shell->commands = NULL;
 	shell->nbr_cmds = 0;
 	shell->make_array = create_env_array;
 	shell->get = get_env_var;
@@ -103,7 +104,7 @@ void	init_env(char **envp)
 	//shell->unset = unset;
 	shell->print = print_env;
 	shell->print_alpha = export_sort_print;
-	shell->destroy = destroy_env;
+	shell->destroy = free_env;
 
 	create_env_list(envp);
 }
