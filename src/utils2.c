@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:41:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 15:36:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 12:20:11 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,20 @@ int	what_redir_token(char *str)
 	{
 		if (str[0] != str[1])
 		{
-			if (*str == '<' * -1)
+			if (*str == MINOR)
 				return (RDIR_IN);
-			else if (*str == '>' * -1)
+			else if (*str == GREAT)
 				return (RDIR_OUT);
-			else if (*str == '|' * -1)
+			else if (*str == PIPE)
 				return (RDIR_PIPE);
 		}
 		else
 		{
-			if (*str == '<' * -1)
+			if (*str == MINOR)
 				return (RDIR_HDOC);
-			else if (*str == '>' * -1)
+			else if (*str == GREAT)
 				return (RDIR_APP);
-			else if (*str == '|' * -1)
+			else if (*str == PIPE)
 				return (RDIR_DPIPE);
 		}
 	}
@@ -80,11 +80,9 @@ int	what_redir_token(char *str)
 */
 void	set_shlvl()
 {
-	// long int		i;		set but not used
 	int		shlvl;
 	char	*shlvl_val;
 	
-	// i = 0;
 	shlvl_val = get_env_var_value("SHLVL");
 	if (shlvl_val && contains_only_nbr(shlvl_val))
 	{

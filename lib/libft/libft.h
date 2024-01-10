@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/08 16:31:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/06 21:28:25 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 16:36:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	ft_adress(unsigned long int ad, int *len);
 
 //	Extra Functions
 
-void	matrix_deleter(char **mtx);
+void	matrix_deleter(char ***mtx);
 char	*ft_strjoin_free(char const *s1, char const *s2, int tofree);
 
 #endif

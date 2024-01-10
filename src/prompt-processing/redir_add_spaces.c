@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:32:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 15:11:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 19:19:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	space_toadd_count(char *prompt)
  * @brief	This function was made to make add_spaces_redirections shorter
  * 			(norminette)
 */
-static void	add_spaces_redirections_while(char **prompt,
+static void	add_spaces_redirections_loop(char **prompt,
 				char **new_prompt, int *i, int *j)
 {
 	while ((*prompt)[*i])
@@ -90,22 +90,23 @@ static void	add_spaces_redirections_while(char **prompt,
 /**
  * @brief	adds a space between redirections and other words if there isn't one
 */
-char	*add_spaces_redirections(char *prompt)
+void	add_spaces_redirections(char **prompt)
 {
 	int		space_count;
 	int		i;
 	int		j;
 	char	*new_prompt;
 
-	space_count = space_toadd_count(prompt);
+	space_count = space_toadd_count(*prompt);
 	if (space_count == 0)
-		return (prompt);
+		return ;
 	i = 0;
 	j = 0;
-	new_prompt = malloc(ft_strlen(prompt) + space_count + 1);
+	new_prompt = malloc(ft_strlen(*prompt) + space_count + 1);
 	if (!new_prompt)
-		return (NULL);
-	add_spaces_redirections_while(&prompt, &new_prompt, &i, &j);
+		free_and_exit(NULL, "MEMORY ERROR", -999);
+	add_spaces_redirections_loop(prompt, &new_prompt, &i, &j);
 	new_prompt[j] = '\0';
-	return (new_prompt);
+	free(*prompt);
+	*prompt = new_prompt;
 }

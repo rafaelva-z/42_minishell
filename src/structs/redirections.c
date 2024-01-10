@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:00:15 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/07 15:58:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/09 16:10:22 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	free_redirections(t_redirection **redirections)
 	t_redirection	*tmp;
 	t_redirection	*node;
 
-	if (!redirections)
+	if (!redirections || !*redirections)
 		return ;
 	node = *redirections;
 	while (node)
