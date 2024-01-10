@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/09 18:25:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 20:00:49 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ static void	wait_loop(t_exec *exec)
 	i = -1;
 	while (++i < exec->envp->nbr_cmds)
 		waitpid(exec->pid[i], &(exec->envp->exit_status), 0);
+	if (WIFEXITED(exec->envp->exit_status))
+		exec->envp->exit_status = WEXITSTATUS(exec->envp->exit_status);
 }
 
 /*

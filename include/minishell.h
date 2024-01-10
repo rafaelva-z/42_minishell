@@ -25,20 +25,18 @@
 # include <readline/history.h>
 # include <stdbool.h>
 
-# define STDIN 0
-# define STDOUT 1
-# define STDERR 2
-
 # define CURSOR		"@minishell>"
 # define DQUOTE		'\"'
 # define SQUOTE		'\''
 
 // Exit Status
 
-# define ES_OP_N_PERM 1
-# define ES_PIPE 4
-# define ES_K_N_AVAIL 126
-# define ES_CMD_N_FOUND 127
+# define ES_OP_N_PERM		1
+# define ES_RDIR_TOKEN 		2
+# define ES_PIPE			4
+# define ES_K_N_AVAIL		126
+# define ES_CMD_N_FOUND		127
+
 
 // Error Messages
 
@@ -57,27 +55,32 @@ enum e_signalhandlers
 enum e_redir
 {
 	NONE,
-	RDIR_IN = -1,
-	RDIR_HDOC = -2,
-	RDIR_OUT = -3,
-	RDIR_APP = -4,
-	RDIR_PIPE = -5,
-	RDIR_DPIPE = -6
+	RDIR_IN		=	-1,
+	RDIR_HDOC	=	-2,
+	RDIR_OUT	=	-3,
+	RDIR_APP	=	-4,
+	RDIR_PIPE	=	-5,
+	RDIR_DPIPE	=	-6
 };
 
 enum e_negative_char_prompt
 {
-	GREAT = -62,
-	MINOR = -60,
-	PIPE = -124,
-	SPC = -32,
-	SINGQ = -39,
-	DOUBQ = -34,
+	GREAT		=	-62,
+	MINOR		=	-60,
+	PIPE		=	-124,
+	SPC			=	-32,
+	SINGQ		=	-39,
+	DOUBQ		=	-34,
 };
 
 
 
 void		set_signals(int process);
+
+
+//
+
+void		expansion_manager(char **prompt);
 
 //	Built-ins
 

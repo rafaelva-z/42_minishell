@@ -74,6 +74,7 @@ int	prompt_processing(char **prompt)
 	{
 		free(*prompt);
 		display_error(ERR_QUOTES);
+		get_env_struct()->exit_status = ES_OP_N_PERM;
 		return (-1);
 	}
 	prompt_cleaner(prompt);
@@ -81,6 +82,7 @@ int	prompt_processing(char **prompt)
 	{
 		free(*prompt);
 		display_error(ERR_RDIR);
+		get_env_struct()->exit_status = ES_OP_N_PERM;
 		return (-2);
 	}
 	add_spaces_redirections(prompt);
@@ -134,6 +136,7 @@ static void	shell_loop()
 			}
 			if (prompt_processing(&prompt))
 				continue ;
+			expansion_manager(&prompt);
 			create_commands_and_redirections_struct(&prompt);
 			here_doc_manager();
 			process_generator();
