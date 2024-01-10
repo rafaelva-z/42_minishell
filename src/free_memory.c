@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:55:19 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/10 20:23:54 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 21:22:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void    free_and_exit(t_exec *exec, char *message, int exit_status)
 	
 	if (message)
 	{
-		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(message, 2);
 		free (message);
 	}

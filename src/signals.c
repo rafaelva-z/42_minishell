@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 20:58:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 20:43:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void	sighandler_main(int signal) // MAIN
 	if (signal == SIGINT)
 	{
 		g_signal = 0;
+		get_env_struct()->exit_status = ES_SIGINT;
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -35,18 +36,17 @@ static void	sighandler_main(int signal) // MAIN
 
 static void	sighandler_child_heredoc(int signal) // CHILD
 {
-	(void)signal;
-	//write(STDOUT_FILENO, "\n", 1);
-	close(STDIN_FILENO);
-	g_signal = SIGINT;
+	if (signal == SIGINT)
+	{
+		g_signal = SIGINT;
+		close(STDIN_FILENO);
+	}
 }
 
 static void	sighandler_loop(int signal) // inside LOOP 
 {
-	(void)signal;
-	g_signal = SIGINT;
-	//write(1, "\n", 1);
-	return ;
+	if (signal == SIGINT)
+		g_signal = SIGINT;
 }
 
 /**
@@ -63,8 +63,8 @@ void	set_signals(int process)
 	sigemptyset(&sig_quit.sa_mask);
 	if (process == HNDLR_MAIN)
 	{
-		sig_int.sa_handler = sighandler_main;
 		g_signal = 0;
+		sig_int.sa_handler = sighandler_main;
 	}
 	else if (process == HNDLR_CHILD_HD)
 		sig_int.sa_handler = sighandler_child_heredoc;

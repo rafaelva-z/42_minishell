@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/09 18:02:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 21:29:22 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static void	here_doc_check(t_commands *commands)
 	pid_t			pid;
 	t_redirection	*redir;
 
-	set_signals(HNDLR_LOOP); 	// apparently redundant, already done 
-								// after prompt is valid on main
 	redir = commands->redirects;
 	while (redir && g_signal == 0)
 	{
@@ -60,8 +58,8 @@ static void	here_doc_check(t_commands *commands)
 			continue ;
 		}
 		to_close(commands->hd_fd);
-		if (pipe(fd) == -1) // changed from 1 to -1
-			ft_printf("Error\n");	//	Error treatment!
+		if (pipe(fd) == -1)
+			free_and_exit(NULL, ft_strdup("Pipe error\n"), ES_PIPE);
 		pid = fork();
 		if (pid == 0)
 			here_doc(redir, fd);

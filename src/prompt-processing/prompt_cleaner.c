@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 19:18:30 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 21:32:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*space_trim(const char *prompt)
 	j = 0;
 	tmp = ft_calloc(ft_strlen(prompt) + 1, 1);
 	if (!tmp)
-		free_and_exit(NULL, "MEMORY ERROR", -999);
+		free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
 	while (prompt[i])
 	{
 		while (prompt[i] && prompt[i] != DQUOTE && prompt[i] != SQUOTE
@@ -65,7 +65,7 @@ int	prompt_cleaner(char **prompt)
 	free(spc_trim);
 	free(*prompt);
 	if (!trim)
-		free_and_exit(NULL, "MEMORY ERROR", -999);
+		free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
 	*prompt = trim;
 	return (0);
 }

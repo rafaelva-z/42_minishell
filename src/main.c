@@ -123,9 +123,10 @@ static void	shell_loop()
 	shell = get_env_struct();
 	while (1)
 	{
+		set_signals(HNDLR_MAIN);
 		get_prompt(&prompt);
 		if (!prompt)
-			break ;
+			free_and_exit(NULL, ft_strdup("exit\n"), 0);
 		else
 		{
 			set_signals(HNDLR_LOOP);

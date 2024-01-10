@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/09 18:11:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 20:37:45 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	builtin_exec_parent(t_exec *exec, t_commands *commands)
 		else if (ft_strncmp("unset", commands->cmds[0], 6) == 0)
 			unset(&commands->cmds[1]);
 		else if (ft_strncmp("exit", commands->cmds[0], 5) == 0)
+		{
+			printf("exit\n");
 			free_and_exit(exec, NULL, 0);
+		}
 		else
 			return (0);
 	}

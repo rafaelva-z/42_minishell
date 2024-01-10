@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/05 19:16:37 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 21:35:17 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ void	unset(char **cmds)
 	{
 		var_name = ft_strjoin(cmds[i], "=");
 		if (!var_name)
-			return ; // Memory error
+			free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
 		if (!var_name_check(var_name))
 		{
-			perror("unset: not a valid identifier");
 			free(var_name);
 			return ;
 		}

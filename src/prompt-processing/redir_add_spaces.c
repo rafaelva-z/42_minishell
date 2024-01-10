@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:32:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 19:19:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 21:32:57 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	add_spaces_redirections(char **prompt)
 	j = 0;
 	new_prompt = malloc(ft_strlen(*prompt) + space_count + 1);
 	if (!new_prompt)
-		free_and_exit(NULL, "MEMORY ERROR", -999);
+		free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
 	add_spaces_redirections_loop(prompt, &new_prompt, &i, &j);
 	new_prompt[j] = '\0';
 	free(*prompt);

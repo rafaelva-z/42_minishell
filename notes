@@ -2,9 +2,6 @@
 	==================|| N O T E S ||==================
 	===================================================
 
-=>	The space_function should also substitute tabs by spaces
-	when not inside quotes.
-
 =>	What should be used on here_doc: gnl or readline?
 
 =>	To do: Error handling
@@ -21,11 +18,8 @@
 =>	the exit status that is considered is the one from the last
 	command of the pipeline
 
-
-
 	==================|| T O   D O ||==================
 
-=>	expansao
 =>	exit status
 =>	error handling
 
@@ -35,9 +29,6 @@
 =>	exit status
 	se não hover argumentos suficientes nas redireções ou pipes exit status é 2 
 	se for uma pasta ou não houver permissão é 1
-
-=>  Makefile esta a dar relink
-
 
     ================| T O   S O L V E |================
 
@@ -50,7 +41,9 @@
 =>	corrigir quando a prompt eh so redirections o prompt da na mesma um
 	comando
 
-	==========| F A I L E D    P R O M P T S|==========
+=>  depois de fazer unset do home deve dar uma mensagem de erro
+	ao fazer apenas "cd"
 
-=>	echo HI >    > out		|->|			bash: syntax error near
-	unexpected token `>'
+=>	ctrl c + ctrl d Da um \n a mais? 
+
+	==========| F A I L E D    P R O M P T S|==========

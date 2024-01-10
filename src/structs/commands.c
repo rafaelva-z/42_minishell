@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 19:11:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 17:44:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 21:37:01 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ static t_commands	*create_command_linkedlist(int node_amount)
 	{
 		node = malloc(sizeof(t_commands));
 		if (!node)
-		{
-			perror("MEMORY ERROR");
-			exit(-10000);
-		}
+			free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
 		if (shell->commands == NULL)
 			shell->commands = node;
 		initialize_command_struct(node);
@@ -103,10 +100,7 @@ t_commands	*get_command_linkedlst(char *prompt)
 	shell->nbr_cmds = get_pipe_count(prompt) + 1;
 	commands = create_command_linkedlist(shell->nbr_cmds);
 	if (!commands)
-	{
-		perror("MEMORY ERROR");
-		exit(-10000);
-	}
+		free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
 	return (commands);
 }
 
@@ -153,10 +147,7 @@ void	add_commands(t_commands **command_struct, char **tokens)
 		command_node->cmds = malloc((count_commands(tokens, pipe_count++) + 1)
 				* sizeof(char *));
 		if (!command_node->cmds)
-		{
-			perror("MEMORY ERROR");
-			exit(-10000);
-		}
+			free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
 		j = 0;
 		while (tokens[++i] && tokens[i][0] != RDIR_PIPE)
 		{

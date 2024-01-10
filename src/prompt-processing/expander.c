@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/10 20:27:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 21:17:19 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static int	expansion_check(char *prompt)
 	return (1);
 }
 
+//coco
 
 char	*expansions(char *prompt, char *first_prompt)
 {
