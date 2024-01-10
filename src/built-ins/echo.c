@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/09 12:43:28 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/10 19:35:06 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ void	echo(char **prompt)
 	i = -1;
 	token_nbr = 0;
 	if (!prompt || !*prompt)
+	{
+		printf("\n");
 		return;
+	}
 	while (prompt[token_nbr])
 		token_nbr++;
 	while (prompt[++i] && is_flag(prompt[i]) == 0)
@@ -57,10 +60,7 @@ void	echo(char **prompt)
 	if (is_flag(prompt[i]) == 0)
 		return ;
 	while (i < token_nbr - 1)
-	{
-		ft_printf("%s ", prompt[i]);
-		i++;
-	}
+		ft_printf("%s ", prompt[i++]);
 	if (i == token_nbr - 1)
 		ft_printf("%s", prompt[i]);
 	if (nl == 0)

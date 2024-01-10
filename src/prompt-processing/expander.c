@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/10 16:33:26 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/10 20:27:20 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-static char *key_word(char *s)
+char *key_word(char *s)
 {
 	int		i;
 	char	*key_wrd;
@@ -28,7 +28,7 @@ static char *key_word(char *s)
 	return (key_wrd);
 }
 
-static char	*expand(char *s)
+char	*expand(char *s)
 {
 	char	*key_wrd;
 	char	*var;
@@ -45,6 +45,49 @@ static char	*expand(char *s)
 	return (ft_strdup(var));
 }
 
+static void	expansion_prep(char **prompt)
+{
+	int		i;
+	int		neg_len;
+	char	*prod;
+
+	i = -1;
+	neg_len = 0;
+	if (!prompt || !*prompt || !**prompt)
+		return ;
+	while ((*prompt)[++i + 1])
+	{
+		if ((*prompt)[i] == '$' && ft_isdigit((*prompt)[i + 1]))
+		{
+			(*prompt)[i] = -1;
+			(*prompt)[i + 1] = -1;
+			neg_len += 2;
+		}
+	}
+	prod = malloc(ft_strlen(*prompt) - neg_len + 1);
+	i = -1;
+	neg_len = 0;
+	while ((*prompt)[++i])
+	{
+		prod[i - neg_len] = (*prompt)[i];
+		if ((*prompt)[i] == -1)
+			neg_len++;
+	}
+	prod[i - neg_len] = 0;
+	free (*prompt);
+	*prompt = prod;
+}
+
+static int	expansion_check(char *prompt)
+{
+	if (*prompt != '$')
+		return (1);
+	if (ft_isalpha(*(++prompt)) || *prompt == '_' || *prompt == '?')
+		return (0);
+	return (1);
+}
+
+
 char	*expansions(char *prompt, char *first_prompt)
 {
 	int		i;
@@ -53,14 +96,16 @@ char	*expansions(char *prompt, char *first_prompt)
 
 	i = 0;
 	expanded_str = NULL;
-	while (prompt[i] && (prompt[i] != '$' || is_inside_quotes(prompt, i) == 1))
+	if (!prompt || !*prompt)
+		return (prompt);
+	while (prompt[i] && (expansion_check(&prompt[i]) || is_inside_quotes(prompt, i) == 1))
 		i++;
 	if (!prompt[i] || !(prompt[i + 1]))
 		return (prompt);
 	if (prompt[i + 1] == '?')
 	{
 		prompt[i] = 0;
-		expanded_str = ft_strjoin(prompt, ft_itoa(get_env_struct()->exit_status));
+		expanded_str = ft_strjoin_free(prompt, ft_itoa(get_env_struct()->exit_status), 2);
 		if (prompt == first_prompt)
 			free (prompt);
 		return (expanded_str);
@@ -69,12 +114,20 @@ char	*expansions(char *prompt, char *first_prompt)
 	expanded_str = ft_strjoin_free(prompt, expand(prompt + i + 1), 2);
 	while (prompt[++i] && prompt[i] != ' ' && prompt[i] != '\"')
 		;
+	if (!prompt[i])
+	{
+		if (prompt == first_prompt)
+			free (prompt);
+		return (expanded_str);
+	}
 	prod = ft_strjoin_free(expanded_str, expansions(prompt + i, first_prompt), 3);
-	free (prompt);
+	if (prompt == first_prompt)
+		free (prompt);
 	return (prod);
 }
 
-
-/*
-        dkvdnvdv \0PATH safaf $OTHER
-*/
+void	expansion_manager(char **prompt)
+{
+	expansion_prep(prompt);
+	*prompt = expansions(*prompt, *prompt);
+}
