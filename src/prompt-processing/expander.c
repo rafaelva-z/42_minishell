@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/10 21:17:19 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:46:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,16 @@ char	*expansions(char *prompt, char *first_prompt)
 	expanded_str = NULL;
 	if (!prompt || !*prompt)
 		return (prompt);
-	while (prompt[i] && (expansion_check(&prompt[i]) || is_inside_quotes(prompt, i) == 1))
+	while (prompt[i] && (expansion_check(&prompt[i])
+			|| is_inside_quotes(prompt, i) == 1))
 		i++;
 	if (!prompt[i] || !(prompt[i + 1]))
 		return (prompt);
 	if (prompt[i + 1] == '?')
 	{
 		prompt[i] = 0;
-		expanded_str = ft_strjoin_free(prompt, ft_itoa(get_env_struct()->exit_status), 2);
+		expanded_str = ft_strjoin_free(prompt,
+				ft_itoa(get_env_struct()->exit_status), 2);
 		if (prompt == first_prompt)
 			free (prompt);
 		return (expanded_str);
@@ -121,7 +123,8 @@ char	*expansions(char *prompt, char *first_prompt)
 			free (prompt);
 		return (expanded_str);
 	}
-	prod = ft_strjoin_free(expanded_str, expansions(prompt + i, first_prompt), 3);
+	prod = ft_strjoin_free(expanded_str,
+			expansions(prompt + i, first_prompt), 3);
 	if (prompt == first_prompt)
 		free (prompt);
 	return (prod);

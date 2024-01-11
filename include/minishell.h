@@ -24,6 +24,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdbool.h>
+# include <termios.h>
 
 # define CURSOR		"@minishell>"
 # define DQUOTE		'\"'
@@ -42,8 +43,8 @@
 
 // Error Messages
 
-# define ERR_QUOTES	"error: quotes open" 
-# define ERR_RDIR "-minishell: syntax error near unexpected token 'insert token?'"
+# define ERR_QUOTES		"error: quotes open" 
+# define ERR_RDIR		"syntax error near unexpected token 'insert token?'"
 
 extern int	g_signal;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/10 21:26:52 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:45:25 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 	{
 		if (cmd->write_fd > 2)
 			cmd->write_fd = to_close(cmd->write_fd);
-		cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_CREAT , S_IRUSR | S_IWUSR);
+		cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_CREAT,
+				S_IRUSR | S_IWUSR);
 		return ;
 	}
 	if (access(redir->key_wrd, W_OK) == -1)

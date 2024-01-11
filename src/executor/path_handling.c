@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/10 21:26:52 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:44:14 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ void	bin_finder(t_exec *exec)
 
 	if (!exec->envp->get_value("PATH"))
 	{
-		// printf("aqui\n");
 		exec->bin_dir = NULL;
 		return ;
 	}
-	// printf("nao era suporto vir parar aqui\n");
 	exec->bin_dir = ft_split(exec->envp->get_value("PATH"), ':');
 	if (!exec->bin_dir)
 		return ;

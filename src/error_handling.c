@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:05:22 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/09 21:34:44 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:53:14 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*message_joiner(int nbr, ...)
 	while (++i < nbr)
 		str = ft_strjoin_free(str, va_arg(arg, char *), 1);
 	va_end(arg);
-	return (str);	
+	return (str);
 }
 
 void	display_error(char *error_msg)

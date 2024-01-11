@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/10 20:43:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:54:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * 	CTRL + \ = SIGQUIT
  * 	CTRL + D = EOF
 **/
-static void	sighandler_main(int signal) // MAIN
+static void	sighandler_main(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -34,16 +34,17 @@ static void	sighandler_main(int signal) // MAIN
 	}
 }
 
-static void	sighandler_child_heredoc(int signal) // CHILD
+static void	sighandler_child_heredoc(int signal)
 {
 	if (signal == SIGINT)
 	{
 		g_signal = SIGINT;
+		rl_clear_signals();
 		close(STDIN_FILENO);
 	}
 }
 
-static void	sighandler_loop(int signal) // inside LOOP 
+static void	sighandler_loop(int signal)
 {
 	if (signal == SIGINT)
 		g_signal = SIGINT;
@@ -70,8 +71,6 @@ void	set_signals(int process)
 		sig_int.sa_handler = sighandler_child_heredoc;
 	else if (process == HNDLR_LOOP)
 		sig_int.sa_handler = sighandler_loop;
-	else if (process == 4)
-		sig_int.sa_handler = SIG_IGN;
 	sig_quit.sa_handler = SIG_IGN;
 	sig_int.sa_flags = 0;
 	sig_quit.sa_flags = 0;

@@ -30,6 +30,10 @@
 	se não hover argumentos suficientes nas redireções ou pipes exit status é 2 
 	se for uma pasta ou não houver permissão é 1
 
+=>	shlvl error message, fazer o join do valor quando é demasiado alto 
+
+=>	redirect token error message fazer join para dizer qual é o toke que causa o erro
+
     ================| T O   S O L V E |================
 
 =>  There's a problem with the cursor when you do a ctr + C during the
@@ -44,6 +48,6 @@
 =>  depois de fazer unset do home deve dar uma mensagem de erro
 	ao fazer apenas "cd"
 
-=>	ctrl c + ctrl d Da um \n a mais? 
+=>	ctrl c + ctrl d Da um \n a mais depois do exit? 
 
 	==========| F A I L E D    P R O M P T S|==========

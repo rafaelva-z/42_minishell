@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:55:19 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/10 21:22:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:53:27 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	free_matrix_and_commands()
+void	free_matrix_and_commands(void)
 {
-	t_envp *shell;
+	t_envp	*shell;
 
 	shell = get_env_struct();
 	if (shell->tokens)
@@ -23,10 +23,10 @@ void	free_matrix_and_commands()
 		free_commands(&shell->commands);
 }
 
-void    free_and_exit(t_exec *exec, char *message, int exit_status)
+void	free_and_exit(t_exec *exec, char *message, int exit_status)
 {
 	t_envp	*shell;
-	
+
 	if (message)
 	{
 		ft_putstr_fd(message, 2);

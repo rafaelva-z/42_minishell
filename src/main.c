@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scosta-j <scosta-j@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/07 15:33:14 by scosta-j          #+#    #+#             */
-/*   Updated: 2023/09/07 15:33:14 by scosta-j         ###   ########.fr       */
+/*   Created: 2024/01/11 01:38:40 by rvaz              #+#    #+#             */
+/*   Updated: 2024/01/11 01:38:40 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	prompt_processing(char **prompt)
 
 static void	get_prompt(char **prompt)
 {
-	t_envp *shell;
+	t_envp	*shell;
 
 	shell = get_env_struct();
 	set_signals(HNDLR_MAIN);
@@ -105,7 +105,7 @@ static void	get_prompt(char **prompt)
 
 static void	create_commands_and_redirections_struct(char **prompt)
 {
-	t_envp *shell;
+	t_envp	*shell;
 
 	shell = get_env_struct();
 	shell->commands = get_command_linkedlst(*prompt);
@@ -117,12 +117,14 @@ static void	create_commands_and_redirections_struct(char **prompt)
 
 static void	shell_loop()
 {
-	t_envp	*shell;
-	char	*prompt;
+	char			*prompt;
+	//struct termios	term;
 
-	shell = get_env_struct();
 	while (1)
 	{
+		//tcgetattr(STDIN_FILENO, &term);
+		if (g_signal == SIGINT)
+			write(1, "\n", 1);
 		set_signals(HNDLR_MAIN);
 		get_prompt(&prompt);
 		if (!prompt)
@@ -142,6 +144,7 @@ static void	shell_loop()
 			here_doc_manager();
 			process_generator();
 			free_matrix_and_commands();
+			//tcsetattr(STDIN_FILENO, TCSANOW, &term);
 		}
 	}
 }

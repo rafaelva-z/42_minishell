@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/10 21:35:17 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:43:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	unset(char **cmds)
 	{
 		var_name = ft_strjoin(cmds[i], "=");
 		if (!var_name)
-			free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
+			free_and_exit(NULL,
+				"minishell: memory alocation failed", ES_ALLOC_FAIL);
 		if (!var_name_check(var_name))
 		{
 			free(var_name);
