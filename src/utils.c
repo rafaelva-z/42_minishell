@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/06 21:53:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 01:53:41 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	contains_only_nbr(char *str)
 	while (str[++i])
 	{
 		if (str[0] == '-')
-			continue;
+			continue ;
 		if (!ft_isdigit(*str))
 			return (0);
 	}

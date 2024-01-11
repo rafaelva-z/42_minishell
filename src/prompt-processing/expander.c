@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/10 20:27:20 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 19:48:16 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ char *key_word(char *s)
 	char	*key_wrd;
 
 	i = 0;
-	while (s[i] && s[i] != 32 && s[i] != 34)
+	while (s[i] && s[i] != ' ' && s[i] != DQUOTE)
 		i++;
 	key_wrd = malloc(i + 1);
 	key_wrd[i] = 0;
 	i = -1;
-	while (s[++i] && s[i] != 32 && s[i] != 34)
+	while (s[++i] && s[i] != ' ' && s[i] != DQUOTE)
 		key_wrd[i] = s[i];
 	return (key_wrd);
 }
@@ -78,15 +78,15 @@ static void	expansion_prep(char **prompt)
 	*prompt = prod;
 }
 
-static int	expansion_check(char *prompt)
+static int	expansion_check(char *c, char *prompt, int i)
 {
-	if (*prompt != '$')
+	if (*c != '$')
 		return (1);
-	if (ft_isalpha(*(++prompt)) || *prompt == '_' || *prompt == '?')
+	if (ft_isalpha(*(++c)) || *c == '_' || *c == '?'
+		|| is_inside_quotes(prompt, i) == 1)
 		return (0);
 	return (1);
 }
-
 
 char	*expansions(char *prompt, char *first_prompt)
 {
@@ -98,14 +98,15 @@ char	*expansions(char *prompt, char *first_prompt)
 	expanded_str = NULL;
 	if (!prompt || !*prompt)
 		return (prompt);
-	while (prompt[i] && (expansion_check(&prompt[i]) || is_inside_quotes(prompt, i) == 1))
+	while (prompt[i] && expansion_check(&prompt[i], prompt, i))
 		i++;
 	if (!prompt[i] || !(prompt[i + 1]))
 		return (prompt);
 	if (prompt[i + 1] == '?')
 	{
 		prompt[i] = 0;
-		expanded_str = ft_strjoin_free(prompt, ft_itoa(get_env_struct()->exit_status), 2);
+		expanded_str = ft_strjoin_free(prompt,
+				ft_itoa(get_env_struct()->exit_status), 2);
 		if (prompt == first_prompt)
 			free (prompt);
 		return (expanded_str);
@@ -120,7 +121,8 @@ char	*expansions(char *prompt, char *first_prompt)
 			free (prompt);
 		return (expanded_str);
 	}
-	prod = ft_strjoin_free(expanded_str, expansions(prompt + i, first_prompt), 3);
+	prod = ft_strjoin_free(expanded_str,
+			expansions(prompt + i, first_prompt), 3);
 	if (prompt == first_prompt)
 		free (prompt);
 	return (prod);

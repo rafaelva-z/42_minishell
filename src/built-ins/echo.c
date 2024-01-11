@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/10 19:35:06 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:41:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	echo(char **prompt)
 	if (!prompt || !*prompt)
 	{
 		printf("\n");
-		return;
+		return ;
 	}
 	while (prompt[token_nbr])
 		token_nbr++;

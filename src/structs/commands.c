@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 19:11:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 17:44:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 12:52:49 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,8 @@ static t_commands	*create_command_linkedlist(int node_amount)
 	{
 		node = malloc(sizeof(t_commands));
 		if (!node)
-		{
-			perror("MEMORY ERROR");
-			exit(-10000);
-		}
+			free_and_exit(NULL, "minishell: memory alocation failed",
+				ES_ALLOC_FAIL);
 		if (shell->commands == NULL)
 			shell->commands = node;
 		initialize_command_struct(node);
@@ -103,10 +101,8 @@ t_commands	*get_command_linkedlst(char *prompt)
 	shell->nbr_cmds = get_pipe_count(prompt) + 1;
 	commands = create_command_linkedlist(shell->nbr_cmds);
 	if (!commands)
-	{
-		perror("MEMORY ERROR");
-		exit(-10000);
-	}
+		free_and_exit(NULL, "minishell: memory alocation failed",
+			ES_ALLOC_FAIL);
 	return (commands);
 }
 
@@ -153,10 +149,8 @@ void	add_commands(t_commands **command_struct, char **tokens)
 		command_node->cmds = malloc((count_commands(tokens, pipe_count++) + 1)
 				* sizeof(char *));
 		if (!command_node->cmds)
-		{
-			perror("MEMORY ERROR");
-			exit(-10000);
-		}
+			free_and_exit(NULL, "minishell: memory alocation failed",
+				ES_ALLOC_FAIL);
 		j = 0;
 		while (tokens[++i] && tokens[i][0] != RDIR_PIPE)
 		{
@@ -217,59 +211,3 @@ void	free_commands(t_commands **command_struct)
 	get_env_struct()->commands = NULL;
 	*command_struct = NULL;
 }
-
-
-
-
-
-
-// OLD ADD REDIRECTIONS, WITH PROMPT (char *) AS PARAMETER
-/*
-void	add_redirections(t_commands **command_struct, char *prompt)
-{
-	t_redirection	*redirect;
-	t_commands		*command_node;
-	int				i;
-
-	i = 0;
-	command_node = *command_struct;
-	if (!prompt || !command_struct || !*command_struct)
-		return ;
-	while (command_node)
-	{
-		while (prompt[i])
-		{
-			while (prompt[i] && !is_redir(prompt[i]))
-				i++;
-			if (is_redir(prompt[i]) && !is_inside_quotes(prompt, i) && prompt[i] != '|')
-			{
-				redirect = new_redirection(0, NULL);
-				if (prompt[i] != prompt[i + 1])
-				{
-					if (prompt[i] == '>')
-						redirect->type = RDIR_OUT;
-					else if (prompt[i] == '<')
-						redirect->type = RDIR_IN;
-					i++;
-				}
-				else
-				{
-					if (prompt[i] == '>')
-						redirect->type = RDIR_APP;
-					else if (prompt[i] == '<')
-						redirect->type = RDIR_HDOC;
-					i += 2;
-				}
-				while (prompt[i] && ft_isspace(prompt[i]))
-					i++;
-				redirect->key_wrd = malloc(wordlen(&prompt[i])); //wordlen must get the length of the word between quotes or not 
-				ft_strlcpy(redirect->key_wrd, prompt, wordlen(&prompt[i]));
-				addback_redirection(command_node->redirect, redirect);
-			}
-			if (prompt[i] == '|')
-				break ;
-		}
-		command_node = command_node->next;
-	}
-}
-*/
