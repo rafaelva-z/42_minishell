@@ -96,9 +96,9 @@ static void	get_prompt(char **prompt)
 	shell = get_env_struct();
 	set_signals(HNDLR_MAIN);
 	if (shell->cursor)
-		*prompt = readline(shell->cursor);
+		*prompt = readline("$ ");
 	else
-		*prompt = readline(CURSOR);
+		*prompt = readline("$ ");
 	if (*prompt && **prompt)
 		add_history(*prompt);
 }

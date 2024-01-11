@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/11 12:44:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 17:49:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ void	path_finder(t_exec *exec, t_commands *cmd)
 		free_and_exit(exec, message_joiner(3 , "minishell:", cmd->cmds[0],
 					": Permission denied\n"), ES_K_N_AVAIL);
 	}
-	free_and_exit(exec, message_joiner(3 , "minishell:", cmd->cmds[0], ": command not found\n")
+	free_and_exit(exec, message_joiner(3 , "minishell: ", cmd->cmds[0], ": command not found\n")
 			, ES_CMD_N_FOUND);
 }

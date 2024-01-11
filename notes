@@ -51,3 +51,11 @@
 =>	ctrl c + ctrl d Da um \n a mais depois do exit? 
 
 	==========| F A I L E D    P R O M P T S|==========
+
+>|cat
+(|)
+cat << magic > magic
+cat Makefile | grep pr | head -n 5 | cd file_not_exit
+cd $HOME/Bureau
+
+Qualquer variavel de ambiente entre aspas invalid free

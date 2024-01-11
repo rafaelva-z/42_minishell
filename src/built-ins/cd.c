@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/07 20:45:07 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/11 17:44:37 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	cd(char **cmds)
 	else
 		r = chdir(cmds[0]);
 	if (r < 0)
-		perror(""); // how do i make this work properly?
+		perror("minishell: cd"); // how do i make this work properly?
 	else if (oldpwd)
 		set_pwd(oldpwd);
 	if (oldpwd)
