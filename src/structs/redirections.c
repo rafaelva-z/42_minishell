@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:00:15 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 21:31:37 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 22:53:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	add_redirections(t_commands **command_struct, char **tokens)
 			}
 			redirect = new_redirection(0, NULL);
 			if (!redirect)
-				free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
+				free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL);
 			if (tokens[i][0] == RDIR_IN || tokens[i][0] == RDIR_OUT)
 				redirect->type = tokens[i][0];
 			else if (tokens[i][0] == RDIR_APP || tokens[i][0] == RDIR_HDOC)

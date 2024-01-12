@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:05:22 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 20:54:42 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 22:54:08 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*message_joiner(int nbr, ...)
 {
-	va_list arg;
+	va_list	arg;
 	int		i;
 	char	*str;
 

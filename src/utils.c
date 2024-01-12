@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/11 01:53:41 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 22:58:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	lst_insert_before(t_env_var *lst, t_env_var *new_lst)
 
 /**
  * @brief	checks if the given character is inside quotes
- * @return	0 if the character is not inside quotes, 1 if it is inside single quotes
+ * @return	0 if the character is not inside quotes,
+ * 			1 if it is inside single quotes
  * 			2 if it is inside double quotes.
 */
 int	is_inside_quotes(char *str, size_t index)

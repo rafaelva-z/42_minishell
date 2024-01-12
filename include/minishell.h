@@ -40,7 +40,6 @@
 # define ES_CMD_N_FOUND		127
 # define ES_SIGINT			130
 
-
 // Error Messages
 
 # define ERR_ALLOC				"minishell: memory alocation failed\n"
@@ -51,6 +50,8 @@
 # define ERR_CD_HOME_NOT_SET	"minishell: cd: HOME not set\n"
 
 # define MSG_EXIT				ft_strdup("exit\n")
+# define MSG_HDOC_EOF			"minishell: warning: here-document delimited by end-of-file (wanted `EOF')\n"
+# define MSG_SHLVL_HIGH			"warning: shell level (insert value here) too high, resetting to 1"
 
 extern int	g_signal;
 
@@ -82,26 +83,24 @@ enum e_negative_char_prompt
 	DOUBQ		=	-34,
 };
 
-
-
 void		set_signals(int process);
 void		expansion_manager(char **prompt);
 int			prompt_processing(char **prompt);
 
 //	main.c
 
-void	get_prompt_cursor(void);
+void		get_prompt_cursor(void);
 
 //	Built-ins
 
-int		cd(char **cmds);
-int		echo(char **prompt);
-int		print_env(void);
-int		export(char **cmds);
-void	set_env_var(const char *name, const char *value);
-int		export_sort_print(void);
-int		pwd(void);
-int		unset(char **cmds);
+int			cd(char **cmds);
+int			echo(char **prompt);
+int			print_env(void);
+int			export(char **cmds);
+void		set_env_var(const char *name, const char *value);
+int			export_sort_print(void);
+int			pwd(void);
+int			unset(char **cmds);
 
 //	free_memory.c
 

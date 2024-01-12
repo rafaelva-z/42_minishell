@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 21:30:21 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/12 22:41:53 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*expand(char *s)
 {
 	char	*key_wrd;
 	char	*var;
-
 
 	key_wrd = key_word(s);
 	if (!ft_strncmp(key_wrd, "?", 2))
@@ -99,7 +98,7 @@ char	*expansions(char *prompt, int rec)
 	char	*prod;
 
 	i = 0;
-	expanded_str = NULL;																							/*	'$PATH' */
+	expanded_str = NULL;
 	if (!prompt || !*prompt)
 		return (prompt);
 	while (prompt[i] && expansion_check(&prompt[i], prompt, i))
@@ -112,7 +111,8 @@ char	*expansions(char *prompt, int rec)
 	}
 	prompt[i] = 0;
 	expanded_str = ft_strjoin_free(prompt, expand(prompt + i + 1), 2);
-	while (prompt[++i] && prompt[i] != ' ' && prompt[i] != '\"' && prompt[i] != '$')
+	while (prompt[++i] && prompt[i] != ' '
+		&& prompt[i] != '\"' && prompt[i] != '$')
 		;
 	if (!prompt[i])
 	{
@@ -145,7 +145,6 @@ static void	limiter_protect(char *s)
 		if (s[i] == '$')
 			s[i] = -1;
 	}
-
 }
 
 // >>       >> |       
@@ -167,6 +166,3 @@ void	expansion_manager(char **prompt)
 	}
 	printf("prompt: %s\n", *prompt);
 }
-
-
-/*	<< $USER	*/

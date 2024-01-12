@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 20:03:13 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/12 22:38:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,20 @@ static void	dupper(t_commands *cmd)
 */
 static void	executor(t_exec *exec, t_commands *cmd)
 {
-	// redirect(exec, cmd);
-	if (!cmd->cmds)			//	this has to be here in case
-							//  theres no command (ex: << EOF)
+	if (!cmd->cmds)
 		free_and_exit(exec, NULL, get_env_struct()->exit_status);
 	redirect(exec, cmd);
 	// Need to copy Here_doc input text to commands
-	//printf("fd in: %d\tfd out: %d\n", cmd->read_fd, cmd->write_fd);	
 	dupper(cmd);
 	exec->remainder_fd = to_close(exec->remainder_fd);
 	builtin_exec_child(exec, cmd);
 	path_finder(exec, cmd);
 	create_env_array();
-	// write (2, "here\n", 5);
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	free_and_exit(exec, message_joiner(3 , "minishell: ", cmd->cmds[0], ": command not found\n")
-			, ES_CMD_N_FOUND);
+	free_and_exit(exec, message_joiner(3 , "minishell: ",
+			cmd->cmds[0], ": command not found\n"), ES_CMD_N_FOUND);
 }
 
 /*
@@ -121,14 +117,14 @@ void	process_generator(void)
 	t_commands	*current;
 	int			i;
 
-	if (g_signal == SIGINT) // test this
+	if (g_signal == SIGINT)
 		return ;
 	initializer_exec(&exec);
 	current = exec.envp->commands;
 	i = -1;
 	while (current)
 	{
-		if(current->cmds[0])	// fix this by allocating the correct ammount of cmds
+		if (current->cmds[0])	// fix this by allocating the correct ammount of cmds
 								// when there are no redirections!! commands.c
 			if (exec.envp->nbr_cmds == 1 && builtin_exec_parent(&exec, current))
 				return ;
