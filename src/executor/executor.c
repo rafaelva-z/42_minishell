@@ -67,7 +67,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	free_and_exit(exec, message_joiner(3 , "minishell: ", cmd->cmds[0], ": command not found")
+	free_and_exit(exec, message_joiner(3 , "minishell: ", cmd->cmds[0], ": command not found\n")
 			, ES_CMD_N_FOUND);
 }
 

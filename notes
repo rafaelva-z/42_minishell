@@ -1,0 +1,53 @@
+	===================================================
+	==================|| N O T E S ||==================
+	===================================================
+
+	==================|| T O   D O ||==================
+
+=> 	Here document also expands environment variables, but first
+	it compares with the limiter and then expands. The limiter
+	itself its not expansible.
+
+=>	redirection (access)
+	if the "file name" is a directory or a already created file or folder
+
+=>	"export a" nao deveria dar erro
+
+
+
+
+
+	==========| F A I L E D    P R O M P T S|==========
+
+>|cat
+cat << magic > magic
+cat Makefile | grep pr | head -n 5 | cd file_not_exit
+echo test|>
+cd ""
+cd too many arguments
+env -i ./minishell
+
+
+Qualquer variavel de ambiente entre aspas invalid free
+echo "$a "$b" $c $d" "$e"
+exit | echo $? > test
+echo $PWD >> test1 >> test2 > test1
+cd $vari ""
+cd $HOME/Bureau
+echo '$USER' echo $USER
+
+
+
+
+
+    ================| E X T R A S |================
+
+=>	redirect token error message fazer join para dizer qual é o toke que causa o erro
+
+=>	shlvl error message, fazer o join do valor quando é demasiado alto 
+
+
+
+
+
+

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:00:15 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/10 21:37:19 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 21:31:37 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	add_redirections(t_commands **command_struct, char **tokens)
 			redirect = new_redirection(0, NULL);
 			if (!redirect)
 				free_and_exit(NULL, "minishell: memory alocation failed", ES_ALLOC_FAIL);
-			if (tokens[i][0] == RDIR_IN || tokens[i][0] == RDIR_OUT) // Dont forget to convert the enum to negative values
-				redirect->type = tokens[i][0]; // Tokenizer will have changed the redirection to a neg value
+			if (tokens[i][0] == RDIR_IN || tokens[i][0] == RDIR_OUT)
+				redirect->type = tokens[i][0];
 			else if (tokens[i][0] == RDIR_APP || tokens[i][0] == RDIR_HDOC)
 				redirect->type = tokens[i][0];
-			redirect->key_wrd = tokens[++i]; // remember that this was allocated on tokens
+			redirect->key_wrd = tokens[++i];
 			addback_redirection(&command_node->redirects, redirect);
 		}
 	}

@@ -43,8 +43,14 @@
 
 // Error Messages
 
-# define ERR_QUOTES		"error: quotes open" 
-# define ERR_RDIR		"syntax error unexpected token"
+# define ERR_ALLOC				"minishell: memory alocation failed\n"
+# define ERR_QUOTES				"error: quotes open\n" 
+# define ERR_RDIR				"syntax error unexpected token\n"
+# define ERR_CD					"minishell: cd"
+# define ERR_CD_TOO_MANY_ARG	"minishell: cd: too many arguments\n"
+# define ERR_CD_HOME_NOT_SET	"minishell: cd: HOME not set\n"
+
+# define MSG_EXIT				ft_strdup("exit\n")
 
 extern int	g_signal;
 
@@ -79,11 +85,12 @@ enum e_negative_char_prompt
 
 
 void		set_signals(int process);
-
-
-//
-
 void		expansion_manager(char **prompt);
+int			prompt_processing(char **prompt);
+
+//	main.c
+
+void	get_prompt_cursor(void);
 
 //	Built-ins
 
@@ -115,6 +122,11 @@ int			contains_only_nbr(char *str);
 int			to_close(int fd);
 int			what_redir_token(char *str);
 void		set_shlvl();
+
+//	utils3.c
+
+int			get_pipe_count(char *str);
+int			count_commands(char **tokens, size_t pipe);
 
 // quote_check.c
 

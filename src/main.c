@@ -14,23 +14,74 @@
 
 int	g_signal;
 
-/**
- * @brief	Allocates the prompt cursor to param "char **cursor".
- * 			the cursor will be the username + the constant CURSOR
- * 			or just the constant CURSOR if there is no USER variable
-*/
-static void	get_prompt_cursor(void)
+static void	get_prompt(char **prompt)
 {
 	t_envp	*shell;
 
 	shell = get_env_struct();
+	set_signals(HNDLR_MAIN);
 	if (shell->cursor)
-		free(shell->cursor);
-	if (get_env_var("USER"))
+		*prompt = readline(shell->cursor);
+	else
+		*prompt = readline(CURSOR);
+	if (*prompt && **prompt)
+		add_history(*prompt);
+}
+
+static void	create_commands_and_redirections_struct(char **prompt)
+{
+	t_envp	*shell;
+
+	shell = get_env_struct();
+	shell->commands = get_command_linkedlst(*prompt);
+	shell->tokens = tokenizer(*prompt);
+	free(*prompt);
+	add_redirections(&shell->commands, shell->tokens);
+	add_commands(&shell->commands, shell->tokens);
+}
+
+static void	shell_loop(void)
+{
+	char			*prompt;
+
+	while (true)
 	{
-		shell->cursor = get_env_var("USER")->content + 5;
-		shell->cursor = ft_strjoin(shell->cursor, CURSOR);
+		set_env_var("_", "/usr/bin/env");
+		if (g_signal == SIGINT)
+			write(1, "\n", 1);
+		set_signals(HNDLR_MAIN);
+		get_prompt(&prompt);
+		if (!prompt)
+			free_and_exit(NULL, MSG_EXIT, 0);
+		else
+		{
+			set_signals(HNDLR_LOOP);
+			if (!*prompt)
+			{
+				free(prompt);
+				continue ;
+			}
+			if (prompt_processing(&prompt))
+				continue ;
+			expansion_manager(&prompt);
+			create_commands_and_redirections_struct(&prompt);
+			here_doc_manager();
+			process_generator();
+			free_matrix_and_commands();
+		}
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argv;
+	if (argc != 1)
+		exit(0);
+	init_env(envp);
+	get_prompt_cursor();
+	set_shlvl();
+	shell_loop();
+	free_and_exit(NULL, NULL, 0);
 }
 
 //	TEST
@@ -67,96 +118,3 @@ static void	get_prompt_cursor(void)
 // 			printf("-|PIPE|-\n");
 // 	}
 // }
-
-int	prompt_processing(char **prompt)
-{
-	if (quote_check(*prompt))
-	{
-		free(*prompt);
-		get_env_struct()->exit_status = ES_OP_N_PERM;
-		return (display_error(ERR_QUOTES, -1));
-	}
-	prompt_cleaner(prompt);
-	if (redirection_check(*prompt))
-	{
-		free(*prompt);
-		
-		get_env_struct()->exit_status = ES_OP_N_PERM;
-		return (display_error(ERR_RDIR, -2));
-	}
-	add_spaces_redirections(prompt);
-	return (0);
-}
-
-static void	get_prompt(char **prompt)
-{
-	t_envp	*shell;
-
-	shell = get_env_struct();
-	set_signals(HNDLR_MAIN);
-	if (shell->cursor)
-		*prompt = readline(shell->cursor);
-	else
-		*prompt = readline(CURSOR);
-	if (*prompt && **prompt)
-		add_history(*prompt);
-}
-
-static void	create_commands_and_redirections_struct(char **prompt)
-{
-	t_envp	*shell;
-
-	shell = get_env_struct();
-	shell->commands = get_command_linkedlst(*prompt);
-	shell->tokens = tokenizer(*prompt);
-	free(*prompt);
-	add_redirections(&shell->commands, shell->tokens);
-	add_commands(&shell->commands, shell->tokens);
-}
-
-static void	shell_loop()
-{
-	char			*prompt;
-	//struct termios	term;
-
-	while (1)
-	{
-		//tcgetattr(STDIN_FILENO, &term);
-		set_env_var("_", "/usr/bin/env");
-		if (g_signal == SIGINT)
-			write(1, "\n", 1);
-		set_signals(HNDLR_MAIN);
-		get_prompt(&prompt);
-		if (!prompt)
-			free_and_exit(NULL, ft_strdup("exit\n"), 0);
-		else
-		{
-			set_signals(HNDLR_LOOP);
-			if (!*prompt)
-			{
-				free(prompt);
-				continue ;
-			}
-			if (prompt_processing(&prompt))
-				continue ;
-			expansion_manager(&prompt);
-			create_commands_and_redirections_struct(&prompt);
-			here_doc_manager();
-			process_generator();
-			free_matrix_and_commands();
-			//tcsetattr(STDIN_FILENO, TCSANOW, &term);
-		}
-	}
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argv;
-	if (argc != 1)
-		exit(0);
-	init_env(envp);
-	get_prompt_cursor();
-	set_shlvl();
-	shell_loop();
-	free_and_exit(NULL, NULL, 0);
-}
