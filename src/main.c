@@ -117,18 +117,16 @@ static void	create_commands_and_redirections_struct(char **prompt)
 static void	shell_loop()
 {
 	char			*prompt;
-	//struct termios	term;
 
 	while (1)
 	{
-		//tcgetattr(STDIN_FILENO, &term);
 		set_env_var("_", "/usr/bin/env");
 		if (g_signal == SIGINT)
 			write(1, "\n", 1);
 		set_signals(HNDLR_MAIN);
 		get_prompt(&prompt);
 		if (!prompt)
-			free_and_exit(NULL, ft_strdup("exit\n"), 0);
+			free_and_exit(NULL, MSG_EXIT, 0);
 		else
 		{
 			set_signals(HNDLR_LOOP);
@@ -144,7 +142,6 @@ static void	shell_loop()
 			here_doc_manager();
 			process_generator();
 			free_matrix_and_commands();
-			//tcsetattr(STDIN_FILENO, TCSANOW, &term);
 		}
 	}
 }
