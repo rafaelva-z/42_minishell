@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 16:59:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 19:21:06 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,34 +80,37 @@ static void	expansion_prep(char **prompt)
 
 static int	expansion_check(char *c, char *prompt, int i)
 {
-	if (*c != '$')
+	if ((*c) != '$' || is_inside_quotes(prompt, i) == 1)
 		return (1);
-	if (ft_isalpha(*(++c)) || *c == '_' || *c == '?'
-		|| is_inside_quotes(prompt, i) == 1)
+	if (ft_isalpha(*(++c)) || *c == '_' || *c == '?')
 		return (0);
 	return (1);
 }
 
-char	*expansions(char *prompt, char *first_prompt)
+char	*expansions(char *prompt, int rec)
 {
 	int		i;
 	char	*expanded_str;
 	char	*prod;
 
 	i = 0;
-	expanded_str = NULL;
+	expanded_str = NULL;																							/*	'$PATH' */
 	if (!prompt || !*prompt)
 		return (prompt);
 	while (prompt[i] && expansion_check(&prompt[i], prompt, i))
 		i++;
 	if (!prompt[i] || !(prompt[i + 1]))
+	{
+		if (rec)
+			return (ft_strdup(prompt));
 		return (prompt);
+	}
 	if (prompt[i + 1] == '?')
 	{
 		prompt[i] = 0;
 		expanded_str = ft_strjoin_free(prompt,
 				ft_itoa(get_env_struct()->exit_status), 2);
-		if (prompt == first_prompt)
+		if (rec == 0)
 			free (prompt);
 		return (expanded_str);
 	}
@@ -117,13 +120,13 @@ char	*expansions(char *prompt, char *first_prompt)
 		;
 	if (!prompt[i])
 	{
-		if (prompt == first_prompt)
+		if (rec == 0)
 			free (prompt);
 		return (expanded_str);
 	}
 	prod = ft_strjoin_free(expanded_str,
-			expansions(prompt + i, first_prompt), 3);
-	if (prompt && prompt == first_prompt)
+			expansions(prompt + i, rec + 1), 3);
+	if (prompt && rec == 0)
 		free (prompt);
 	return (prod);
 }
@@ -131,5 +134,5 @@ char	*expansions(char *prompt, char *first_prompt)
 void	expansion_manager(char **prompt)
 {
 	expansion_prep(prompt);
-	*prompt = expansions(*prompt, *prompt);
+	*prompt = expansions(*prompt, 0);
 }
