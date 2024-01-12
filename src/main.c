@@ -122,6 +122,7 @@ static void	shell_loop()
 	while (1)
 	{
 		//tcgetattr(STDIN_FILENO, &term);
+		set_env_var("_", "/usr/bin/env");
 		if (g_signal == SIGINT)
 			write(1, "\n", 1);
 		set_signals(HNDLR_MAIN);
@@ -130,7 +131,6 @@ static void	shell_loop()
 			free_and_exit(NULL, ft_strdup("exit\n"), 0);
 		else
 		{
-			set_env_var("_", "/usr/bin/env");
 			set_signals(HNDLR_LOOP);
 			if (!*prompt)
 			{
@@ -142,6 +142,7 @@ static void	shell_loop()
 			expansion_manager(&prompt);
 			create_commands_and_redirections_struct(&prompt);
 			here_doc_manager();
+			printf("bananas\n");
 			process_generator();
 			free_matrix_and_commands();
 			//tcsetattr(STDIN_FILENO, TCSANOW, &term);
