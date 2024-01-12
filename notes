@@ -2,53 +2,20 @@
 	==================|| N O T E S ||==================
 	===================================================
 
-=>	What should be used on here_doc: gnl or readline?
-
-=>	To do: Error handling
+	==================|| T O   D O ||==================
 
 => 	Here document also expands environment variables, but first
 	it compares with the limiter and then expands. The limiter
 	itself its not expansible.
 
-=>	All builtins should exit at the end. (with
-	exit status)
-
-=>	Test if the builtins are redirecting properly (ex: pwd > file)
-
-=>	the exit status that is considered is the one from the last
-	command of the pipeline
-
-	==================|| T O   D O ||==================
-
-=>	exit status
-=>	error handling
-
 =>	redirection (access)
-	if the "file name" is a directory or a already created file
-	
-=>	exit status
-	se não hover argumentos suficientes nas redireções ou pipes exit status é 2 
-	se for uma pasta ou não houver permissão é 1
+	if the "file name" is a directory or a already created file or folder
 
-=>	shlvl error message, fazer o join do valor quando é demasiado alto 
+=>	"export a" nao deveria dar erro
 
-=>	redirect token error message fazer join para dizer qual é o toke que causa o erro
 
-    ================| T O   S O L V E |================
 
-=>  There's a problem with the cursor when you do a ctr + C during the
-    execution of a process (ex: sleep 5)
 
-=>  set the ignals right for the children processes of here doc and
-    commands
-
-=>	corrigir quando a prompt eh so redirections o prompt da na mesma um
-	comando
-
-=>  depois de fazer unset do home deve dar uma mensagem de erro
-	ao fazer apenas "cd"
-
-=>	ctrl c + ctrl d Da um \n a mais depois do exit? 
 
 	==========| F A I L E D    P R O M P T S|==========
 
@@ -71,6 +38,13 @@ echo '$USER' echo $USER
 
 
 
+
+
+    ================| E X T R A S |================
+
+=>	redirect token error message fazer join para dizer qual é o toke que causa o erro
+
+=>	shlvl error message, fazer o join do valor quando é demasiado alto 
 
 
 

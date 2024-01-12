@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/12 15:10:10 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/12 21:28:49 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,14 @@ INCLUDES	=	./include
 LIBFT_PATH	=	./lib/libft/
 LIBFT		=	$(LIBFT_PATH)libft.a
 SRCS		=	$(addprefix ./src/,				\
+				cursor.c						\
 				main.c							\
 				free_memory.c					\
 				signals.c						\
 				redir_utils.c					\
 				utils.c							\
 				utils2.c						\
+				utils3.c						\
 				here_doc.c						\
      			error_handling.c				\
 				$(addprefix built-ins/, 		\
@@ -39,6 +41,7 @@ SRCS		=	$(addprefix ./src/,				\
 				)								\
 				$(addprefix structs/,			\
 				commands.c						\
+				commands2.c						\
 				env.c							\
 				env2.c							\
 				redirections.c					\
@@ -50,6 +53,7 @@ SRCS		=	$(addprefix ./src/,				\
 				redirections.c					\
 				)								\
 				$(addprefix prompt-processing/,	\
+				prompt_processing.c				\
 				expander.c						\
 				prompt_cleaner.c				\
 				quote_check.c					\

@@ -6,13 +6,11 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:05:22 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 19:59:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 20:54:42 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-//	(6, "ola", "cuntao", ...)
 
 char	*message_joiner(int nbr, ...)
 {

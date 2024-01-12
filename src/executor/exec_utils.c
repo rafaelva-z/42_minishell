@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 20:36:03 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 20:55:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	builtin_exec_child(t_exec *exec, t_commands *commands)
 	else if (ft_strncmp("unset", commands->cmds[0], 6) == 0)
 		shell->exit_status = unset(&commands->cmds[1]);
 	else if (ft_strncmp("exit", commands->cmds[0], 5) == 0)
-		free_and_exit(exec, MSG_EXIT, 0);
+		free_and_exit(exec, NULL, 0);
 	else
 		return ;
 	close(STDIN_FILENO);
