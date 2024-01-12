@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 17:11:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 19:38:13 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	builtin_exec_child(t_exec *exec, t_commands *commands)
 		free_and_exit(exec, ft_strdup("exit\n"), 0);
 	else
 		return ;
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	free_and_exit(exec, NULL, get_env_struct()->exit_status);
 }
 

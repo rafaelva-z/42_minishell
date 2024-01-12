@@ -142,7 +142,6 @@ static void	shell_loop()
 			expansion_manager(&prompt);
 			create_commands_and_redirections_struct(&prompt);
 			here_doc_manager();
-			printf("bananas\n");
 			process_generator();
 			free_matrix_and_commands();
 			//tcsetattr(STDIN_FILENO, TCSANOW, &term);
