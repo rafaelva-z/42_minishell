@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/09 12:44:29 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/11 17:44:37 by rvaz             ###   ########.fr       */
+/*   Created: 2023/09/09 12:44:29 by rvaz       	   #+#    #+#             */
+/*   Updated: 2024/01/12 13:10:53 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	set_pwd(char *oldpwd)
 		free(cwd);
 	}
 	if (oldpwd)
-		shell->set("OLDPWD=", oldpwd);
+		shell->set("OLDPWD", oldpwd);
 }
 
 static int	count_cmds(char **cmds)
@@ -41,32 +41,32 @@ static int	count_cmds(char **cmds)
 /**
  * @brief change the working directory
 */
-void	cd(char **cmds)
+int	cd(char **cmds)
 {
 	int		r;
 	char	*home;
 	char	*oldpwd;
 	
 	if (count_cmds(cmds) > 1)
-	{
-		perror("cd: too many arguments\n");
-		return ;
-	}
+		return (display_error("minishell: cd: too many arguments", 1));
 	home = get_env_struct()->get_value("HOME");
-	r = -1;
-	if (!cmds[0] && !home)
-		return ;
+	if ((!cmds[0] || !cmds[0][0]) && !home)
+		return (display_error("minishell: cd: HOME not set", 1));
 	oldpwd = getcwd(NULL, 0);
 	if (!cmds[0])
 		r = chdir(home);
 	else
 		r = chdir(cmds[0]);
 	if (r < 0)
-		perror("minishell: cd"); // how do i make this work properly?
+	{
+		perror("minishell: cd");
+		return (1);
+	}
 	else if (oldpwd)
 		set_pwd(oldpwd);
 	if (oldpwd)
 		free(oldpwd);
+	return (0);
 }
 
 /**

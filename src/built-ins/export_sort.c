@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 19:56:58 by rvaz              #+#    #+#             */
-/*   Updated: 2023/12/29 19:58:30 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 15:03:17 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	quicksort_str(char **cont, int low, int high)
  * @brief	sorts enviroment variables alphabetically using quicksort,
  * 			and prints all variables
 */
-void	export_sort_print(void)
+int	export_sort_print(void)
 {
 	t_envp		*shell;
 	t_env_var	*tmp;
@@ -67,10 +67,10 @@ void	export_sort_print(void)
 
 	shell = get_env_struct();
 	if (!shell->vars)
-		return ;
+		return (0);
 	cont_str = malloc(ft_lstsize(shell->vars) * sizeof(char *));
 	if (!cont_str)
-		return ;
+		return (0);
 	tmp = shell->vars;
 	i = -1;
 	while (tmp)
@@ -83,4 +83,5 @@ void	export_sort_print(void)
 	while (j <= i)
 		printf("%s\n", cont_str[j++]);
 	free(cont_str);
+	return (0);
 }

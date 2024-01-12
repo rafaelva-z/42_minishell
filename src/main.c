@@ -73,17 +73,16 @@ int	prompt_processing(char **prompt)
 	if (quote_check(*prompt))
 	{
 		free(*prompt);
-		display_error(ERR_QUOTES);
 		get_env_struct()->exit_status = ES_OP_N_PERM;
-		return (-1);
+		return (display_error(ERR_QUOTES, -1));
 	}
 	prompt_cleaner(prompt);
 	if (redirection_check(*prompt))
 	{
 		free(*prompt);
-		display_error(ERR_RDIR);
+		
 		get_env_struct()->exit_status = ES_OP_N_PERM;
-		return (-2);
+		return (display_error(ERR_RDIR, -2));
 	}
 	add_spaces_redirections(prompt);
 	return (0);
@@ -96,9 +95,9 @@ static void	get_prompt(char **prompt)
 	shell = get_env_struct();
 	set_signals(HNDLR_MAIN);
 	if (shell->cursor)
-		*prompt = readline("$ ");
+		*prompt = readline(shell->cursor);
 	else
-		*prompt = readline("$ ");
+		*prompt = readline(CURSOR);
 	if (*prompt && **prompt)
 		add_history(*prompt);
 }
@@ -131,6 +130,7 @@ static void	shell_loop()
 			free_and_exit(NULL, ft_strdup("exit\n"), 0);
 		else
 		{
+			set_env_var("_", "/usr/bin/env");
 			set_signals(HNDLR_LOOP);
 			if (!*prompt)
 			{

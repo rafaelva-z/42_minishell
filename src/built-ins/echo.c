@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/11 12:41:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 15:03:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	is_flag(char *s)
 *	@brief display a line of text
 *	@param prompt the content to be echoed
 */
-void	echo(char **prompt)
+int	echo(char **prompt)
 {
 	int	nl;
 	int	i;
@@ -51,18 +51,19 @@ void	echo(char **prompt)
 	if (!prompt || !*prompt)
 	{
 		printf("\n");
-		return ;
+		return (0);
 	}
 	while (prompt[token_nbr])
 		token_nbr++;
 	while (prompt[++i] && is_flag(prompt[i]) == 0)
 		nl = 1;
 	if (is_flag(prompt[i]) == 0)
-		return ;
+		return (0);
 	while (i < token_nbr - 1)
 		ft_printf("%s ", prompt[i++]);
 	if (i == token_nbr - 1)
 		ft_printf("%s", prompt[i]);
 	if (nl == 0)
 		printf("\n");
+	return (0);
 }
