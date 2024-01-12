@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:10:29 by rvaz              #+#    #+#             */
-/*   Updated: 2023/09/20 20:28:45 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 16:11:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 /**
  *	@brief print name of current/working directory
 */
-void	pwd(void)
+int	pwd(void)
 {
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (1);
 	printf("%s\n", pwd);
 	free(pwd);
+	return (0);
 }

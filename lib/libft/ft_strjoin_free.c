@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 02:32:24 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/10 17:49:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 16:28:32 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,9 @@ char	*ft_strjoin_free(char const *s1, char const *s2, int tofree)
 		ft_strlcpy(sj, s1, s1len + 1);
 	if (s2)
 		ft_strlcat(sj, s2, (s1len + s2len + 1));
-	if (tofree == 1)
+	if (s1 && (tofree == 1 || tofree == 3))
 		free ((char *) s1);
-	else if (tofree == 2)
+	else if (s2 && (tofree == 2 || tofree == 3))
 		free ((char *) s2);
-	else if (tofree == 3)
-	{
-		free ((char *) s1);
-		free ((char *) s2);
-	}
 	return (sj);
 }

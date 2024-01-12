@@ -53,9 +53,27 @@
 	==========| F A I L E D    P R O M P T S|==========
 
 >|cat
-(|)
 cat << magic > magic
 cat Makefile | grep pr | head -n 5 | cd file_not_exit
-cd $HOME/Bureau
+echo test|>
+cd ""
+cd too many arguments
+env -i ./minishell
+
 
 Qualquer variavel de ambiente entre aspas invalid free
+echo "$a "$b" $c $d" "$e"
+exit | echo $? > test
+echo $PWD >> test1 >> test2 > test1
+cd $vari ""
+cd $HOME/Bureau
+echo '$USER' echo $USER
+
+
+
+
+
+
+
+
+

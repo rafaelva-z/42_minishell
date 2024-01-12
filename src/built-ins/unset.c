@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/11 12:43:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 15:59:28 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ static void	unset_env_var(const char *name)
 {
 	t_envp		*shell;
 	t_env_var	*current;
+	t_env_var	*next;
 
 	shell = get_env_struct();
+	next = shell->vars->next;
 	if (!name || !shell->vars)
 		return ;
 	current = shell->get(name);
@@ -32,13 +34,18 @@ static void	unset_env_var(const char *name)
 		current->previous->next = current->next;
 	if (current->next)
 		current->next->previous = current->previous;
+	if (next && !current->previous)
+		shell->vars = next;
+	else if(!next && !current->previous)
+		shell->vars = NULL;
 	ft_lstdelone(current, free);
+	//printf("%s---\n", shell->vars->content);
 }
 
 /**
  *	@brief unset values and attributes of variables and functions
 */
-void	unset(char **cmds)
+int	unset(char **cmds)
 {
 	char	*var_name;
 	int		i;
@@ -53,11 +60,12 @@ void	unset(char **cmds)
 		if (!var_name_check(var_name))
 		{
 			free(var_name);
-			return ;
+			return (0);
 		}
 		free(var_name);
 		unset_env_var(cmds[i++]);
 	}
+	return (0);
 }
 
 /**

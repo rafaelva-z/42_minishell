@@ -87,14 +87,14 @@ void		expansion_manager(char **prompt);
 
 //	Built-ins
 
-void		cd(char **cmds);
-void		echo(char **prompt);
-void		print_env(void);
-void		export(char **cmds);
-void		set_env_var(const char *name, const char *value);
-void		export_sort_print(void);
-void		pwd(void);
-void		unset(char **cmds);
+int		cd(char **cmds);
+int		echo(char **prompt);
+int		print_env(void);
+int		export(char **cmds);
+void	set_env_var(const char *name, const char *value);
+int		export_sort_print(void);
+int		pwd(void);
+int		unset(char **cmds);
 
 //	free_memory.c
 
@@ -168,7 +168,7 @@ int			builtin_exec_parent(t_exec *exec, t_commands *cmd);
 void		free_exec(t_exec *exec);
 
 // destroyer
-void		display_error(char *error_msg);
+int		display_error(char *error_msg, int exit_status);
 
 // error_handling
 

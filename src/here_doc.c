@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/11 12:53:41 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 16:20:04 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	here_doc(t_redirection *rdir, int fd[2])
 				== 0 && len == (int)(ft_strlen(s))))
 			break ;
 		write(fd[1], s, ft_strlen(s));
+		write(fd[1], "\n", 1);
 		free (s);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term); // this is preventive

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/11 12:42:10 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 15:31:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	set_env_var(const char *name, const char *value)
  *	@brief set the export attribute for variables
  *	@example export("VAR_NAME=VAR_VALUE");
 */
-void	export(char **cmds)
+int	export(char **cmds)
 {
 	char	*var_value;
 	char	*var_name;
@@ -51,15 +51,12 @@ void	export(char **cmds)
 
 	i = -1;
 	if (!cmds[0])
-	{
-		export_sort_print();
-		return ;
-	}
+		return (export_sort_print());
 	while (cmds[++i])
 	{
 		j = 0;
 		if (!var_name_check(cmds[i]))
-			continue ;
+			return (display_error("minishell: export: invalid option", 1));
 		while (cmds[i][j] != '=')
 			j++;
 		var_name = ft_substr(cmds[i], 0, j);
@@ -68,6 +65,7 @@ void	export(char **cmds)
 		free(var_name);
 		free(var_value);
 	}
+	return (0);
 }
 
 /**

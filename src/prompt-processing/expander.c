@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/11 19:48:16 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 16:59:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*expand(char *s)
 	if (!var)
 	{
 		free (key_wrd);
-		return (ft_strdup(""));
+		return (NULL);
 	}
 	free (key_wrd);
 	return (ft_strdup(var));
@@ -123,7 +123,7 @@ char	*expansions(char *prompt, char *first_prompt)
 	}
 	prod = ft_strjoin_free(expanded_str,
 			expansions(prompt + i, first_prompt), 3);
-	if (prompt == first_prompt)
+	if (prompt && prompt == first_prompt)
 		free (prompt);
 	return (prod);
 }

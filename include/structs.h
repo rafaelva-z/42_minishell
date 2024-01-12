@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:06:56 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 18:07:33 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 15:05:19 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_envp
 	char				*(*get_value)(const char *name);				//  (F) get env var value
 	void				(*set)(const char *name, const char *value);	//  (F) add var to envp
 	void				(*unset)(const char *name);						//  (F) remove var from envp
-	void				(*print)(void);									//  (F) print all env vars
-	void				(*print_alpha)(void);							//	(F) prints variables sorted alphabetically
+	int					(*print)(void);									//  (F) print all env vars
+	int					(*print_alpha)(void);							//	(F) prints variables sorted alphabetically
 	void				(*destroy)();									//	(F) properly frees everything
 																		//		that was allocated
 }				t_envp;

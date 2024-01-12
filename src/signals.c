@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/11 12:54:29 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 14:34:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	sighandler_loop(int signal)
 {
 	if (signal == SIGINT)
 		g_signal = SIGINT;
+	printf("not gay");
 }
 
 /**
