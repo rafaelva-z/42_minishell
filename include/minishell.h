@@ -43,8 +43,14 @@
 
 // Error Messages
 
-# define ERR_QUOTES		"error: quotes open" 
-# define ERR_RDIR		"syntax error unexpected token"
+# define ERR_ALLOC				"minishell: memory alocation failed\n"
+# define ERR_QUOTES				"error: quotes open\n" 
+# define ERR_RDIR				"syntax error unexpected token\n"
+# define ERR_CD					"minishell: cd"
+# define ERR_CD_TOO_MANY_ARG	"minishell: cd: too many arguments\n"
+# define ERR_CD_HOME_NOT_SET	"minishell: cd: HOME not set\n"
+
+# define MSG_EXIT				ft_strdup("exit\n")
 
 extern int	g_signal;
 

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 15:59:28 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 20:31:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int	unset(char **cmds)
 	{
 		var_name = ft_strjoin(cmds[i], "=");
 		if (!var_name)
-			free_and_exit(NULL,
-				"minishell: memory alocation failed", ES_ALLOC_FAIL);
+			free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL);
 		if (!var_name_check(var_name))
 		{
 			free(var_name);

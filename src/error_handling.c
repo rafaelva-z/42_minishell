@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:05:22 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 18:58:17 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 19:59:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ char	*message_joiner(int nbr, ...)
 int	display_error(char *error_msg, int exit_status)
 {
 	if (error_msg)
-	{
 		ft_putstr_fd(error_msg, 2);
-		ft_putstr_fd("\n", 2);
-	}
 	return (exit_status);
 }
