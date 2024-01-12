@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 19:21:06 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/12 21:30:21 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ char *key_word(char *s)
 	char	*key_wrd;
 
 	i = 0;
-	while (s[i] && s[i] != ' ' && s[i] != DQUOTE)
+	while (s[i] && s[i] != ' ' && s[i] != DQUOTE && s[i] != '$')
 		i++;
 	key_wrd = malloc(i + 1);
 	key_wrd[i] = 0;
 	i = -1;
-	while (s[++i] && s[i] != ' ' && s[i] != DQUOTE)
+	while (s[++i] && s[i] != ' ' && s[i] != DQUOTE && s[i] != '$')
 		key_wrd[i] = s[i];
 	return (key_wrd);
 }
@@ -35,6 +35,11 @@ char	*expand(char *s)
 
 
 	key_wrd = key_word(s);
+	if (!ft_strncmp(key_wrd, "?", 2))
+	{
+		free (key_wrd);
+		return (ft_itoa(get_env_struct()->exit_status));
+	}
 	var = get_env_var_value((const char *)key_wrd);
 	if (!var)
 	{
@@ -105,18 +110,9 @@ char	*expansions(char *prompt, int rec)
 			return (ft_strdup(prompt));
 		return (prompt);
 	}
-	if (prompt[i + 1] == '?')
-	{
-		prompt[i] = 0;
-		expanded_str = ft_strjoin_free(prompt,
-				ft_itoa(get_env_struct()->exit_status), 2);
-		if (rec == 0)
-			free (prompt);
-		return (expanded_str);
-	}
 	prompt[i] = 0;
 	expanded_str = ft_strjoin_free(prompt, expand(prompt + i + 1), 2);
-	while (prompt[++i] && prompt[i] != ' ' && prompt[i] != '\"')
+	while (prompt[++i] && prompt[i] != ' ' && prompt[i] != '\"' && prompt[i] != '$')
 		;
 	if (!prompt[i])
 	{
@@ -131,8 +127,46 @@ char	*expansions(char *prompt, int rec)
 	return (prod);
 }
 
+static void	limiter_protect(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == '<' && s[i + 1] == '<')
+			i += 3;
+		else
+			continue ;
+		if (s[i] == '\"')
+			i++;
+		while (s[i] && s[i] == ' ')
+			i++;
+		if (s[i] == '$')
+			s[i] = -1;
+	}
+
+}
+
+// >>       >> |       
+
 void	expansion_manager(char **prompt)
 {
+	int		i;
+	char	*temp;
+
+	i = -1;
 	expansion_prep(prompt);
+	limiter_protect(*prompt);
 	*prompt = expansions(*prompt, 0);
+	temp = *prompt;
+	while (temp[++i])
+	{
+		if (temp[i] == -1)
+			temp[i] = '$';
+	}
+	printf("prompt: %s\n", *prompt);
 }
+
+
+/*	<< $USER	*/
