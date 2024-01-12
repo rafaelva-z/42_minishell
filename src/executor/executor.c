@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 19:58:35 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 20:03:13 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	dupper(t_commands *cmd)
 */
 static void	executor(t_exec *exec, t_commands *cmd)
 {
-	redirect(exec, cmd);
+	// redirect(exec, cmd);
 	if (!cmd->cmds)			//	this has to be here in case
 							//  theres no command (ex: << EOF)
 		free_and_exit(exec, NULL, get_env_struct()->exit_status);
@@ -63,6 +63,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	builtin_exec_child(exec, cmd);
 	path_finder(exec, cmd);
 	create_env_array();
+	// write (2, "here\n", 5);
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
