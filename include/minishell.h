@@ -85,11 +85,12 @@ enum e_negative_char_prompt
 
 
 void		set_signals(int process);
-
-
-//
-
 void		expansion_manager(char **prompt);
+int			prompt_processing(char **prompt);
+
+//	main.c
+
+void	get_prompt_cursor(void);
 
 //	Built-ins
 
@@ -121,6 +122,11 @@ int			contains_only_nbr(char *str);
 int			to_close(int fd);
 int			what_redir_token(char *str);
 void		set_shlvl();
+
+//	utils3.c
+
+int			get_pipe_count(char *str);
+int			count_commands(char **tokens, size_t pipe);
 
 // quote_check.c
 

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 16:20:04 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 21:18:22 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	here_doc(t_redirection *rdir, int fd[2])
 		free (s);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &term); // this is preventive
+	if (!s)
+		ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `EOF')\n", STDOUT_FILENO);
 	if (s)
 		free (s);
 	close(fd[0]);
@@ -54,7 +56,6 @@ static void	here_doc_check(t_commands *commands)
 	int				fd[2];
 	pid_t			pid;
 	t_redirection	*redir;
-	struct termios	term;
 
 	redir = commands->redirects;
 	while (redir && g_signal == 0)
@@ -67,12 +68,10 @@ static void	here_doc_check(t_commands *commands)
 		to_close(commands->hd_fd);
 		if (pipe(fd) == -1)
 			free_and_exit(NULL, ft_strdup("Pipe error\n"), ES_PIPE);
-		tcgetattr(STDIN_FILENO, &term);
 		pid = fork();
 		if (pid == 0)
 			here_doc(redir, fd);
 		waitpid(pid, NULL, 0);
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 		fd[1] = to_close(fd[1]);
 		commands->hd_fd = fd[0];
 		redir = redir->next;
@@ -85,12 +84,17 @@ static void	here_doc_check(t_commands *commands)
 void	here_doc_manager(void)
 {
 	t_commands	*current;
+	struct termios	term;
 
 	current = get_env_struct()->commands;
+	tcgetattr(STDIN_FILENO, &term);
 	while (current && g_signal == 0)
 	{
 		if (current->redirects)
+		{
 			here_doc_check(current);
+			tcsetattr(STDIN_FILENO, TCSANOW, &term);
+		}
 		current = current->next;
 	}
 }

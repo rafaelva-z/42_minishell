@@ -14,80 +14,6 @@
 
 int	g_signal;
 
-/**
- * @brief	Allocates the prompt cursor to param "char **cursor".
- * 			the cursor will be the username + the constant CURSOR
- * 			or just the constant CURSOR if there is no USER variable
-*/
-static void	get_prompt_cursor(void)
-{
-	t_envp	*shell;
-
-	shell = get_env_struct();
-	if (shell->cursor)
-		free(shell->cursor);
-	if (get_env_var("USER"))
-	{
-		shell->cursor = get_env_var("USER")->content + 5;
-		shell->cursor = ft_strjoin(shell->cursor, CURSOR);
-	}
-}
-
-//	TEST
-// static void	print_commands_redirects(t_commands *commands)
-// {
-// 	printf("\n_________________\nREDIRECTIONS\n");
-// 	t_commands		*test_c = commands;
-// 	t_redirection	*test_r;
-// 	while (test_c)
-// 	{
-// 		test_r = test_c->redirects;
-// 		while (test_r)
-// 		{
-// 			printf("__type: %d\n", test_r->type);
-// 			printf("__key_wrd: %s\n", test_r->key_wrd);
-// 			test_r = test_r->next;
-// 		}
-// 		test_c = test_c->next;
-// 		if (test_c)
-// 			printf("-|PIPE|-\n");
-// 	}
-// 	printf("\n_________________\nCOMMANDS\n");
-// 	test_c = commands;
-// 	while (test_c)
-// 	{
-// 		int	f = 0;
-// 		while (test_c->cmds[f])
-// 		{
-// 			printf("cmd: %s\n", test_c->cmds[f]);
-// 			f++;
-// 		}
-// 		test_c = test_c->next;
-// 		if (test_c)
-// 			printf("-|PIPE|-\n");
-// 	}
-// }
-
-int	prompt_processing(char **prompt)
-{
-	if (quote_check(*prompt))
-	{
-		free(*prompt);
-		get_env_struct()->exit_status = ES_OP_N_PERM;
-		return (display_error(ERR_QUOTES, -1));
-	}
-	prompt_cleaner(prompt);
-	if (redirection_check(*prompt))
-	{
-		free(*prompt);
-		
-		get_env_struct()->exit_status = ES_OP_N_PERM;
-		return (display_error(ERR_RDIR, -2));
-	}
-	add_spaces_redirections(prompt);
-	return (0);
-}
-
 static void	get_prompt(char **prompt)
 {
 	t_envp	*shell;
@@ -114,11 +40,11 @@ static void	create_commands_and_redirections_struct(char **prompt)
 	add_commands(&shell->commands, shell->tokens);
 }
 
-static void	shell_loop()
+static void	shell_loop(void)
 {
 	char			*prompt;
 
-	while (1)
+	while (true)
 	{
 		set_env_var("_", "/usr/bin/env");
 		if (g_signal == SIGINT)
@@ -157,3 +83,38 @@ int	main(int argc, char **argv, char **envp)
 	shell_loop();
 	free_and_exit(NULL, NULL, 0);
 }
+
+//	TEST
+// static void	print_commands_redirects(t_commands *commands)
+// {
+// 	printf("\n_________________\nREDIRECTIONS\n");
+// 	t_commands		*test_c = commands;
+// 	t_redirection	*test_r;
+// 	while (test_c)
+// 	{
+// 		test_r = test_c->redirects;
+// 		while (test_r)
+// 		{
+// 			printf("__type: %d\n", test_r->type);
+// 			printf("__key_wrd: %s\n", test_r->key_wrd);
+// 			test_r = test_r->next;
+// 		}
+// 		test_c = test_c->next;
+// 		if (test_c)
+// 			printf("-|PIPE|-\n");
+// 	}
+// 	printf("\n_________________\nCOMMANDS\n");
+// 	test_c = commands;
+// 	while (test_c)
+// 	{
+// 		int	f = 0;
+// 		while (test_c->cmds[f])
+// 		{
+// 			printf("cmd: %s\n", test_c->cmds[f]);
+// 			f++;
+// 		}
+// 		test_c = test_c->next;
+// 		if (test_c)
+// 			printf("-|PIPE|-\n");
+// 	}
+// }
