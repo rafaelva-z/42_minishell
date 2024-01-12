@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 15:31:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 20:00:30 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	export(char **cmds)
 	{
 		j = 0;
 		if (!var_name_check(cmds[i]))
-			return (display_error("minishell: export: invalid option", 1));
+			return (display_error("minishell: export: invalid option\n", 1));
 		while (cmds[i][j] != '=')
 			j++;
 		var_name = ft_substr(cmds[i], 0, j);

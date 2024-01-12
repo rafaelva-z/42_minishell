@@ -48,10 +48,10 @@ int	cd(char **cmds)
 	char	*oldpwd;
 	
 	if (count_cmds(cmds) > 1)
-		return (display_error("minishell: cd: too many arguments", 1));
+		return (display_error("minishell: cd: too many arguments\n", 1));
 	home = get_env_struct()->get_value("HOME");
 	if ((!cmds[0] || !cmds[0][0]) && !home)
-		return (display_error("minishell: cd: HOME not set", 1));
+		return (display_error("minishell: cd: HOME not set\n", 1));
 	oldpwd = getcwd(NULL, 0);
 	if (!cmds[0])
 		r = chdir(home);

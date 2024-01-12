@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:45 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 19:58:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
-	free_and_exit(exec, message_joiner(3 , "minishell: ", cmd->cmds[0], ": command not found")
+	free_and_exit(exec, message_joiner(3 , "minishell: ", cmd->cmds[0], ": command not found\n")
 			, ES_CMD_N_FOUND);
 }
 
