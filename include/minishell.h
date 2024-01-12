@@ -44,7 +44,7 @@
 // Error Messages
 
 # define ERR_QUOTES		"error: quotes open" 
-# define ERR_RDIR		"syntax error near unexpected token 'insert token?'"
+# define ERR_RDIR		"syntax error unexpected token"
 
 extern int	g_signal;
 
