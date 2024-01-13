@@ -48,10 +48,12 @@
 # define ERR_CD					"minishell: cd"
 # define ERR_CD_TOO_MANY_ARG	"minishell: cd: too many arguments\n"
 # define ERR_CD_HOME_NOT_SET	"minishell: cd: HOME not set\n"
-
+# define ERR_EXPORT_BAD_NAME	"minishell: export: not a valid identifier\n"
+# define ERR_EXIT_TOO_MANY_ARG	"minishell: exit: too many arguments\n"
+# define ERR_EXIT_NUM_ARG		"minishell: exit: numeric argument required\n"
 # define MSG_EXIT				ft_strdup("exit\n")
 # define MSG_HDOC_EOF			"minishell: warning: here-document delimited by end-of-file (wanted `EOF')\n"
-# define MSG_SHLVL_HIGH			"warning: shell level (insert value here) too high, resetting to 1"
+# define MSG_SHLVL_HIGH			"warning: shell level too high, resetting to 1"
 
 extern int	g_signal;
 
@@ -97,6 +99,7 @@ int			cd(char **cmds);
 int			echo(char **prompt);
 int			print_env(void);
 int			export(char **cmds);
+void		exit_bltn(t_exec *exec, char **cmds, short print_exit);
 void		set_env_var(const char *name, const char *value);
 int			export_sort_print(void);
 int			pwd(void);
@@ -126,6 +129,7 @@ void		set_shlvl(void);
 
 int			get_pipe_count(char *str);
 int			count_commands(char **tokens, size_t pipe);
+int			count_cmds(char **cmds);
 
 // quote_check.c
 

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:25:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 13:33:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 14:27:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,14 @@ int	count_commands(char **tokens, size_t pipe)
 		i++;
 	}
 	return (count);
+}
+
+int	count_cmds(char **cmds)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i])
+		i++;
+	return (i);
 }
