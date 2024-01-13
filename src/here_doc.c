@@ -3,28 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 22:56:43 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 13:02:55 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/**
-*	@brief The name says it all: simulates a here_doc. It does it by reading from
-*	the standard input, within the command itself and the limiter word.
-*/
-void	here_doc(t_redirection *rdir, int fd[2])
+static void	here_doc_loop(t_redirection *rdir, int fd[2])
 {
 	char			*s;
 	int				len;
-	struct termios	term;
 
-	tcgetattr(STDIN_FILENO, &term); // this is preventive try removing
-	set_signals(HNDLR_CHILD_HD);
-	rl_cleanup_after_signal();
 	len = ft_strlen(rdir->key_wrd);
 	while (1)
 	{
@@ -32,15 +24,33 @@ void	here_doc(t_redirection *rdir, int fd[2])
 		if (!s || g_signal == SIGINT || (ft_strncmp(rdir->key_wrd, s, len)
 				== 0 && len == (int)(ft_strlen(s))))
 			break ;
+		expansion_manager(&s);
 		write(fd[1], s, ft_strlen(s));
 		write(fd[1], "\n", 1);
 		free (s);
 	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &term); // this is preventive try removing
 	if (s)
 		free (s);
 	else
 		ft_putstr_fd(MSG_HDOC_EOF, STDOUT_FILENO);
+}
+
+/**
+*	@brief The name says it all: simulates a here_doc. It does it by reading from
+*	the standard input, within the command itself and the limiter word.
+*/
+void	here_doc(t_redirection *rdir, int fd[2])
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term); // this is preventive try removing
+	set_signals(HNDLR_CHILD_HD);
+	rl_cleanup_after_signal();
+
+
+	here_doc_loop(rdir, fd);
+
+	tcsetattr(STDIN_FILENO, TCSANOW, &term); // this is preventive try removing
 	close(fd[0]);
 	close(fd[1]);
 	free_and_exit(NULL, NULL, 0);
