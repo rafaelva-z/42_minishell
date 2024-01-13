@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:06:56 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 23:24:12 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 13:16:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,68 +16,79 @@
 # include "minishell.h"
 
 /**
- * 
- * 
+ * char 			*key_wrd		The key word after the operand: limiter or file name
+ * int				type			Redirection type (t_redir_type)
+ * t_redirection	next			Pointer to the next redirection struct
 */
 typedef struct s_redirection
 {
-	char					*key_wrd;			//	[X]	The key word after the operand: limiter or file name
-	int						type;				//	[X]	Redirection type (t_redir_type)
-	struct s_redirection	*next;	 			//	[X]	Pointer to the next redirection struct
+	char					*key_wrd;
+	int						type;
+	struct s_redirection	*next;
 }				t_redirection;
 
 /**
- * 
- * 
+ * char					**cmds;			the command and respective arguments 
+ * char					*cmd_path;		The path to the command's binary
+ * t_redirection		*redirects;		All redirections
+ * int					hd_fd;			The fd corresponding to the here_doc
+ * int					read_fd;		The fd corresponding to the read_fd
+ * int					write_fd;		The fd corresponding to the write_fd
+ * struct s_commands	*next;			Next command in the pipeline
 */
 typedef struct s_commands
 {
-	char				**cmds;					//	[X] The command and it respective arguments
-	char				*cmd_path;				//	[ ] The path to the command's binary
-	t_redirection		*redirects;				//	[X] All redirections
-	int					hd_fd;					//	[ ] The fd corresponding to the here_doc
-	int					read_fd;				//	[ ] The fd corresponding to the read_fd
-	int					write_fd;				//	[ ] The fd corresponding to the write_fd
-	struct s_commands	*next;					//	[X] Next command in the pipeline
-	
+	char				**cmds;
+	char				*cmd_path;
+	t_redirection		*redirects;
+	int					hd_fd;
+	int					read_fd;
+	int					write_fd;
+	struct s_commands	*next;
 }				t_commands;
 
-/**
- * 
- * 
+/*
+ * t_env_var			*vars			pointer to the linked list with all env vars
+ * char					**env_array		pointer to an all env vars but in array format
+ * t_commands			*commands		Pointer to the first command struct in the pipeline
+ * char					*cursor			pointer to the cursor that is printed before every prompt
+ * int					nbr_cmds		amount of command structs (pipe amount + 1)
 */
 typedef struct s_envp
 {
-	t_env_var			*vars;											//  pointer to var_list
-	char				**env_array;									//	array with env
+	t_env_var			*vars;
+	char				**env_array;
 	int					exit_status;
-	t_commands			*commands;								//Pointer to the struct of fist command in the pipeline
+	t_commands			*commands;
 	char				*cursor;
 	int					nbr_cmds;
 	char				**tokens;
-	t_env_var			*(*get)(const char *name);						//  (F) get env var struct 
-	char				**(*make_array)(void);							//  (F) create env var array
-	char				*(*get_value)(const char *name);				//  (F) get env var value
-	void				(*set)(const char *name, const char *value);	//  (F) add var to envp
-	void				(*unset)(const char *name);						//  (F) remove var from envp
-	int					(*print)(void);									//  (F) print all env vars
-	int					(*print_alpha)(void);							//	(F) prints variables sorted alphabetically
-	void				(*destroy)();									//	(F) properly frees everything
-																		//		that was allocated
+	t_env_var			*(*get)(const char	*name);
+	char				**(*make_array)(void);
+	char				*(*get_value)(const char *name);
+	void				(*set)(const char *name, const char *value);
+	void				(*unset)(const char *name);
+	int					(*print)(void);
+	int					(*print_alpha)(void);
+	void				(*destroy)();
 }				t_envp;
 
 /**
- * 
- * 
+ * char				**bin_dir;			the splited binary directories
+ * int				nbr_bin;			number of binary directories
+ * int				fd[2];				pipe's file descriptors (in front)
+ * int				remainder_fd;		reading end of the back pipe
+ * pid_t			*pid;				pids of the command's processes
+ * t_envp			*envp;				pointer to envp struct
 */
 typedef struct s_exec
 {
-	char			**bin_dir;					//	the splited binary directories
-	int				nbr_bin;					//	number of binary directories
-	int				fd[2];						//	pipe's file descriptors (in front)
-	int				remainder_fd;				//	reading end of the back pipe
-	pid_t			*pid;						//	pids of the command's processes
-	t_envp			*envp;						//	pointer to envp struct
+	char			**bin_dir;
+	int				nbr_bin;
+	int				fd[2];
+	int				remainder_fd;
+	pid_t			*pid;
+	t_envp			*envp;
 }				t_exec;
 
 t_envp			*get_env_struct(void);

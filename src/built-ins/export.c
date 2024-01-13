@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 20:00:30 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 13:33:52 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	set_env_var(const char *name, const char *value)
 		current->content = ft_strjoin(var_name, value);
 	}
 	free(var_name);
-	//  do nothing if var and value are the same as existing one
 }
 
 /**

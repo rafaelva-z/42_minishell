@@ -120,7 +120,7 @@ int			contains_only_nbr(char *str);
 
 int			to_close(int fd);
 int			what_redir_token(char *str);
-void		set_shlvl();
+void		set_shlvl(void);
 
 //	utils3.c
 
@@ -179,7 +179,7 @@ int			builtin_exec_parent(t_exec *exec, t_commands *cmd);
 void		free_exec(t_exec *exec);
 
 // destroyer
-int		display_error(char *error_msg, int exit_status);
+int			display_error(char *error_msg, int exit_status);
 
 // error_handling
 
