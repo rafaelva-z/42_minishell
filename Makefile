@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/12 21:28:49 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/13 13:49:35 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRCS		=	$(addprefix ./src/,				\
 				cd.c							\
 				echo.c							\
 				env.c							\
+				exit.c							\
 				export.c						\
 				export_sort.c 					\
 				pwd.c							\

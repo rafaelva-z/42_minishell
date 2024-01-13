@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/13 13:32:44 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 15:10:17 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	var_printcontent(void *content)
 }
 
 /**
- * @brief checks if the string a valid enviroment variable with a valid name
+ * @brief checks if the string a valid enviroment variable name
  * @return 0 if invalid, 1 if valid
 */
 bool	var_name_check(const char *str)
@@ -30,14 +30,13 @@ bool	var_name_check(const char *str)
 	int	i;
 
 	i = 0;
-	if (!str || (!ft_isalpha(str[i]) && str[i] != '_')
-		|| ft_strchr(str, '=') == NULL)
+	if (!str)
+		return (true);
+	if (!ft_isalpha(str[i]) && str[i] != '_')
 		return (false);
-	while (str[++i] != '=')
-	{
+	while (str[++i] && str[i] != '=')
 		if (!ft_isalnum(str[i]) && str[i] != '_')
 			return (false);
-	}
 	return (true);
 }
 
@@ -92,12 +91,10 @@ int	contains_only_nbr(char *str)
 	i = -1;
 	if (!str)
 		return (0);
+	if (str[0] == '-')
+			i++;
 	while (str[++i])
-	{
-		if (str[0] == '-')
-			continue ;
-		if (!ft_isdigit(*str))
+		if (!ft_isdigit(str[i]))
 			return (0);
-	}
 	return (1);
 }
