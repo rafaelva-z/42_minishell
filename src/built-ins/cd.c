@@ -28,16 +28,6 @@ void	set_pwd(char *oldpwd)
 		shell->set("OLDPWD", oldpwd);
 }
 
-static int	count_cmds(char **cmds)
-{
-	int	i;
-
-	i = 0;
-	while (cmds[i])
-		i++;
-	return (i);
-}
-
 /**
  * @brief change the working directory
 */

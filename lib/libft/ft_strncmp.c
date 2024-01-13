@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:19:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 13:50:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 13:29:42 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 
 	i = 0;
 	if (!s1 || !s2)
-		return(999999);
+		return (999999);
 	if (n == 0)
 		return (0);
 	while (s1[i] == s2[i] && i < n - 1 && s1[i])

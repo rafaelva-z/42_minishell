@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 20:31:54 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 13:34:32 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@ static void	unset_env_var(const char *name)
 		current->next->previous = current->previous;
 	if (next && !current->previous)
 		shell->vars = next;
-	else if(!next && !current->previous)
+	else if (!next && !current->previous)
 		shell->vars = NULL;
 	ft_lstdelone(current, free);
-	//printf("%s---\n", shell->vars->content);
 }
 
 /**

@@ -34,6 +34,7 @@ SRCS		=	$(addprefix ./src/,				\
 				cd.c							\
 				echo.c							\
 				env.c							\
+				exit.c							\
 				export.c						\
 				export_sort.c 					\
 				pwd.c							\

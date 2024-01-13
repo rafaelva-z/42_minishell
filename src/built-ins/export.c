@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 20:00:30 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 15:15:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	set_env_var(const char *name, const char *value)
 		current->content = ft_strjoin(var_name, value);
 	}
 	free(var_name);
-	//  do nothing if var and value are the same as existing one
 }
 
 /**
@@ -50,15 +49,17 @@ int	export(char **cmds)
 	int		j;
 
 	i = -1;
-	if (!cmds[0])
+	if (!cmds || !cmds[0])
 		return (export_sort_print());
 	while (cmds[++i])
 	{
 		j = 0;
 		if (!var_name_check(cmds[i]))
-			return (display_error("minishell: export: invalid option\n", 1));
-		while (cmds[i][j] != '=')
+			return (display_error(ERR_EXPORT_BAD_NAME, 1));
+		while (cmds[i][j] && cmds[i][j] != '=')
 			j++;
+		if (cmds[i][j] != '=')
+			return (0);
 		var_name = ft_substr(cmds[i], 0, j);
 		var_value = ft_substr(cmds[i], j + 1, ft_strlen(&(cmds[i][j + 1])));
 		set_env_var(var_name, var_value);

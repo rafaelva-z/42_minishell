@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 23:15:02 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 14:56:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 void	builtin_exec_child(t_exec *exec, t_commands *commands)
 {
-	t_envp *shell;
+	t_envp	*shell;
 
 	shell = get_env_struct();
 	if (!commands || !commands->cmds || !commands->cmds[0])
@@ -35,10 +35,10 @@ void	builtin_exec_child(t_exec *exec, t_commands *commands)
 	else if (ft_strncmp("unset", commands->cmds[0], 6) == 0)
 		shell->exit_status = unset(&commands->cmds[1]);
 	else if (ft_strncmp("exit", commands->cmds[0], 5) == 0)
-		free_and_exit(exec, NULL, 0);
+		exit_bltn(exec, &commands->cmds[1], false);
 	else
 		return ;
-	close(STDIN_FILENO);
+	close(STDIN_FILENO); // does this need to be here?
 	close(STDOUT_FILENO);
 	free_and_exit(exec, NULL, get_env_struct()->exit_status);
 }
@@ -48,7 +48,7 @@ void	builtin_exec_child(t_exec *exec, t_commands *commands)
 */
 int	builtin_exec_parent(t_exec *exec, t_commands *commands)
 {
-	t_envp *shell;
+	t_envp	*shell;
 
 	shell = get_env_struct();
 	if (commands && commands->cmds && commands->cmds[0])
@@ -60,7 +60,7 @@ int	builtin_exec_parent(t_exec *exec, t_commands *commands)
 		else if (ft_strncmp("unset", commands->cmds[0], 6) == 0)
 			shell->exit_status = unset(&commands->cmds[1]);
 		else if (ft_strncmp("exit", commands->cmds[0], 5) == 0)
-			free_and_exit(exec, MSG_EXIT, 0);
+			exit_bltn(exec, &commands->cmds[1], true);
 		else
 			return (0);
 	}
