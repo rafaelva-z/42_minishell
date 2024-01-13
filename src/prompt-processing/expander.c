@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 16:41:22 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/13 17:25:07 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*expansion(char *prpt, int rec, int i, char *expnd_str)
 
 	if (!prpt || !*prpt)
 		return (prpt);
-	if (prpt[i] == '\"')
+	if (prpt[i] == '\"' && rec)
 		prpt++;
 	while (prpt[i] && expansion_check(&prpt[i], prpt, i))
 		i++;
@@ -77,12 +77,11 @@ static char	*expansion(char *prpt, int rec, int i, char *expnd_str)
 	expnd_str = ft_strjoin_free(prpt, expand(prpt + i + 1), 2);
 	while (prpt[++i] && prpt[i] != ' ' && prpt[i] != '\"' && prpt[i] != '$')
 		;
-	if (!prpt[i] && rec == 0)
-		free (prpt);
-	if (!prpt[i])
+	if (expander_aux(prpt, rec))
 		return (expnd_str);
 	prd = ft_strjoin_free(expnd_str, expansion(prpt + i, rec + 1, 0, NULL), 3);
-	expander_aux(prpt, rec);
+	if (prpt && rec == 0)
+		free (prpt);
 	return (prd);
 }
 

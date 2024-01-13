@@ -193,7 +193,7 @@ char		*message_joiner(int nbr, ...);
 
 int			expansion_check(char *c, char *prompt, int i);
 void		expansion_prep(char **prompt, int i, int neg_len);
-void	    expander_aux(char *prpt, int rec);
+int		    expander_aux(char *prpt, int rec);
 
 #endif
 

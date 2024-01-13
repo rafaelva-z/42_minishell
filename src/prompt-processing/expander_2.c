@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:32:28 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 16:42:16 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/13 17:24:56 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,13 @@ int	expansion_check(char *c, char *prompt, int i)
 	return (1);
 }
 
-void	expander_aux(char *prpt, int rec)
+int	expander_aux(char *prompt, int rec)
 {
-	if (prpt && rec == 0)
-		free (prpt);
+	if (!*prompt)
+	{
+		if (rec == 0)
+			free(prompt);
+		return (1);
+	}
+	return (0);
 }
