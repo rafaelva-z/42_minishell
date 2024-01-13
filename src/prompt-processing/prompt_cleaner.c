@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 22:50:39 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 16:07:07 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ static void	space_trim_loop(const char *prompt, char *tmp, int *i, int *j)
 {
 	char	c;
 
-	while (prompt[*i] && prompt[*i] != DQUOTE && prompt[*i] != SQUOTE
+	while (prompt[*i] && prompt[*i] != '\"' && prompt[*i] != '\''
 		&& !ft_isspace(prompt[*i]))
 		tmp[(*j)++] = prompt[(*i)++];
-	if (prompt[*i] == SQUOTE || prompt[*i] == DQUOTE)
+	if (prompt[*i] == '\'' || prompt[*i] == '\"')
 	{
 		c = prompt[*i];
 		tmp[(*j)++] = prompt[(*i)++];

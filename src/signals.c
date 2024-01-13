@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 22:57:18 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 16:26:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	set_signals(int process)
 	struct sigaction	sig_quit;
 	sigset_t			block_mask;
 
-	(void)block_mask;  //may not be needed
+	(void)block_mask;
 	sigemptyset(&sig_int.sa_mask);
 	sigemptyset(&sig_quit.sa_mask);
 	if (process == HNDLR_MAIN)

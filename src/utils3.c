@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:25:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 14:27:58 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 17:29:14 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	count_commands(char **tokens, size_t pipe)
 {
 	int	i;
 	int	count;
+
 
 	i = 0;
 	count = 0;

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 17:35:44 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 13:08:04 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 16:32:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	init_env(char **envp)
 	shell->get = get_env_var;
 	shell->get_value = get_env_var_value;
 	shell->set = set_env_var;
-	//shell->unset = unset;
 	shell->print = print_env;
 	shell->print_alpha = export_sort_print;
 	shell->destroy = free_env;
