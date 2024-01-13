@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 03:02:07 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 16:22:33 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 18:45:24 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	redirection_check_loop(char *prompt, int *i)
 {
 	int	after_redir_type;
 	int	redir_type;
-	int flag;
+	int	flag;
 
 	flag = 0;
 	while (prompt[*i] && !is_redir(prompt[*i]))

@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 18:11:52 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/13 18:43:16 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 /*	ATENTION: if theres no input on the fist command, it should read from
 				the standard input*/
 
-static void is_directory(t_redirection *rdir,t_exec *exec)
+static void	is_directory(t_redirection *rdir, t_exec *exec)
 {
-	struct stat path;
+	struct stat	path;
 
 	path.st_mode = 0;
 	stat(rdir->key_wrd, &path);
 	if (S_ISDIR(path.st_mode))
 		free_and_exit(exec, message_joiner(3, "minishell: ",
-			rdir->key_wrd, ": Is a directory\n"), ES_OP_N_PERM);
+				rdir->key_wrd, ": Is a directory\n"), ES_OP_N_PERM);
 }
 
 /*
