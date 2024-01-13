@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:00:15 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 22:53:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 16:55:05 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,34 @@ t_redirection	*new_redirection(int type, char *key_wrd)
 	return (redirect);
 }
 
+static void add_redir_if(char **tokens, int *i, t_commands **command_node)
+{
+	t_redirection	*redirect;
+	
+	if (tokens[*i] && is_redir_val(tokens[*i][0]))
+	{
+		if (tokens[*i][0] == RDIR_PIPE)
+		{
+			*command_node = (*command_node)->next;
+			(*i)++;
+			return ;
+		}
+		redirect = new_redirection(0, NULL);
+		if (!redirect)
+			free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL);
+		if (tokens[*i][0] == RDIR_IN || tokens[*i][0] == RDIR_OUT)
+			redirect->type = tokens[*i][0];
+		else if (tokens[*i][0] == RDIR_APP || tokens[*i][0] == RDIR_HDOC)
+			redirect->type = tokens[*i][0];
+		redirect->key_wrd = tokens[++(*i)];
+		addback_redirection(&(*command_node)->redirects, redirect);
+	}
+}
+
 void	add_redirections(t_commands **command_struct, char **tokens)
 {
 	int				i;
 	t_commands		*command_node;
-	t_redirection	*redirect;
 
 	i = 0;
 	command_node = *command_struct;
@@ -39,24 +62,7 @@ void	add_redirections(t_commands **command_struct, char **tokens)
 	{
 		while (tokens[i] && !is_redir_val(tokens[i][0]))
 			i++;
-		if (tokens[i] && is_redir_val(tokens[i][0]))
-		{
-			if (tokens[i][0] == RDIR_PIPE)
-			{
-				command_node = command_node->next;
-				i++;
-				continue ;
-			}
-			redirect = new_redirection(0, NULL);
-			if (!redirect)
-				free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL);
-			if (tokens[i][0] == RDIR_IN || tokens[i][0] == RDIR_OUT)
-				redirect->type = tokens[i][0];
-			else if (tokens[i][0] == RDIR_APP || tokens[i][0] == RDIR_HDOC)
-				redirect->type = tokens[i][0];
-			redirect->key_wrd = tokens[++i];
-			addback_redirection(&command_node->redirects, redirect);
-		}
+		add_redir_if(tokens, &i, &command_node);
 	}
 }
 

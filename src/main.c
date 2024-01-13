@@ -40,54 +40,18 @@ static void	create_commands_and_redirections_struct(char **prompt)
 	add_commands(&shell->commands, shell->tokens);
 }
 
-static void	shell_loop(void)
+static void	shell_loop_start(char **prompt)
 {
-	char			*prompt;
-
-	while (true)
-	{
-		set_env_var("_", "/usr/bin/env");
-		if (g_signal == SIGINT)
-			write(1, "\n", 1);
-		set_signals(HNDLR_MAIN);
-		get_prompt(&prompt);
-		if (!prompt)
-			free_and_exit(NULL, MSG_EXIT, STDOUT_FILENO);
-		else
-		{
-			set_signals(HNDLR_LOOP);
-			if (!*prompt)
-			{
-				free(prompt);
-				continue ;
-			}
-			if (prompt_processing(&prompt))
-				continue ;
-			expansion_manager(&prompt);
-			create_commands_and_redirections_struct(&prompt);
-			here_doc_manager();
-			process_generator();
-			free_matrix_and_commands();
-		}
-	}
+	set_env_var("_", "/usr/bin/env");
+	if (g_signal == SIGINT)
+		write(1, "\n", 1);
+	set_signals(HNDLR_MAIN);
+	get_prompt(prompt);
 }
 
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argv;
-	if (argc != 1)
-		exit(0);
-	init_env(envp);
-	get_prompt_cursor();
-	set_shlvl();
-	shell_loop();
-	free_and_exit(NULL, NULL, 0);
-}
-
-//	TEST
 // static void	print_commands_redirects(t_commands *commands)
 // {
-// 	printf("\n_________________\nREDIRECTIONS\n");
+// 	printf("\n\n\n_________________\nREDIRECTIONS\n");
 // 	t_commands		*test_c = commands;
 // 	t_redirection	*test_r;
 // 	while (test_c)
@@ -118,3 +82,45 @@ int	main(int argc, char **argv, char **envp)
 // 			printf("-|PIPE|-\n");
 // 	}
 // }
+
+static void	shell_loop(void)
+{
+	char			*prompt;
+
+	while (true)
+	{
+		shell_loop_start(&prompt);
+		if (!prompt)
+			free_and_exit(NULL, ft_strdup(MSG_EXIT), STDOUT_FILENO);
+		else
+		{
+			set_signals(HNDLR_LOOP);
+			if (!*prompt)
+			{
+				free(prompt);
+				continue ;
+			}
+			if (prompt_processing(&prompt))
+				continue ;
+			expansion_manager(&prompt);
+			create_commands_and_redirections_struct(&prompt);
+			//print_commands_redirects(get_env_struct()->commands);
+			here_doc_manager();
+			process_generator();
+			free_matrix_and_commands();
+		}
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argv;
+	if (argc != 1)
+		exit(0);
+	init_env(envp);
+	get_prompt_cursor();
+	set_shlvl();
+	shell_loop();
+	free_and_exit(NULL, NULL, 0);
+}
+

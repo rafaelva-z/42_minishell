@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 13:45:08 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 16:06:34 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ char *key_word(char *s)
 	char	*key_wrd;
 
 	i = 0;
-	while (s[i] && s[i] != ' ' && s[i] != DQUOTE && s[i] != '$')
+	while (s[i] && s[i] != ' ' && s[i] != '\"' && s[i] != '$')
 		i++;
 	key_wrd = malloc(i + 1);
 	key_wrd[i] = 0;
 	i = -1;
-	while (s[++i] && s[i] != ' ' && s[i] != DQUOTE && s[i] != '$')
+	while (s[++i] && s[i] != ' ' && s[i] != '\"' && s[i] != '$')
 		key_wrd[i] = s[i];
 	return (key_wrd);
 }

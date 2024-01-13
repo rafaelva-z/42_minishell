@@ -10,11 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# define _XOPEN_SOURCE 700							// Dunno what this is but now sigaction works on my home pc
+# define _XOPEN_SOURCE 700
 # include "../lib/libft/libft.h"
 # include "structs.h"
 # include <sys/wait.h>
@@ -25,10 +24,9 @@
 # include <readline/history.h>
 # include <stdbool.h>
 # include <termios.h>
+# include <signal.h>
 
 # define CURSOR		"@minishell>"
-# define DQUOTE		'\"'
-# define SQUOTE		'\''
 
 // Exit Status
 
@@ -51,8 +49,9 @@
 # define ERR_EXPORT_BAD_NAME	"minishell: export: not a valid identifier\n"
 # define ERR_EXIT_TOO_MANY_ARG	"minishell: exit: too many arguments\n"
 # define ERR_EXIT_NUM_ARG		"minishell: exit: numeric argument required\n"
-# define MSG_EXIT				ft_strdup("exit\n")
-# define MSG_HDOC_EOF			"minishell: warning: here-document delimited by end-of-file (wanted `EOF')\n"
+# define MSG_EXIT				"exit\n"
+# define MSG_HDOC_EOF			"minishell: warning: here-document \
+								delimited by end-of-file (wanted `EOF')\n"
 # define MSG_SHLVL_HIGH			"warning: shell level too high, resetting to 1"
 
 extern int	g_signal;
