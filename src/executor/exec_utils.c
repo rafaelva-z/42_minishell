@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 20:55:29 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 23:15:02 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	builtin_exec_parent(t_exec *exec, t_commands *commands)
 	if (exec)
 		free_exec(exec);
 	return (1);
-
 }
 
 void	free_exec(t_exec *exec)

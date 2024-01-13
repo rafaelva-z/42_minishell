@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 21:18:22 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 22:56:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	here_doc(t_redirection *rdir, int fd[2])
 	int				len;
 	struct termios	term;
 
-
-	tcgetattr(STDIN_FILENO, &term); // this is preventive
+	tcgetattr(STDIN_FILENO, &term); // this is preventive try removing
 	set_signals(HNDLR_CHILD_HD);
 	rl_cleanup_after_signal();
 	len = ft_strlen(rdir->key_wrd);
@@ -37,11 +36,11 @@ void	here_doc(t_redirection *rdir, int fd[2])
 		write(fd[1], "\n", 1);
 		free (s);
 	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &term); // this is preventive
-	if (!s)
-		ft_putstr_fd("minishell: warning: here-document delimited by end-of-file (wanted `EOF')\n", STDOUT_FILENO);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term); // this is preventive try removing
 	if (s)
 		free (s);
+	else
+		ft_putstr_fd(MSG_HDOC_EOF, STDOUT_FILENO);
 	close(fd[0]);
 	close(fd[1]);
 	free_and_exit(NULL, NULL, 0);
@@ -83,7 +82,7 @@ static void	here_doc_check(t_commands *commands)
 */
 void	here_doc_manager(void)
 {
-	t_commands	*current;
+	t_commands		*current;
 	struct termios	term;
 
 	current = get_env_struct()->commands;

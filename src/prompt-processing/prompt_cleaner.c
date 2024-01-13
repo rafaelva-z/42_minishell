@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_cleaner.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/11 12:46:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 22:50:39 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+static void	space_trim_loop(const char *prompt, char *tmp, int *i, int *j)
+{
+	char	c;
+
+	while (prompt[*i] && prompt[*i] != DQUOTE && prompt[*i] != SQUOTE
+		&& !ft_isspace(prompt[*i]))
+		tmp[(*j)++] = prompt[(*i)++];
+	if (prompt[*i] == SQUOTE || prompt[*i] == DQUOTE)
+	{
+		c = prompt[*i];
+		tmp[(*j)++] = prompt[(*i)++];
+		while (prompt[*i] && prompt[*i] != c)
+			tmp[(*j)++] = prompt[(*i)++];
+		tmp[(*j)++] = prompt[(*i)++];
+	}
+	if (prompt[*i] && ft_isspace(prompt[*i]))
+		tmp[(*j)++] = ' ';
+	while (prompt[*i] && ft_isspace(prompt[*i]))
+		(*i)++;
+}
 
 /**
  * @brief	removes extra spaces between arguments leaving only one where
@@ -20,7 +41,6 @@ static char	*space_trim(const char *prompt)
 {
 	int		i;
 	int		j;
-	char	c;
 	char	*tmp;
 
 	i = 0;
@@ -30,23 +50,7 @@ static char	*space_trim(const char *prompt)
 		free_and_exit(NULL, "minishell: memory alocation failed",
 			ES_ALLOC_FAIL);
 	while (prompt[i])
-	{
-		while (prompt[i] && prompt[i] != DQUOTE && prompt[i] != SQUOTE
-			&& !ft_isspace(prompt[i]))
-			tmp[j++] = prompt[i++];
-		if (prompt[i] == SQUOTE || prompt[i] == DQUOTE)
-		{
-			c = prompt[i];
-			tmp[j++] = prompt[i++];
-			while (prompt[i] && prompt[i] != c)
-				tmp[j++] = prompt[i++];
-			tmp[j++] = prompt[i++];
-		}
-		if (prompt[i] && ft_isspace(prompt[i]))
-			tmp[j++] = ' ';
-		while (prompt[i] && ft_isspace(prompt[i]))
-			i++;
-	}
+		space_trim_loop(prompt, tmp, &i, &j);
 	tmp[j] = '\0';
 	return (tmp);
 }

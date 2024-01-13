@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 20:02:19 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/12 22:40:42 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	redirect(t_exec *exec, t_commands *cmd)
 	current = cmd->redirects;
 	while (current)
 	{
-
 		if (current->type == RDIR_IN)
 			redir_in(exec, cmd, current);
 		else if (current->type == RDIR_HDOC)

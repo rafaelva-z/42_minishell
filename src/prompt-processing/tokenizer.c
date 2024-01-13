@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 22:30:35 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/09 12:20:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 22:52:50 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,8 @@ static void	unquoter(char **token)
 	nbr_quotes = 0;
 	i = -1;
 	while ((*token)[++i])
-	{
 		if ((*token)[i] == SINGQ || (*token)[i] == DOUBQ)
 			nbr_quotes++;
-	}
 	prod = malloc(ft_strlen(*token) - nbr_quotes + 1);
 	i = -1;
 	j = 0;
@@ -83,7 +81,7 @@ static void	unquoter(char **token)
 		}
 		prod[i - j] = (*token)[i];
 	}
-	prod[i - j] = 0;
+	prod[i - j] = '\0';
 	free(*token);
 	*token = prod;
 }
