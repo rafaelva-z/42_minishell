@@ -36,7 +36,7 @@ int	cd(char **cmds)
 	int		r;
 	char	*home;
 	char	*oldpwd;
-	
+
 	if (count_cmds(cmds) > 1)
 		return (display_error(ERR_CD_TOO_MANY_ARG, 1));
 	home = get_env_struct()->get_value("HOME");

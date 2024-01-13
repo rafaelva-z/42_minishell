@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:25:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 17:29:14 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 18:20:06 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	count_commands(char **tokens, size_t pipe)
 {
 	int	i;
 	int	count;
-
 
 	i = 0;
 	count = 0;
