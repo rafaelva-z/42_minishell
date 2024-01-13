@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:52:10 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/11 19:48:46 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 16:06:31 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	quote_check(const char *str)
 	{
 		if (!c)
 		{
-			if (*str == SQUOTE || *str == DQUOTE)
+			if (*str == '\'' || *str == '\"')
 				c = *str;
 		}
 		else if (c == *str)
 			c = 0;
 		str++;
 	}
-	return ((c == SQUOTE) + ((c == DQUOTE) * 2));
+	return ((c == '\'') + ((c == '\"') * 2));
 }

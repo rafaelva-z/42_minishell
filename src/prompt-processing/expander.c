@@ -18,12 +18,12 @@ static char	*key_word(char *s, int *quote)
 	char	*key_wrd;
 
 	i = 0;
-	while (s[i] && s[i] != ' ' && s[i] != DQUOTE && s[i] != '$')
+	while (s[i] && s[i] != ' ' && s[i] != '\"' && s[i] != '$')
 		i++;
 	key_wrd = malloc(i + 1);
 	key_wrd[i] = 0;
 	i = -1;
-	while (s[++i] && s[i] != ' ' && s[i] != DQUOTE && s[i] != '$')
+	while (s[++i] && s[i] != ' ' && s[i] != '\"' && s[i] != '$')
 		key_wrd[i] = s[i];
 	if (s[i] == DQUOTE)
 		*quote = 1;

@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/13 15:10:17 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 16:33:01 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	is_inside_quotes(char *str, size_t index)
 	{
 		if (!c)
 		{
-			if (*str == SQUOTE || *str == DQUOTE)
+			if (*str == '\'' || *str == '\"')
 				c = *str;
 		}
 		else if (c == *str)
@@ -81,7 +81,7 @@ int	is_inside_quotes(char *str, size_t index)
 	}
 	if (c == *str)
 		c = 0;
-	return ((c == SQUOTE) + ((c == DQUOTE) * 2));
+	return ((c == '\'') + ((c == '\"') * 2));
 }
 
 int	contains_only_nbr(char *str)
@@ -92,7 +92,7 @@ int	contains_only_nbr(char *str)
 	if (!str)
 		return (0);
 	if (str[0] == '-')
-			i++;
+		i++;
 	while (str[++i])
 		if (!ft_isdigit(str[i]))
 			return (0);
