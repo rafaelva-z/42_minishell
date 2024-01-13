@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:41:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/11 12:55:04 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 23:00:15 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,17 +78,17 @@ int	what_redir_token(char *str)
  *	bash: warning: shell level (2147483647) too high, resetting to 1
  *	bigger than 2147483646			shlvl = 0
 */
-void	set_shlvl()
+void	set_shlvl(void)
 {
 	int		shlvl;
 	char	*shlvl_val;
-	
+
 	shlvl_val = get_env_var_value("SHLVL");
 	if (shlvl_val && contains_only_nbr(shlvl_val))
 	{
 		shlvl = ft_atoi(shlvl_val);
 		if (shlvl >= 999 && shlvl <= 2147483646)
-			perror("warning: shell level (insert value here) too high, resetting to 1"); // Join
+			ft_putstr_fd(MSG_SHLVL_HIGH, STDOUT_FILENO);
 		else if (shlvl < 0 || shlvl > 2147483646)
 		{
 			set_env_var("SHLVL", "0");
@@ -104,4 +104,3 @@ void	set_shlvl()
 	}
 	set_env_var("SHLVL", "1");
 }
-

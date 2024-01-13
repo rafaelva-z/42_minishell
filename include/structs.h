@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:06:56 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 15:05:19 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 23:24:12 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include "minishell.h"
 
+/**
+ * 
+ * 
+*/
 typedef struct s_redirection
 {
 	char					*key_wrd;			//	[X]	The key word after the operand: limiter or file name
@@ -22,6 +26,10 @@ typedef struct s_redirection
 	struct s_redirection	*next;	 			//	[X]	Pointer to the next redirection struct
 }				t_redirection;
 
+/**
+ * 
+ * 
+*/
 typedef struct s_commands
 {
 	char				**cmds;					//	[X] The command and it respective arguments
@@ -34,6 +42,10 @@ typedef struct s_commands
 	
 }				t_commands;
 
+/**
+ * 
+ * 
+*/
 typedef struct s_envp
 {
 	t_env_var			*vars;											//  pointer to var_list
@@ -54,6 +66,10 @@ typedef struct s_envp
 																		//		that was allocated
 }				t_envp;
 
+/**
+ * 
+ * 
+*/
 typedef struct s_exec
 {
 	char			**bin_dir;					//	the splited binary directories
@@ -64,7 +80,7 @@ typedef struct s_exec
 	t_envp			*envp;						//	pointer to envp struct
 }				t_exec;
 
-t_envp		*get_env_struct(void);
+t_envp			*get_env_struct(void);
 
 // commands.c
 

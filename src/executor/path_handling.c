@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/11 17:49:48 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/12 22:39:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	path_finder(t_exec *exec, t_commands *cmd)
 			return ;
 		}
 		free_and_exit(exec, message_joiner(3 , "minishell:", cmd->cmds[0],
-					": Permission denied\n"), ES_K_N_AVAIL);
+				": Permission denied\n"), ES_K_N_AVAIL);
 	}
-	free_and_exit(exec, message_joiner(3 , "minishell: ", cmd->cmds[0], ": command not found\n")
-			, ES_CMD_N_FOUND);
+	free_and_exit(exec, message_joiner(3 , "minishell: ",
+			cmd->cmds[0], ": command not found\n"), ES_CMD_N_FOUND);
 }

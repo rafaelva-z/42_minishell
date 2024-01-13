@@ -52,7 +52,7 @@ static void	shell_loop(void)
 		set_signals(HNDLR_MAIN);
 		get_prompt(&prompt);
 		if (!prompt)
-			free_and_exit(NULL, MSG_EXIT, 0);
+			free_and_exit(NULL, MSG_EXIT, STDOUT_FILENO);
 		else
 		{
 			set_signals(HNDLR_LOOP);
