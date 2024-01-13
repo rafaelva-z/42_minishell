@@ -4,19 +4,6 @@
 
 	==================|| T O   D O ||==================
 
-	=> 	Here document also expands environment variables, but first
-		it compares with the limiter and then expands. The limiter
-		itself its not expansible.
-
-	=>	redirection (access)
-		if the "file name" is a directory or a already created file or folder
-
-	=>	"export a" nao deveria dar erro
-
-
-
-
-
 		==========| F A I L E D    P R O M P T S|==========
 
 	>|cat
@@ -45,8 +32,6 @@
 	=>	redirect token error message fazer join para dizer qual é o toke que causa o erro
 
 	=>	shlvl error message, fazer o join do valor quando é demasiado alto 
-
-	=> dar handle do exit com argumentos
 
 
 
