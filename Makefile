@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
+#    By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by scosta-j          #+#    #+#              #
-#    Updated: 2024/01/13 13:49:35 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/13 16:45:47 by fda-estr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ SRCS		=	$(addprefix ./src/,				\
 				$(addprefix prompt-processing/,	\
 				prompt_processing.c				\
 				expander.c						\
+				expander_2.c					\
 				prompt_cleaner.c				\
 				quote_check.c					\
 				redir_add_spaces.c				\
@@ -63,16 +64,21 @@ SRCS		=	$(addprefix ./src/,				\
 				tokenizer.c						\
 				)								\
 				)								\
-				
+
+OBJS = $(SRCS:.c=.o)
+
 CYAN		=	\033[96m
 RESET		=	\033[0m
 TAG			=	$(CYAN)[$(NAME)]$(RESET)
 
+%.o: %.c
+	@$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
+
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(SRCS)
+$(NAME): $(LIBFT) $(OBJS)
 	@echo "$(TAG) Making Program"
-	@$(CC) $(CFLAGS) $(SRCS) $(LIBFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 $(LIBFT):
 	@make -C $(LIBFT_PATH)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/09 22:30:35 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 13:28:42 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 15:53:15 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ static void	prompt_neutralizer(char *s)
 	int	i;
 
 	i = -1;
+	if (!s)
+		return ;
 	while (s[++i])
 	{
 		if (s[i] == '\'' || s[i] == '\"')

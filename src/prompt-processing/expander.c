@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 16:06:34 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 17:25:07 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-char *key_word(char *s)
+static char	*key_word(char *s, int *quote)
 {
 	int		i;
 	char	*key_wrd;
@@ -25,15 +25,21 @@ char *key_word(char *s)
 	i = -1;
 	while (s[++i] && s[i] != ' ' && s[i] != '\"' && s[i] != '$')
 		key_wrd[i] = s[i];
+	if (s[i] == DQUOTE)
+		*quote = 1;
 	return (key_wrd);
 }
 
-char	*expand(char *s)
+static char	*expand(char *s)
 {
 	char	*key_wrd;
 	char	*var;
+	int		quote;
+	char	*prod;
 
-	key_wrd = key_word(s);
+	quote = 0;
+	prod = NULL;
+	key_wrd = key_word(s, &quote);
 	if (!ft_strncmp(key_wrd, "?", 2))
 	{
 		free (key_wrd);
@@ -46,85 +52,37 @@ char	*expand(char *s)
 		return (NULL);
 	}
 	free (key_wrd);
-	return (ft_strdup(var));
+	if (quote)
+		prod = "\"";
+	return (ft_strjoin_free(var, prod, 0));
 }
 
-static void	expansion_prep(char **prompt)
+static char	*expansion(char *prpt, int rec, int i, char *expnd_str)
 {
-	int		i;
-	int		neg_len;
-	char	*prod;
+	char	*prd;
 
-	i = -1;
-	neg_len = 0;
-	if (!prompt || !*prompt || !**prompt)
-		return ;
-	while ((*prompt)[++i + 1])
-	{
-		if ((*prompt)[i] == '$' && ft_isdigit((*prompt)[i + 1]))
-		{
-			(*prompt)[i] = -1;
-			(*prompt)[i + 1] = -1;
-			neg_len += 2;
-		}
-	}
-	prod = malloc(ft_strlen(*prompt) - neg_len + 1);
-	i = -1;
-	neg_len = 0;
-	while ((*prompt)[++i])
-	{
-		prod[i - neg_len] = (*prompt)[i];
-		if ((*prompt)[i] == -1)
-			neg_len++;
-	}
-	prod[i - neg_len] = 0;
-	free (*prompt);
-	*prompt = prod;
-}
-
-static int	expansion_check(char *c, char *prompt, int i)
-{
-	if ((*c) != '$' || is_inside_quotes(prompt, i) == 1)
-		return (1);
-	if (ft_isalpha(*(++c)) || *c == '_' || *c == '?')
-		return (0);
-	return (1);
-}
-
-char	*expansions(char *prompt, int rec)
-{
-	int		i;
-	char	*expanded_str;
-	char	*prod;
-
-	i = 0;
-	expanded_str = NULL;
-	if (!prompt || !*prompt)
-		return (prompt);
-	while (prompt[i] && expansion_check(&prompt[i], prompt, i))
+	if (!prpt || !*prpt)
+		return (prpt);
+	if (prpt[i] == '\"' && rec)
+		prpt++;
+	while (prpt[i] && expansion_check(&prpt[i], prpt, i))
 		i++;
-	if (!prompt[i] || !(prompt[i + 1]))
+	if (!prpt[i] || !(prpt[i + 1]))
 	{
 		if (rec)
-			return (ft_strdup(prompt));
-		return (prompt);
+			return (ft_strdup(prpt));
+		return (prpt);
 	}
-	prompt[i] = 0;
-	expanded_str = ft_strjoin_free(prompt, expand(prompt + i + 1), 2);
-	while (prompt[++i] && prompt[i] != ' '
-		&& prompt[i] != '\"' && prompt[i] != '$')
+	prpt[i] = 0;
+	expnd_str = ft_strjoin_free(prpt, expand(prpt + i + 1), 2);
+	while (prpt[++i] && prpt[i] != ' ' && prpt[i] != '\"' && prpt[i] != '$')
 		;
-	if (!prompt[i])
-	{
-		if (rec == 0)
-			free (prompt);
-		return (expanded_str);
-	}
-	prod = ft_strjoin_free(expanded_str,
-			expansions(prompt + i, rec + 1), 3);
-	if (prompt && rec == 0)
-		free (prompt);
-	return (prod);
+	if (expander_aux(prpt, rec))
+		return (expnd_str);
+	prd = ft_strjoin_free(expnd_str, expansion(prpt + i, rec + 1, 0, NULL), 3);
+	if (prpt && rec == 0)
+		free (prpt);
+	return (prd);
 }
 
 static void	limiter_protect(char *s)
@@ -153,9 +111,9 @@ void	expansion_manager(char **prompt)
 	char	*temp;
 
 	i = -1;
-	expansion_prep(prompt);
+	expansion_prep(prompt, -1, 0);
 	limiter_protect(*prompt);
-	*prompt = expansions(*prompt, 0);
+	*prompt = expansion(*prompt, 0, 0, NULL);
 	temp = *prompt;
 	while (temp[++i])
 	{
