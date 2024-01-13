@@ -18,6 +18,7 @@
 # include "../lib/libft/libft.h"
 # include "structs.h"
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -189,4 +190,12 @@ int			display_error(char *error_msg, int exit_status);
 
 char		*message_joiner(int nbr, ...);
 
+// expander_2.c
+
+int			expansion_check(char *c, char *prompt, int i);
+void		expansion_prep(char **prompt, int i, int neg_len);
+void	    expander_aux(char *prpt, int rec);
+
 #endif
+
+/* "$DISPLAY" '?PATH' */
