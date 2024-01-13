@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 13:37:27 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 18:40:41 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@ void	bin_finder(t_exec *exec)
 * @brief It finds and associates the correct path to the binary of each
  corresponding command
 */
-void	path_finder(t_exec *exec, t_commands *cmd)
+void	path_finder(t_exec *exec, t_commands *cmd, int i)
 {
-	int	i;
 	int	bin_amt;
 
-	i = -1;
 	bin_amt = 0;
 	while (exec->bin_dir && exec->bin_dir[bin_amt])
 		bin_amt++;

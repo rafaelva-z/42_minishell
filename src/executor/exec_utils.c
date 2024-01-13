@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 14:56:43 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 18:38:09 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,34 @@ void	builtin_exec_child(t_exec *exec, t_commands *commands)
 		exit_bltn(exec, &commands->cmds[1], false);
 	else
 		return ;
-	close(STDIN_FILENO); // does this need to be here?
+	close(STDIN_FILENO);
 	close(STDOUT_FILENO);
 	free_and_exit(exec, NULL, get_env_struct()->exit_status);
+}
+
+/*
+* @brief Managed all open file descriptors at the begging of the execution
+*/
+void	fd_handler_in(t_exec *exec, t_commands *cmd)
+{
+	if (exec->remainder_fd > 0)
+		cmd->read_fd = exec->remainder_fd;
+	else
+		cmd->read_fd = STDIN_FILENO;
+	if (exec->fd[1] > 0)
+		cmd->write_fd = exec->fd[1];
+	else
+		cmd->write_fd = STDOUT_FILENO;
+	exec->remainder_fd = exec->fd[0];
+}
+
+/*
+* @brief Managed all open file descriptors at the end of the execution
+*/
+void	fd_handler_out(t_commands *cmd)
+{
+	cmd->read_fd = to_close(cmd->read_fd);
+	cmd->write_fd = to_close(cmd->write_fd);
 }
 
 /**
