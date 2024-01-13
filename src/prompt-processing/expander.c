@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 17:25:07 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/13 18:07:49 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*key_word(char *s, int *quote)
 	i = -1;
 	while (s[++i] && s[i] != ' ' && s[i] != '\"' && s[i] != '$')
 		key_wrd[i] = s[i];
-	if (s[i] == DQUOTE)
+	if (s[i] == '\"')
 		*quote = 1;
 	return (key_wrd);
 }

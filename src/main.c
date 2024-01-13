@@ -104,7 +104,6 @@ static void	shell_loop(void)
 				continue ;
 			expansion_manager(&prompt);
 			create_commands_and_redirections_struct(&prompt);
-			//print_commands_redirects(get_env_struct()->commands);
 			here_doc_manager();
 			process_generator();
 			free_matrix_and_commands();
@@ -123,4 +122,3 @@ int	main(int argc, char **argv, char **envp)
 	shell_loop();
 	free_and_exit(NULL, NULL, 0);
 }
-
