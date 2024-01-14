@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 18:07:49 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/14 21:05:05 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*expansion(char *prpt, int rec, int i, char *expnd_str)
 	expnd_str = ft_strjoin_free(prpt, expand(prpt + i + 1), 2);
 	while (prpt[++i] && prpt[i] != ' ' && prpt[i] != '\"' && prpt[i] != '$')
 		;
-	if (expander_aux(prpt, rec))
+	if (expander_aux(prpt, rec, i))
 		return (expnd_str);
 	prd = ft_strjoin_free(expnd_str, expansion(prpt + i, rec + 1, 0, NULL), 3);
 	if (prpt && rec == 0)
