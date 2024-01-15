@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 13:34:32 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/15 12:47:38 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	unset(char **cmds)
 		if (!var_name_check(var_name))
 		{
 			free(var_name);
-			return (0);
+			i++;
+			continue ;
 		}
 		free(var_name);
 		unset_env_var(cmds[i++]);

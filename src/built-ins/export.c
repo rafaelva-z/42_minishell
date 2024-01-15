@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 15:15:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/15 12:43:02 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ void	set_env_var(const char *name, const char *value)
 	free(var_name);
 }
 
+static int export_aux(char **cmds, int i)
+{
+	if (!var_name_check(cmds[i]))
+	{
+		display_error(ERR_EXPORT_BAD_NAME, 1);
+		return (1);
+	}
+	return (0);
+}
+
 /**
  *	@brief set the export attribute for variables
  *	@example export("VAR_NAME=VAR_VALUE");
@@ -54,8 +64,8 @@ int	export(char **cmds)
 	while (cmds[++i])
 	{
 		j = 0;
-		if (!var_name_check(cmds[i]))
-			return (display_error(ERR_EXPORT_BAD_NAME, 1));
+		if (export_aux(cmds, i))
+			continue ;
 		while (cmds[i][j] && cmds[i][j] != '=')
 			j++;
 		if (cmds[i][j] != '=')
