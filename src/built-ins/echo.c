@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:08:06 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 20:15:19 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 18:32:25 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ static int	is_flag(char *s)
 	if (s[i] == 0)
 		return (0);
 	return (1);
+}
+
+static void	echo_aux(char **prompt, int i, int token_nbr, int nl)
+{
+	if (i == token_nbr - 1)
+		ft_putstr_fd(prompt[i], STDOUT_FILENO);
+	if (nl == 0)
+		ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
 /**
@@ -64,9 +72,6 @@ int	echo(char **prompt)
 		ft_putstr_fd(prompt[i++], STDOUT_FILENO);
 		ft_putstr_fd(" ", STDOUT_FILENO);
 	}
-	if (i == token_nbr - 1)
-		ft_putstr_fd(prompt[i], STDOUT_FILENO);
-	if (nl == 0)
-		ft_putstr_fd("\n", STDOUT_FILENO);
+	echo_aux(prompt, i, token_nbr, nl);
 	return (0);
 }

@@ -166,7 +166,7 @@ void		process_generator(void);
 // path_handling.c
 
 void		bin_finder(t_exec *exec);
-void		path_finder(t_exec *exec, t_commands *cmd);
+void		path_finder(t_exec *exec, t_commands *cmd, int i);
 
 // redirections.c
 
@@ -178,6 +178,9 @@ void		redir_out_append(t_exec *exec, t_commands *cmd,
 void		redirect(t_exec *exec, t_commands *cmd);
 
 // exec_utils.c
+
+void		fd_handler_out(t_commands *cmd);
+void		fd_handler_in(t_exec *exec, t_commands *cmd);
 void		builtin_exec_child(t_exec *exec, t_commands *cmd);
 int			builtin_exec_parent(t_exec *exec, t_commands *cmd);
 void		free_exec(t_exec *exec);
@@ -193,7 +196,7 @@ char		*message_joiner(int nbr, ...);
 
 int			expansion_check(char *c, char *prompt, int i);
 void		expansion_prep(char **prompt, int i, int neg_len);
-int			expander_aux(char *prpt, int rec);
+int			expander_aux(char *prpt, int rec, int i);
 
 #endif
 

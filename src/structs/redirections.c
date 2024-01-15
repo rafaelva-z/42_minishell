@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:00:15 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 16:55:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/13 18:50:11 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ t_redirection	*new_redirection(int type, char *key_wrd)
 	return (redirect);
 }
 
-static void add_redir_if(char **tokens, int *i, t_commands **command_node)
+static void	add_redir_if(char **tokens, int *i, t_commands **command_node)
 {
 	t_redirection	*redirect;
-	
+
 	if (tokens[*i] && is_redir_val(tokens[*i][0]))
 	{
 		if (tokens[*i][0] == RDIR_PIPE)
