@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   expander_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:32:28 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/14 21:09:20 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:16:23 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * @brief removes invalid expantions with numbers like "$123" becomes "23"
+*/
 void	expansion_prep(char **prompt, int i, int neg_len)
 {
 	char	*prod;
@@ -20,7 +23,7 @@ void	expansion_prep(char **prompt, int i, int neg_len)
 		return ;
 	while ((*prompt)[++i + 1])
 	{
-		if ((*prompt)[i] == '$' && ft_isdigit((*prompt)[i + 1]))
+		if (is_inside_quotes(*prompt, i) != 1 && (*prompt)[i] == '$' && ft_isdigit((*prompt)[i + 1]))
 		{
 			(*prompt)[i] = -1;
 			(*prompt)[i + 1] = -1;
@@ -40,7 +43,10 @@ void	expansion_prep(char **prompt, int i, int neg_len)
 	free (*prompt);
 	*prompt = prod;
 }
-
+/**
+ * @brief	checks if the given character '$' is the start of a valid expansion
+ * @return	1 if the expansion is not valid, 0 if the expansion is valid
+*/
 int	expansion_check(char *c, char *prompt, int i)
 {
 	if ((*c) != '$' || is_inside_quotes(prompt, i) == 1)
@@ -50,13 +56,3 @@ int	expansion_check(char *c, char *prompt, int i)
 	return (1);
 }
 
-int	expander_aux(char *prompt, int rec, int i)
-{
-	if (!prompt[i])
-	{
-		if (rec == 0)
-			free(prompt);
-		return (1);
-	}
-	return (0);
-}

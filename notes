@@ -4,7 +4,7 @@
 
 	==================|| T O   D O ||==================
 
-		==========| F A I L E D    P R O M P T S|==========
+	==========| F A I L E D    P R O M P T S|==========
 
 	>|cat
 	cat << magic > magic
