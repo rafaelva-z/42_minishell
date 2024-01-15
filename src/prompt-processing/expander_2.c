@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:32:28 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/15 14:16:23 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/15 17:16:23 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,14 @@
 /**
  * @brief removes invalid expantions with numbers like "$123" becomes "23"
 */
-void	expansion_prep(char **prompt, int i, int neg_len)
+void	expansion_prep(char **prompt, int i, int neg_len, char *prod)
 {
-	char	*prod;
-
 	if (!prompt || !*prompt || !**prompt)
 		return ;
 	while ((*prompt)[++i + 1])
 	{
-		if (is_inside_quotes(*prompt, i) != 1 && (*prompt)[i] == '$' && ft_isdigit((*prompt)[i + 1]))
+		if (is_inside_quotes(*prompt, i) != 1
+			&& (*prompt)[i] == '$' && ft_isdigit((*prompt)[i + 1]))
 		{
 			(*prompt)[i] = -1;
 			(*prompt)[i + 1] = -1;
@@ -43,6 +42,7 @@ void	expansion_prep(char **prompt, int i, int neg_len)
 	free (*prompt);
 	*prompt = prod;
 }
+
 /**
  * @brief	checks if the given character '$' is the start of a valid expansion
  * @return	1 if the expansion is not valid, 0 if the expansion is valid
@@ -56,3 +56,35 @@ int	expansion_check(char *c, char *prompt, int i)
 	return (1);
 }
 
+/**
+ * @brief checks if there is a valid expansion on the string
+ * @return 0 if there is no valid expansion, 1 if there is.
+*/
+int	expansion_check_str(char *prompt)
+{
+	int	i;
+
+	i = 0;
+	while (prompt[i] && (is_inside_quotes(prompt, i) == 1 || prompt[i] != '$'))
+		i++;
+	if (prompt[i])
+		return (1);
+	return (0);
+}
+
+/**
+ * @brief	converts all '$' between SQUOTES to -1
+*/
+void	expansion_masker(char *prompt)
+{
+	int	i;
+
+	i = -1;
+	while (prompt[++i])
+	{
+		if (prompt[i] == '$' && (is_inside_quotes(prompt, i) == 1 
+				|| (prompt[i + 1] == ' ' || prompt[i + 1] == '\"'
+					|| prompt[i + 1] == '\'' || prompt[i + 1] == '\0')))
+			prompt[i] = -1;
+	}
+}
