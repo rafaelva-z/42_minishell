@@ -3,27 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 18:43:16 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/15 16:59:06 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*	ATENTION: if theres no input on the fist command, it should read from
-				the standard input*/
-
-static void	is_directory(t_redirection *rdir, t_exec *exec)
+void	is_directory(char *str, t_exec *exec)
 {
 	struct stat	path;
 
 	path.st_mode = 0;
-	stat(rdir->key_wrd, &path);
+	stat(str, &path);
 	if (S_ISDIR(path.st_mode))
 		free_and_exit(exec, message_joiner(3, "minishell: ",
-				rdir->key_wrd, ": Is a directory\n"), ES_OP_N_PERM);
+				str, ": Is a directory\n"), ES_K_N_AVAIL);
 }
 
 /*
@@ -47,7 +44,7 @@ void	redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir)
 */
 void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
-	is_directory(redir, exec);
+	is_directory(redir->key_wrd, exec);
 	if (access(redir->key_wrd, F_OK) == -1)
 	{
 		if (cmd->write_fd > 2)
@@ -69,7 +66,7 @@ void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 */
 void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
-	is_directory(redir, exec);
+	is_directory(redir->key_wrd, exec);
 	if (access(redir->key_wrd, F_OK) == -1)
 	{
 		if (cmd->write_fd > 2)

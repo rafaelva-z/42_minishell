@@ -3,44 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/14 21:05:05 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:17:08 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static char	*key_word(char *s, int *quote)
+static char	*key_word(char *s, int *i)
 {
-	int		i;
+	int		j;
 	char	*key_wrd;
 
-	i = 0;
-	while (s[i] && s[i] != ' ' && s[i] != '\"' && s[i] != '$')
-		i++;
-	key_wrd = malloc(i + 1);
-	key_wrd[i] = 0;
-	i = -1;
-	while (s[++i] && s[i] != ' ' && s[i] != '\"' && s[i] != '$')
-		key_wrd[i] = s[i];
-	if (s[i] == '\"')
-		*quote = 1;
+	j = 0;
+	if (*s == '?')
+	{
+		*i += 2;
+		return (ft_strdup("?"));
+	}
+	while (s[j] && s[j] != ' ' && s[j] != '\"' && s[j] != '$')
+		j++;
+	key_wrd = malloc(j + 1);
+	key_wrd[j] = 0;
+	j = -1;
+	while (s[++j] && s[j] != ' ' && s[j] != '\"' && s[j] != '$')
+		key_wrd[j] = s[j];
+	*i += j + 1;
 	return (key_wrd);
 }
 
-static char	*expand(char *s)
+static char	*expand(char *s, int *i)
 {
 	char	*key_wrd;
 	char	*var;
-	int		quote;
 	char	*prod;
 
-	quote = 0;
 	prod = NULL;
-	key_wrd = key_word(s, &quote);
-	if (!ft_strncmp(key_wrd, "?", 2))
+	key_wrd = key_word(s, i);
+	if (!ft_strncmp(key_wrd, "?", 1))
 	{
 		free (key_wrd);
 		return (ft_itoa(get_env_struct()->exit_status));
@@ -52,57 +54,52 @@ static char	*expand(char *s)
 		return (NULL);
 	}
 	free (key_wrd);
-	if (quote)
-		prod = "\"";
 	return (ft_strjoin_free(var, prod, 0));
 }
 
-static char	*expansion(char *prpt, int rec, int i, char *expnd_str)
-{
-	char	*prd;
-
-	if (!prpt || !*prpt)
-		return (prpt);
-	if (prpt[i] == '\"' && rec)
-		prpt++;
-	while (prpt[i] && expansion_check(&prpt[i], prpt, i))
-		i++;
-	if (!prpt[i] || !(prpt[i + 1]))
-	{
-		if (rec)
-			return (ft_strdup(prpt));
-		return (prpt);
-	}
-	prpt[i] = 0;
-	expnd_str = ft_strjoin_free(prpt, expand(prpt + i + 1), 2);
-	while (prpt[++i] && prpt[i] != ' ' && prpt[i] != '\"' && prpt[i] != '$')
-		;
-	if (expander_aux(prpt, rec, i))
-		return (expnd_str);
-	prd = ft_strjoin_free(expnd_str, expansion(prpt + i, rec + 1, 0, NULL), 3);
-	if (prpt && rec == 0)
-		free (prpt);
-	return (prd);
-}
-
-static void	limiter_protect(char *s)
+static void	limiter_masker(char *prompt)
 {
 	int	i;
 
 	i = -1;
-	while (s[++i])
+	while (prompt[++i])
 	{
-		if (s[i] == '<' && s[i + 1] == '<')
+		if (is_inside_quotes(prompt, i) != 1
+			&& prompt[i] == '<' && prompt[i + 1] == '<')
 			i += 3;
 		else
 			continue ;
-		if (s[i] == '\"')
+		while (prompt[i] && !(prompt[i] == ' '
+				&& is_inside_quotes(prompt, i) == 0))
+		{
+			if (prompt[i] == '$')
+				prompt[i] = -1;
 			i++;
-		while (s[i] && s[i] == ' ')
-			i++;
-		if (s[i] == '$')
-			s[i] = -1;
+		}
 	}
+}
+
+static char	*expansion(char *prompt, int rec, int i, char *expnd_str)
+{
+	char	*prd;
+
+	if (!prompt || !*prompt)
+		return (NULL);
+	if (!expansion_check_str(prompt))
+	{
+		if (rec == 0)
+			return (prompt);
+		return (ft_strdup(prompt));
+	}
+	while (prompt[i] && prompt[i] != '$')
+		i++;
+	prompt[i] = '\0';
+	expnd_str = ft_strjoin_free(prompt, expand(prompt + i + 1, &i), 2);
+	prd = ft_strjoin_free(expnd_str,
+			expansion(prompt + i, rec + 1, 0, NULL), 3);
+	if (rec == 0)
+		free (prompt);
+	return (prd);
 }
 
 void	expansion_manager(char **prompt)
@@ -111,13 +108,14 @@ void	expansion_manager(char **prompt)
 	char	*temp;
 
 	i = -1;
-	expansion_prep(prompt, -1, 0);
-	limiter_protect(*prompt);
+	if (!expansion_check_str(*prompt))
+		return ;
+	expansion_prep(prompt, -1, 0, NULL);
+	expansion_masker(*prompt);
+	limiter_masker(*prompt);
 	*prompt = expansion(*prompt, 0, 0, NULL);
 	temp = *prompt;
 	while (temp[++i])
-	{
 		if (temp[i] == -1)
 			temp[i] = '$';
-	}
 }

@@ -4,7 +4,10 @@
 
 	==================|| T O   D O ||==================
 
-		==========| F A I L E D    P R O M P T S|==========
+	'"'$USER'"'
+	export a (add to an export list)
+
+	==========| F A I L E D    P R O M P T S|========== (old)
 
 	>|cat
 	cat << magic > magic

@@ -51,7 +51,7 @@
 # define ERR_EXIT_TOO_MANY_ARG	"minishell: exit: too many arguments\n"
 # define ERR_EXIT_NUM_ARG		"minishell: exit: numeric argument required\n"
 # define MSG_EXIT				"exit\n"
-# define MSG_HDOC_EOF			"minishell: warning: here-document delimited by end-of-file\n"
+# define MSG_HDOC_EOF			"minishell: warning: here-doc delimited by eof\n"
 # define MSG_SHLVL_HIGH			"warning: shell level too high, resetting to 1"
 
 extern int	g_signal;
@@ -85,8 +85,19 @@ enum e_negative_char_prompt
 };
 
 void		set_signals(int process);
-void		expansion_manager(char **prompt);
 int			prompt_processing(char **prompt);
+
+//	expander.c
+
+void		expansion_manager(char **prompt);
+
+// expander_2.c
+
+int			expansion_check(char *c, char *prompt, int i);
+void		expansion_prep(char **prompt, int i, int neg_len, char *prod);
+int			expander_aux(char *prpt, int rec, int i);
+void		expansion_masker(char *prompt);
+int			expansion_check_str(char *prompt);
 
 //	main.c
 
@@ -166,9 +177,11 @@ void		process_generator(void);
 
 void		bin_finder(t_exec *exec);
 void		path_finder(t_exec *exec, t_commands *cmd, int i);
+int			is_path(char *str);
 
 // redirections.c
 
+void		is_directory(char *str, t_exec *exec);
 void		redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir);
 void		redir_out_trunc(t_exec *exec, t_commands *cmd,
 				t_redirection *redir);
@@ -190,12 +203,6 @@ int			display_error(char *error_msg, int exit_status);
 // error_handling
 
 char		*message_joiner(int nbr, ...);
-
-// expander_2.c
-
-int			expansion_check(char *c, char *prompt, int i);
-void		expansion_prep(char **prompt, int i, int neg_len);
-int			expander_aux(char *prpt, int rec, int i);
 
 #endif
 
