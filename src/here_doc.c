@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 16:43:26 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:08:36 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,14 @@ static void	here_doc_loop(t_redirection *rdir, int fd[2])
 	while (1)
 	{
 		s = readline(">");
-		if (!s || g_signal == SIGINT || (ft_strncmp(rdir->key_wrd, s, len)
+		if (g_signal == SIGINT || (ft_strncmp(rdir->key_wrd, s, len)
 				== 0 && len == (int)(ft_strlen(s))))
+		{
+			if (!s)
+				s = malloc(1);
+			break ;
+		}
+		else if (!s)
 			break ;
 		expansion_manager(&s);
 		write(fd[1], s, ft_strlen(s));
@@ -32,7 +38,7 @@ static void	here_doc_loop(t_redirection *rdir, int fd[2])
 	if (s)
 		free (s);
 	else
-		ft_putstr_fd(MSG_HDOC_EOF, STDOUT_FILENO);
+		ft_putstr_fd(MSG_HDOC_EOF, STDERR_FILENO);
 }
 
 /**
