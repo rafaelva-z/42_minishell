@@ -51,8 +51,7 @@
 # define ERR_EXIT_TOO_MANY_ARG	"minishell: exit: too many arguments\n"
 # define ERR_EXIT_NUM_ARG		"minishell: exit: numeric argument required\n"
 # define MSG_EXIT				"exit\n"
-# define MSG_HDOC_EOF			"minishell: warning: here-document \
-								delimited by end-of-file (wanted `EOF')\n"
+# define MSG_HDOC_EOF			"minishell: warning: here-document delimited by end-of-file\n"
 # define MSG_SHLVL_HIGH			"warning: shell level too high, resetting to 1"
 
 extern int	g_signal;
