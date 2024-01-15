@@ -42,7 +42,6 @@ int	cd(char **cmds)
 	home = get_env_struct()->get_value("HOME");
 	if ((!cmds[0] || !cmds[0][0]) && !home)
 		return (display_error(ERR_CD_HOME_NOT_SET, 1));
-	oldpwd = getcwd(NULL, 0);
 	if (!cmds[0])
 		r = chdir(home);
 	else
@@ -52,10 +51,12 @@ int	cd(char **cmds)
 		perror(ERR_CD);
 		return (1);
 	}
-	else if (oldpwd)
-		set_pwd(oldpwd);
+	oldpwd = getcwd(NULL, 0);
 	if (oldpwd)
+	{
+		set_pwd(oldpwd);
 		free(oldpwd);
+	}
 	return (0);
 }
 
