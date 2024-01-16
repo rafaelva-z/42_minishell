@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/16 12:15:29 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 12:18:36 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	export(char **cmds)
 	int		exit_status;
 
 	i = -1;
+	exit_status = 0;
 	if (!cmds || !cmds[0])
 		return (export_sort_print());
 	while (cmds[++i])
