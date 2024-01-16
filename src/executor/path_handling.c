@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/15 21:52:41 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:16:24 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	is_path(char *str)
 		return (1);
 	return (0);
 }
- 
+
 static int	is_path_has_acess(t_commands *cmd, t_exec *exec)
 {
 	if (access(cmd->cmds[0], X_OK) == 0)
@@ -55,7 +55,7 @@ static int	is_path_has_acess(t_commands *cmd, t_exec *exec)
 			": Permission denied\n"), ES_K_N_AVAIL);
 	return (0);
 }
- 
+
 /*
 * @brief It finds and associates the correct path to the binary of each
  corresponding command

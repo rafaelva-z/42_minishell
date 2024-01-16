@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/15 12:43:02 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/16 00:18:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	set_env_var(const char *name, const char *value)
 	free(var_name);
 }
 
-static int export_aux(char **cmds, int i)
+static int	export_aux(char **cmds, int i)
 {
 	if (!var_name_check(cmds[i]))
 	{

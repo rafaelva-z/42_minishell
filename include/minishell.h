@@ -42,8 +42,8 @@
 // Error Messages
 
 # define ERR_ALLOC				"minishell: memory alocation failed\n"
-# define ERR_QUOTES				"error: quotes open\n" 
-# define ERR_RDIR				"syntax error unexpected token\n"
+# define ERR_QUOTES				"minishell: error: quotes open\n" 
+# define ERR_RDIR				"minishell: syntax error unexpected token\n"
 # define ERR_CD					"minishell: cd"
 # define ERR_CD_TOO_MANY_ARG	"minishell: cd: too many arguments\n"
 # define ERR_CD_HOME_NOT_SET	"minishell: cd: HOME not set\n"
