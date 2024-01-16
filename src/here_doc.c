@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/15 12:08:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:32:41 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	here_doc(t_redirection *rdir, int fd[2])
 	free_and_exit(NULL, NULL, 0);
 }
 
-/*
-* @brief Checks if theres any here_doc in the redirections of each command
-* and executes them, in case of it's existence.
+/**
+*	@brief	Checks if theres any here_doc in the redirections of each command
+*			and executes them, in case of it's existence.
 */
 static void	here_doc_check(t_commands *commands)
 {
@@ -90,8 +90,8 @@ static void	here_doc_check(t_commands *commands)
 	}
 }
 
-/*
-* @brief Manages all here_docs
+/**
+*	@brief	Manages all here_docs
 */
 void	here_doc_manager(void)
 {

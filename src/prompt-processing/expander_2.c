@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:32:28 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/16 00:15:09 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:22:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	expansion_check(char *c, char *prompt, int i)
 }
 
 /**
- * @brief checks if there is a valid expansion on the string
- * @return 0 if there is no valid expansion, 1 if there is.
+ * @brief	checks if there is a valid expansion on the string
+ * @return	0 if there is no valid expansion, 1 if there is.
 */
 int	expansion_check_str(char *prompt)
 {

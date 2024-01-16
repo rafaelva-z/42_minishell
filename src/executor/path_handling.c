@@ -6,15 +6,15 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/16 00:16:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:22:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-* @brief Creates an array with the directories to the binaries. If
-* PATH environment variable doesn't exists, the array is set to NULL
+/**
+*	@brief	Creates an array with the directories to the binaries. If
+*			PATH environment variable doesn't exists, the array is set to NULL
 */
 void	bin_finder(t_exec *exec)
 {
@@ -56,9 +56,9 @@ static int	is_path_has_acess(t_commands *cmd, t_exec *exec)
 	return (0);
 }
 
-/*
-* @brief It finds and associates the correct path to the binary of each
- corresponding command
+/**
+ *	@brief It finds and associates the correct path to the binary of each
+ *	corresponding command
 */
 void	path_finder(t_exec *exec, t_commands *cmd, int i)
 {

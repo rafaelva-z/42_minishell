@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/15 16:59:06 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:22:40 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	is_directory(char *str, t_exec *exec)
 				str, ": Is a directory\n"), ES_K_N_AVAIL);
 }
 
-/*
-* @brief Verifies the acess and opens the redirection of the infiles (<)
+/**
+*	@brief	Verifies the acess and opens the redirection of the infiles (<)
 */
 void	redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
@@ -39,8 +39,8 @@ void	redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir)
 	cmd->read_fd = open(redir->key_wrd, O_RDONLY);
 }
 
-/*
-* @brief Verifies the acess and opens the redirection of the out files (>)
+/**
+*	@brief Verifies the acess and opens the redirection of the out files (>)
 */
 void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
@@ -61,8 +61,8 @@ void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 	cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_TRUNC);
 }
 
-/*
-* @brief Verifies the acess and opens the redirection of the append files (>>)
+/**
+*	@brief Verifies the acess and opens the redirection of the append files (>>)
 */
 void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
@@ -83,9 +83,9 @@ void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 	cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_APPEND);
 }
 
-/*
-* @brief Verifies the acess and opens the redirection files in the order that
-* it was prompted
+/**
+*	@brief	Verifies the acess and opens the redirection files in the order that
+* 			it was prompted
 */
 void	redirect(t_exec *exec, t_commands *cmd)
 {

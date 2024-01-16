@@ -6,11 +6,19 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/16 00:18:00 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:20:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
+
+/**
+ * EXPORT =============================
+ * 
+ * 	var names	must begin with letter or underscore
+ * 				can't start with a number
+ * 				can't contain symbols or spaces
+*/
 
 /**
  * @brief sets the env variable given
@@ -79,10 +87,3 @@ int	export(char **cmds)
 	return (0);
 }
 
-/**
- * EXPORT =============================
- * 
- * 	Must begin with letter or underscore
- * 	var name can't start with a number
- * 	var name can't contain symbols or spaces
-*/

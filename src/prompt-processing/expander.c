@@ -6,12 +6,15 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/16 00:00:30 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:26:24 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
+/**
+ * @brief	returns name of the environment variable
+*/
 static char	*key_word(char *s, int *i)
 {
 	int		j;
@@ -34,6 +37,9 @@ static char	*key_word(char *s, int *i)
 	return (key_wrd);
 }
 
+/**
+ * @brief	expands the given string returning the value of the environment variable
+*/
 static char	*expand(char *s, int *i)
 {
 	char	*key_wrd;
@@ -56,6 +62,9 @@ static char	*expand(char *s, int *i)
 	return (ft_strdup(var));
 }
 
+/**
+ * @brief	checks if the given character '$' is the start of a valid expansion
+*/
 static void	limiter_masker(char *prompt)
 {
 	int	i;
@@ -77,7 +86,10 @@ static void	limiter_masker(char *prompt)
 		}
 	}
 }
-
+/**
+ * @brief	expands all valid expansions in the given string
+ * @return	the string with expanded values
+*/
 static char	*expansion(char *prompt, int rec, int i, char *expnd_str)
 {
 	char	*prd;
