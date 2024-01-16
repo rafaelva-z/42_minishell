@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 14:32:28 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/15 17:16:23 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:22:54 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ int	expansion_check(char *c, char *prompt, int i)
 }
 
 /**
- * @brief checks if there is a valid expansion on the string
- * @return 0 if there is no valid expansion, 1 if there is.
+ * @brief	checks if there is a valid expansion on the string
+ * @return	0 if there is no valid expansion, 1 if there is.
 */
 int	expansion_check_str(char *prompt)
 {
@@ -82,7 +82,7 @@ void	expansion_masker(char *prompt)
 	i = -1;
 	while (prompt[++i])
 	{
-		if (prompt[i] == '$' && (is_inside_quotes(prompt, i) == 1 
+		if (prompt[i] == '$' && (is_inside_quotes(prompt, i) == 1
 				|| (prompt[i + 1] == ' ' || prompt[i + 1] == '\"'
 					|| prompt[i + 1] == '\'' || prompt[i + 1] == '\0')))
 			prompt[i] = -1;

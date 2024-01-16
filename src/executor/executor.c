@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/15 20:18:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:17:39 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	initializer_exec(t_exec *exec)
 }
 
 /**
-*	@brief Rearanges the standardin/out to accomudate the proper file descriptors
+*   @brief Rearanges the standardin/out to accomudate the proper file descriptors
 */
 static void	dupper(t_commands *cmd)
 {
@@ -45,10 +45,10 @@ static void	dupper(t_commands *cmd)
 }
 
 /**
-*	@brief	Deals with redirections, with file permissions 
-*			and executes the command
-*	@param	exec executor's struct
-*	@param	cmd the command to be executed
+*   @brief  Deals with redirections, with file permissions 
+*           and executes the command
+*   @param  exec executor's struct
+*   @param  cmd the command to be executed
 */
 static void	executor(t_exec *exec, t_commands *cmd)
 {
@@ -59,6 +59,7 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	exec->remainder_fd = to_close(exec->remainder_fd);
 	builtin_exec_child(exec, cmd);
 	path_finder(exec, cmd, -1);
+	is_directory(cmd->cmds[0], exec);
 	create_env_array();
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
 	close(STDIN_FILENO);
@@ -115,15 +116,14 @@ void	process_generator(void)
 	free_exec(&exec);
 }
 /* EXECUTOR
-			[ ]	verifies if files path exists
-			[ ]	verifies permissions
-			[ ]	(it does both steps 1 and 2 in the order of which they were prompted)
-			[ ]	check if command is a builtin
-			[ ]	creates path of binary
-			[ ]	redirections ????
-			[ ]	executes command (verifies if command exists)
+			[ ] verifies if files path exists
+			[ ] verifies permissions
+			[ ] (it does both steps 1 and 2 in the order of which they were prompted)
+			[ ] check if command is a builtin
+			[ ] creates path of binary
+			[ ] redirections ????
+			[ ] executes command (verifies if command exists)
 */
-
 /*PROCESS GENERATOR
 			Initialize the struct
 			create array with binary directories

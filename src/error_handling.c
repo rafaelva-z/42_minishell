@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:05:22 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/12 22:54:08 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:32:04 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/**
+ * @brief	joins the given strings a single string
+*/
 char	*message_joiner(int nbr, ...)
 {
 	va_list	arg;
@@ -27,9 +30,13 @@ char	*message_joiner(int nbr, ...)
 	return (str);
 }
 
+/**
+ * @brief	Displays the error message in standard error output
+ * @return	Exit status
+*/
 int	display_error(char *error_msg, int exit_status)
 {
 	if (error_msg)
-		ft_putstr_fd(error_msg, 2);
+		ft_putstr_fd(error_msg, STDERR_FILENO);
 	return (exit_status);
 }

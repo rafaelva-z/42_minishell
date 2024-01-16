@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 16:26:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:39:23 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 #include <signal.h>
 
 /**
- * 	Work in progress
  * 	CTRL + C = SIGINT
  * 	CTRL + \ = SIGQUIT
- * 	CTRL + D = EOF
-**/
+ * 	CTRL + D = EOF (char)(-1)
+*/
+
+/**
+ * @brief signal handler for while waiting for prompt on the main function
+*/
 static void	sighandler_main(int signal)
 {
 	if (signal == SIGINT)
@@ -34,6 +37,9 @@ static void	sighandler_main(int signal)
 	}
 }
 
+/**
+ * @brief signal handler for while inside heredoc child process
+*/
 static void	sighandler_child_heredoc(int signal)
 {
 	if (signal == SIGINT)
@@ -44,6 +50,9 @@ static void	sighandler_child_heredoc(int signal)
 	}
 }
 
+/**
+ * @brief signal handler for while inside the loop function in the main function
+*/
 static void	sighandler_loop(int signal)
 {
 	if (signal == SIGINT)

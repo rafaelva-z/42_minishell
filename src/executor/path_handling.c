@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   path_handling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/15 20:17:50 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:22:00 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-/*
-* @brief Creates an array with the directories to the binaries. If
-* PATH environment variable doesn't exists, the array is set to NULL
+/**
+*	@brief	Creates an array with the directories to the binaries. If
+*			PATH environment variable doesn't exists, the array is set to NULL
 */
 void	bin_finder(t_exec *exec)
 {
@@ -35,9 +35,30 @@ void	bin_finder(t_exec *exec)
 		exec->nbr_bin++;
 }
 
-/*
-* @brief It finds and associates the correct path to the binary of each
- corresponding command
+int	is_path(char *str)
+{
+	if (!str || !*str)
+		return (0);
+	if ((str[0] == '.' && str[1] == '/') || str[0] == '/')
+		return (1);
+	return (0);
+}
+
+static int	is_path_has_acess(t_commands *cmd, t_exec *exec)
+{
+	if (access(cmd->cmds[0], X_OK) == 0)
+	{
+		cmd->cmd_path = ft_strdup(cmd->cmds[0]);
+		return (1);
+	}
+	free_and_exit(exec, message_joiner(3, "minishell:", cmd->cmds[0],
+			": Permission denied\n"), ES_K_N_AVAIL);
+	return (0);
+}
+
+/**
+ *	@brief It finds and associates the correct path to the binary of each
+ *	corresponding command
 */
 void	path_finder(t_exec *exec, t_commands *cmd, int i)
 {
@@ -54,16 +75,12 @@ void	path_finder(t_exec *exec, t_commands *cmd, int i)
 		free (cmd->cmd_path);
 		cmd->cmd_path = NULL;
 	}
-	if (access(cmd->cmds[0], F_OK) == 0)
-	{
-		if (access(cmd->cmds[0], X_OK) == 0)
-		{
-			cmd->cmd_path = ft_strdup(cmd->cmds[0]);
+	if (is_path(cmd->cmds[0]) && access(cmd->cmds[0], F_OK) == 0)
+		if (is_path_has_acess(cmd, exec))
 			return ;
-		}
-		free_and_exit(exec, message_joiner(3, "minishell:", cmd->cmds[0],
-				": Permission denied\n"), ES_K_N_AVAIL);
-	}
+	if (is_path(cmd->cmds[0]))
+		free_and_exit(exec, message_joiner(3, "minishell: ",
+				cmd->cmds[0], ": No such file or directory\n"), ES_CMD_N_FOUND);
 	free_and_exit(exec, message_joiner(3, "minishell: ",
 			cmd->cmds[0], ": command not found\n"), ES_CMD_N_FOUND);
 }
