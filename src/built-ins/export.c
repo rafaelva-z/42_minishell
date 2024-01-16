@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/16 00:20:43 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 12:15:29 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,29 @@ void	set_env_var(const char *name, const char *value)
 	free(var_name);
 }
 
-static int	export_aux(char **cmds, int i)
+/**
+ * @brief helper function to export function
+*/
+static void	export_set_env_var(char **cmds, int i, int j)
 {
-	if (!var_name_check(cmds[i]))
-	{
-		display_error(ERR_EXPORT_BAD_NAME, 1);
-		return (1);
-	}
-	return (0);
+	char	*var_value;
+	char	*var_name;
+
+	var_name = ft_substr(cmds[i], 0, j);
+	var_value = ft_substr(cmds[i], j + 1, ft_strlen(&(cmds[i][j + 1])));
+	set_env_var(var_name, var_value);
+	free(var_name);
+	free(var_value);
 }
 
 /**
  *	@brief set the export attribute for variables
- *	@example export("VAR_NAME=VAR_VALUE");
 */
 int	export(char **cmds)
 {
-	char	*var_value;
-	char	*var_name;
 	int		i;
 	int		j;
+	int		exit_status;
 
 	i = -1;
 	if (!cmds || !cmds[0])
@@ -72,18 +75,16 @@ int	export(char **cmds)
 	while (cmds[++i])
 	{
 		j = 0;
-		if (export_aux(cmds, i))
+		if (!var_name_check(cmds[i]))
+		{
+			exit_status = display_error(ERR_EXPORT_BAD_NAME, 1);
 			continue ;
+		}
 		while (cmds[i][j] && cmds[i][j] != '=')
 			j++;
 		if (cmds[i][j] != '=')
-			return (0);
-		var_name = ft_substr(cmds[i], 0, j);
-		var_value = ft_substr(cmds[i], j + 1, ft_strlen(&(cmds[i][j + 1])));
-		set_env_var(var_name, var_value);
-		free(var_name);
-		free(var_value);
+			continue ;
+		export_set_env_var(cmds, i, j);
 	}
-	return (0);
+	return (exit_status);
 }
-
