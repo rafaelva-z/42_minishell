@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/16 00:26:24 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 12:14:55 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static char	*key_word(char *s, int *i)
 }
 
 /**
- * @brief	expands the given string returning the value of the environment variable
+ * @brief	expands the given string returning the value of the
+ * 			environment variable
 */
 static char	*expand(char *s, int *i)
 {
@@ -86,6 +87,7 @@ static void	limiter_masker(char *prompt)
 		}
 	}
 }
+
 /**
  * @brief	expands all valid expansions in the given string
  * @return	the string with expanded values
