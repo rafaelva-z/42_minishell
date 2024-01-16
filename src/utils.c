@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/09 13:42:26 by scosta-j          #+#    #+#             */
-/*   Updated: 2024/01/13 16:33:01 by rvaz             ###   ########.fr       */
+/*   Created: 2023/09/09 13:42:26 by rvaz              #+#    #+#             */
+/*   Updated: 2024/01/16 12:14:26 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ int	is_inside_quotes(char *str, size_t index)
 	return ((c == '\'') + ((c == '\"') * 2));
 }
 
+/**
+ *	@brief	checks if the given string contains only numbers
+*/
 int	contains_only_nbr(char *str)
 {
 	int	i;
@@ -91,7 +94,7 @@ int	contains_only_nbr(char *str)
 	i = -1;
 	if (!str)
 		return (0);
-	if (str[0] == '-')
+	if (str[0] == '-' || str[0] == '+')
 		i++;
 	while (str[++i])
 		if (!ft_isdigit(str[i]))

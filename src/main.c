@@ -14,6 +14,45 @@
 
 int	g_signal;
 
+/*
+static void	print_commands_redirects(t_commands *commands)
+{
+	printf("\n\n\n_________________\nREDIRECTIONS\n");
+	t_commands		*test_c = commands;
+	t_redirection	*test_r;
+	while (test_c)
+	{
+		test_r = test_c->redirects;
+		while (test_r)
+		{
+			printf("__type: %d\n", test_r->type);
+			printf("__key_wrd: %s\n", test_r->key_wrd);
+			test_r = test_r->next;
+		}
+		test_c = test_c->next;
+		if (test_c)
+			printf("-|PIPE|-\n");
+	}
+	printf("\n_________________\nCOMMANDS\n");
+	test_c = commands;
+	while (test_c)
+	{
+		int	f = 0;
+		while (test_c->cmds[f])
+		{
+			printf("cmd: %s\n", test_c->cmds[f]);
+			f++;
+		}
+		test_c = test_c->next;
+		if (test_c)
+			printf("-|PIPE|-\n");
+	}
+}
+*/
+
+/**
+ * @brief	get a prompt from stdin into 'prompt' and add it to history
+*/
 static void	get_prompt(char **prompt)
 {
 	t_envp	*shell;
@@ -48,40 +87,6 @@ static void	shell_loop_start(char **prompt)
 	set_signals(HNDLR_MAIN);
 	get_prompt(prompt);
 }
-
-// static void	print_commands_redirects(t_commands *commands)
-// {
-// 	printf("\n\n\n_________________\nREDIRECTIONS\n");
-// 	t_commands		*test_c = commands;
-// 	t_redirection	*test_r;
-// 	while (test_c)
-// 	{
-// 		test_r = test_c->redirects;
-// 		while (test_r)
-// 		{
-// 			printf("__type: %d\n", test_r->type);
-// 			printf("__key_wrd: %s\n", test_r->key_wrd);
-// 			test_r = test_r->next;
-// 		}
-// 		test_c = test_c->next;
-// 		if (test_c)
-// 			printf("-|PIPE|-\n");
-// 	}
-// 	printf("\n_________________\nCOMMANDS\n");
-// 	test_c = commands;
-// 	while (test_c)
-// 	{
-// 		int	f = 0;
-// 		while (test_c->cmds[f])
-// 		{
-// 			printf("cmd: %s\n", test_c->cmds[f]);
-// 			f++;
-// 		}
-// 		test_c = test_c->next;
-// 		if (test_c)
-// 			printf("-|PIPE|-\n");
-// 	}
-// }
 
 static void	shell_loop(void)
 {

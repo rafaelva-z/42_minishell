@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:41:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 13:33:05 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 00:47:42 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,18 +67,21 @@ int	what_redir_token(char *str)
 	}
 	return (str[0]);
 }
-/**
- *	@brief Sets the SHLVL enviroment variable to the apropriate value
- *	contains non-numbr				shlvl = 1
- *	not set							shlvl = 1
- *	int btween 0 & 2147483645		shlvl = int++
- *	numbers like 0000005			shlvl = 6 (5++)
- *	negative int					shlvl = 0
- *	999 to 2147483646				shlvl = 1 + error message
- *	bash: warning: shell level (2147483647) too high, resetting to 1
- *	bigger than 2147483646			shlvl = 0
-*/
 
+/**
+ *	@brief	Sets the SHLVL enviroment variable to the apropriate value
+ *	@details
+ *			Starting SHLVL:				|	SHLVL is Set to
+ *			----------------------------|---------------------------
+ *			contains non-nbr			|	1
+ *			not set						|	1
+ *			nbr btween 0 & 2147483645	|	nbr++
+ *			<0							|	0
+ *			>2147483646					|	0
+ *			999 to 2147483646			|	1 + error message below
+ *			----------------------------|---------------------------
+ *			bash: warning: shell level (2147483647) too high, resetting to 1
+*/
 void	set_shlvl(void)
 {
 	int		shlvl;

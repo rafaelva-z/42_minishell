@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 03:02:07 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 18:45:24 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/16 00:15:48 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	skip_redirection(int redir_type, int *i)
 
 static int	rdir_loop_error_cases(int after_redir_type, int redir_type)
 {
-	if (after_redir_type < -1 && after_redir_type 
+	if (after_redir_type < -1 && after_redir_type
 		!= RDIR_PIPE && after_redir_type != RDIR_DPIPE)
 	{
 		if (redir_type == RDIR_PIPE)

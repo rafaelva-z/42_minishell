@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:25:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 18:20:06 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/16 00:49:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ int	get_pipe_count(char *str)
 	return (pipe_count);
 }
 
+/**
+ * @brief	Counts the amount of commands (non-redirections) until
+ * 			the next RDIR_PIPE or NULL character.
+*/
 int	count_commands(char **tokens, size_t pipe)
 {
 	int	i;
@@ -67,6 +71,9 @@ int	count_commands(char **tokens, size_t pipe)
 	return (count);
 }
 
+/**
+ * @brief	Counts the amount of strings in given the matrix.
+*/
 int	count_cmds(char **cmds)
 {
 	int	i;
