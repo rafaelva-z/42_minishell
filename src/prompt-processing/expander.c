@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:21:47 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/16 12:14:55 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/16 21:58:48 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static char	*key_word(char *s, int *i)
 		*i += 2;
 		return (ft_strdup("?"));
 	}
-	while (s[j] && s[j] != ' ' && s[j] != '\"' && s[j] != '$')
+	while (s[j] && s[j] != ' ' && s[j] != '\"' && s[j] != '\'' && s[j] != '$')
 		j++;
 	key_wrd = malloc(j + 1);
 	key_wrd[j] = 0;
 	j = -1;
-	while (s[++j] && s[j] != ' ' && s[j] != '\"' && s[j] != '$')
+	while (s[++j] && s[j] != ' ' && s[j] != '\"' && s[j] != '$' && s[j] != '\'')
 		key_wrd[j] = s[j];
 	*i += j + 1;
 	return (key_wrd);
