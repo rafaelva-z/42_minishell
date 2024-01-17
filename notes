@@ -24,7 +24,7 @@
 	echo '$USER' echo $USER
 
 
-
+	echo $"LOL"
 
 
 	    ================| E X T R A S |================
