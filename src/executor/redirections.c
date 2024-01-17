@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:44:42 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/16 00:22:40 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/17 20:14:49 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	is_directory(char *str, t_exec *exec)
 	stat(str, &path);
 	if (S_ISDIR(path.st_mode))
 		free_and_exit(exec, message_joiner(3, "minishell: ",
-				str, ": Is a directory\n"), ES_K_N_AVAIL);
+				str, ": Is a directory\n"), ES_K_N_AVAIL, 1);
 }
 
 /**
@@ -30,10 +30,10 @@ void	redir_in(t_exec *exec, t_commands *cmd, t_redirection *redir)
 {
 	if (access(redir->key_wrd, F_OK) == -1)
 		free_and_exit(exec, message_joiner(3, "minishell:", redir->key_wrd,
-				": No such file or directory\n"), ES_OP_N_PERM);
+				": No such file or directory\n"), ES_OP_N_PERM, 0);
 	if (access(redir->key_wrd, R_OK) == -1)
 		free_and_exit(exec, message_joiner(3, "minishell:", redir->key_wrd,
-				": Permission denied\n"), ES_OP_N_PERM);
+				": Permission denied\n"), ES_OP_N_PERM, 0);
 	if (cmd->read_fd > 2)
 		cmd->read_fd = to_close(cmd->hd_fd);
 	cmd->read_fd = open(redir->key_wrd, O_RDONLY);
@@ -55,7 +55,7 @@ void	redir_out_trunc(t_exec *exec, t_commands *cmd, t_redirection *redir)
 	}
 	if (access(redir->key_wrd, W_OK) == -1)
 		free_and_exit(exec, message_joiner(3, "minishell:", redir->key_wrd,
-				": Permission denied\n"), ES_OP_N_PERM);
+				": Permission denied\n"), ES_OP_N_PERM, 0);
 	if (cmd->write_fd > 2)
 		cmd->write_fd = to_close(cmd->write_fd);
 	cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_TRUNC);
@@ -77,7 +77,7 @@ void	redir_out_append(t_exec *exec, t_commands *cmd, t_redirection *redir)
 	}
 	if (access(redir->key_wrd, W_OK) == -1)
 		free_and_exit(exec, message_joiner(3, "minishell:", redir->key_wrd,
-				": Permission denied\n"), ES_OP_N_PERM);
+				": Permission denied\n"), ES_OP_N_PERM, 0);
 	if (cmd->write_fd > 2)
 		cmd->write_fd = to_close(cmd->write_fd);
 	cmd->write_fd = open(redir->key_wrd, O_WRONLY | O_APPEND);

@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 14:52:11 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/13 18:38:09 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:38:54 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	builtin_exec_child(t_exec *exec, t_commands *commands)
 
 	shell = get_env_struct();
 	if (!commands || !commands->cmds || !commands->cmds[0])
-		free_and_exit(exec, NULL, get_env_struct()->exit_status);
+		free_and_exit(exec, NULL, get_env_struct()->exit_status, 1);
 	if (ft_strncmp("echo", commands->cmds[0], 5) == 0)
 		shell->exit_status = echo(&commands->cmds[1]);
 	else if (ft_strncmp("pwd", commands->cmds[0], 4) == 0)
@@ -38,9 +38,7 @@ void	builtin_exec_child(t_exec *exec, t_commands *commands)
 		exit_bltn(exec, &commands->cmds[1], false);
 	else
 		return ;
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
-	free_and_exit(exec, NULL, get_env_struct()->exit_status);
+	free_and_exit(exec, NULL, get_env_struct()->exit_status, 1);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:28:17 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 18:49:33 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:15:46 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	add_cmds_loop(t_commands **cmd_nd, char **tkns, int *i, int *pp_c)
 			* sizeof(char *));
 	if (!(*cmd_nd)->cmds)
 		free_and_exit(NULL, "minishell: memory alocation failed",
-			ES_ALLOC_FAIL);
+			ES_ALLOC_FAIL, 0);
 	j = 0;
 	while (tkns[++(*i)] && tkns[*i][0] != RDIR_PIPE)
 	{
