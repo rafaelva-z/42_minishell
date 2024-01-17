@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:55:19 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/17 20:26:13 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/17 23:31:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@ void	free_matrix_and_commands(void)
 		free_commands(&shell->commands);
 }
 
-static char	close_std(void)
+static void	close_std(void)
 {
 	close (STDIN_FILENO);
 	close (STDOUT_FILENO);
 }
 
-void	free_and_exit(t_exec *exec, char *mssg, int exit_status, int std)
+void	free_and_exit(t_exec *exec, char *msg, int exit_status, int std)
 {
 	t_envp	*shell;
 
 	if (std)
 		close_std();
-	if (mssg)
+	if (msg)
 	{
-		ft_putstr_fd(mssg, 2);
-		free (mssg);
+		ft_putstr_fd(msg, 2);
+		free (msg);
 	}
 	shell = get_env_struct();
 	shell->exit_status = exit_status;
