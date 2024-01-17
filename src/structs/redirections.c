@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:00:15 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 18:50:11 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:15:56 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	add_redir_if(char **tokens, int *i, t_commands **command_node)
 		}
 		redirect = new_redirection(0, NULL);
 		if (!redirect)
-			free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL);
+			free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL, 0);
 		if (tokens[*i][0] == RDIR_IN || tokens[*i][0] == RDIR_OUT)
 			redirect->type = tokens[*i][0];
 		else if (tokens[*i][0] == RDIR_APP || tokens[*i][0] == RDIR_HDOC)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_memory.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:55:19 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 13:29:03 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/17 18:37:01 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,15 @@ void	free_matrix_and_commands(void)
 		free_commands(&shell->commands);
 }
 
-void	free_and_exit(t_exec *exec, char *message, int exit_status)
+void	free_and_exit(t_exec *exec, char *message, int exit_status, int std)
 {
 	t_envp	*shell;
 
+	if (std)
+	{
+		close (STDIN_FILENO);
+		close (STDOUT_FILENO);
+	}
 	if (message)
 	{
 		ft_putstr_fd(message, 2);

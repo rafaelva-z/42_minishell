@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:20 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/16 23:21:32 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:59:27 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	dupper(t_commands *cmd)
 static void	executor(t_exec *exec, t_commands *cmd)
 {
 	if (!cmd->cmds)
-		free_and_exit(exec, NULL, get_env_struct()->exit_status);
+		free_and_exit(exec, NULL, get_env_struct()->exit_status, 0);
 	redirect(exec, cmd);
 	dupper(cmd);
 	exec->remainder_fd = to_close(exec->remainder_fd);
@@ -62,10 +62,8 @@ static void	executor(t_exec *exec, t_commands *cmd)
 	is_directory(cmd->cmds[0], exec);
 	create_env_array();
 	execve(cmd->cmd_path, cmd->cmds, exec->envp->env_array);
-	close(STDIN_FILENO);
-	close(STDOUT_FILENO);
 	free_and_exit(exec, message_joiner(3, "minishell: ",
-			cmd->cmds[0], ": command not found\n"), ES_CMD_N_FOUND);
+			cmd->cmds[0], ": command not found\n"), ES_CMD_N_FOUND, 1);
 }
 
 /*
@@ -104,7 +102,7 @@ void	process_generator(void)
 			if (exec.envp->nbr_cmds == 1 && builtin_exec_parent(&exec, current))
 				return ;
 		if (current->next && pipe(exec.fd) != 0)
-			free_and_exit(&exec, ft_strdup("Pipe error\n"), ES_PIPE);
+			free_and_exit(&exec, ft_strdup("Pipe error\n"), ES_PIPE, 0);
 		fd_handler_in(&exec, current);
 		exec.pid[++i] = fork();
 		if (exec.pid[i] == 0)

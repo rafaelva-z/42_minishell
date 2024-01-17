@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/16 00:32:41 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/17 18:46:57 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	here_doc(t_redirection *rdir, int fd[2])
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	close(fd[0]);
 	close(fd[1]);
-	free_and_exit(NULL, NULL, 0);
+	free_and_exit(NULL, NULL, 0, 0);
 }
 
 /**
@@ -79,7 +79,7 @@ static void	here_doc_check(t_commands *commands)
 		}
 		to_close(commands->hd_fd);
 		if (pipe(fd) == -1)
-			free_and_exit(NULL, ft_strdup("Pipe error\n"), ES_PIPE);
+			free_and_exit(NULL, ft_strdup("Pipe error\n"), ES_PIPE, 0);
 		pid = fork();
 		if (pid == 0)
 			here_doc(redir, fd);
