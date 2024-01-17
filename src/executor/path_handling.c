@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/23 16:45:08 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/17 20:13:01 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/17 20:27:42 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	path_finder(t_exec *exec, t_commands *cmd, int i)
 	if (is_path(cmd->cmds[0]))
 		free_and_exit(exec, message_joiner(3, "minishell: ",
 				cmd->cmds[0], ": No such file or directory\n"),
-				ES_CMD_N_FOUND, 1);
+			ES_CMD_N_FOUND, 1);
 	free_and_exit(exec, message_joiner(3, "minishell: ",
 			cmd->cmds[0], ": command not found\n"), ES_CMD_N_FOUND, 1);
 }

@@ -118,7 +118,7 @@ int			unset(char **cmds);
 //	free_memory.c
 
 void		free_matrix_and_commands(void);
-void		free_and_exit(t_exec *exec, char *message, int exit_status, int std);
+void		free_and_exit(t_exec *exec, char *mssg, int exit_status, int std);
 
 //	utils.c
 
