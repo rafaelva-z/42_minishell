@@ -6,7 +6,7 @@
 /*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:39 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/15 12:47:38 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/17 18:48:11 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	unset(char **cmds)
 	{
 		var_name = ft_strjoin(cmds[i], "=");
 		if (!var_name)
-			free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL);
+			free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL, 0);
 		if (!var_name_check(var_name))
 		{
 			free(var_name);

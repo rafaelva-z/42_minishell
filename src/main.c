@@ -96,7 +96,7 @@ static void	shell_loop(void)
 	{
 		shell_loop_start(&prompt);
 		if (!prompt)
-			free_and_exit(NULL, ft_strdup(MSG_EXIT), STDOUT_FILENO);
+			free_and_exit(NULL, ft_strdup(MSG_EXIT), STDOUT_FILENO, 0);
 		else
 		{
 			set_signals(HNDLR_LOOP);
@@ -125,5 +125,5 @@ int	main(int argc, char **argv, char **envp)
 	get_prompt_cursor();
 	set_shlvl();
 	shell_loop();
-	free_and_exit(NULL, NULL, 0);
+	free_and_exit(NULL, NULL, 0, 0);
 }

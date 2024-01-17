@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/30 19:11:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 21:28:13 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/17 20:15:36 by fda-estr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_commands	*create_command_linkedlist(int node_amount)
 		node = malloc(sizeof(t_commands));
 		if (!node)
 			free_and_exit(NULL, "minishell: memory alocation failed",
-				ES_ALLOC_FAIL);
+				ES_ALLOC_FAIL, 0);
 		if (shell->commands == NULL)
 			shell->commands = node;
 		initialize_command_struct(node);
@@ -73,6 +73,6 @@ t_commands	*get_command_linkedlst(char *prompt)
 	commands = create_command_linkedlist(shell->nbr_cmds);
 	if (!commands)
 		free_and_exit(NULL, "minishell: memory alocation failed",
-			ES_ALLOC_FAIL);
+			ES_ALLOC_FAIL, 0);
 	return (commands);
 }
