@@ -27,7 +27,7 @@
 # include <termios.h>
 # include <signal.h>
 
-# define CURSOR		"@minishell>"
+# define CURSOR		"\e[94m@minishell>\e[0m"
 
 // Exit Status
 
@@ -38,6 +38,7 @@
 # define ES_K_N_AVAIL		126
 # define ES_CMD_N_FOUND		127
 # define ES_SIGINT			130
+# define ES_SIGQUIT			131
 
 // Error Messages
 
@@ -124,7 +125,7 @@ void		free_and_exit(t_exec *exec, char *mssg, int exit_status, int std);
 
 bool		var_name_check(const char *str);
 void		lst_insert_before(t_env_var *lst, t_env_var *new_lst);
-void		var_printcontent(void *content);
+void		env_var_print(void *content);
 int			is_redir(char c);
 int			is_inside_quotes(char *str, size_t index);
 int			contains_only_nbr(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_add_spaces.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 14:32:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/17 20:15:17 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:26:23 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,7 @@ void	add_spaces_redirections(char **prompt)
 	j = 0;
 	new_prompt = malloc(ft_strlen(*prompt) + space_count + 1);
 	if (!new_prompt)
-		free_and_exit(NULL, "minishell: memory alocation failed",
-			ES_ALLOC_FAIL, 0);
+		free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL, 0);
 	add_spaces_redirections_loop(prompt, &new_prompt, &i, &j);
 	new_prompt[j] = '\0';
 	free(*prompt);
