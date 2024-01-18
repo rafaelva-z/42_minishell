@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/16 12:18:36 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/18 14:14:47 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,40 @@ void	set_env_var(const char *name, const char *value)
 	if (!name)
 		return ;
 	current = get_env_var(name);
-	var_name = ft_strjoin(name, "=");
+	if (value)
+		var_name = ft_strjoin(name, "=");
+	else
+		var_name = ft_strdup(name);
 	if (!current)
 		ft_lstadd_back(&get_env_struct()->vars,
-			ft_lstnew(ft_strjoin(var_name, value)));
+			ft_lstnew(ft_strjoin_free(var_name, value, 1)));
 	else
 	{
 		free(current->content);
-		current->content = ft_strjoin(var_name, value);
+		current->content = ft_strjoin_free(var_name, value, 1);
 	}
-	free(var_name);
 }
 
 /**
  * @brief helper function to export function
 */
-static void	export_set_env_var(char **cmds, int i, int j)
+static void	export_set_env_var(char *cmds, int j)
 {
 	char	*var_value;
 	char	*var_name;
 
-	var_name = ft_substr(cmds[i], 0, j);
-	var_value = ft_substr(cmds[i], j + 1, ft_strlen(&(cmds[i][j + 1])));
-	set_env_var(var_name, var_value);
+	var_value = NULL;
+	var_name = ft_substr(cmds, 0, j);
+	if (cmds[j] == '\0')
+		set_env_var(var_name, NULL);
+	else
+	{
+		var_value = ft_substr(cmds, j + 1, ft_strlen(&(cmds[j + 1])));
+		set_env_var(var_name, var_value);
+	}
 	free(var_name);
-	free(var_value);
+	if (var_value)
+		free(var_value);
 }
 
 /**
@@ -83,9 +92,7 @@ int	export(char **cmds)
 		}
 		while (cmds[i][j] && cmds[i][j] != '=')
 			j++;
-		if (cmds[i][j] != '=')
-			continue ;
-		export_set_env_var(cmds, i, j);
+		export_set_env_var(cmds[i], j);
 	}
 	return (exit_status);
 }

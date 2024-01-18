@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cursor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 20:59:29 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/12 21:06:21 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/18 16:14:19 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ void	get_prompt_cursor(void)
 	{
 		shell->cursor = get_env_var("USER")->content + 5;
 		shell->cursor = ft_strjoin(shell->cursor, CURSOR);
+		shell->cursor = ft_strjoin_free("\e[92m", shell->cursor, 2);
+		shell->cursor = ft_strjoin_free("\e[1m", shell->cursor, 2);
 	}
 }

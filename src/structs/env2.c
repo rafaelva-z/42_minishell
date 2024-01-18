@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:22:08 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/09 18:07:33 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/18 13:38:40 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,17 @@ t_env_var	*get_env_var(const char *str)
 {
 	t_envp		*shell;
 	t_env_var	*current;
-	char		*var_name;
 
 	if (!str)
 		return (NULL);
 	shell = get_env_struct();
 	current = shell->vars;
-	var_name = ft_strjoin(str, "=");
-	if (!var_name)
-		return (NULL);
 	while (current)
 	{
-		if (!ft_strncmp(var_name, current->content, ft_strlen(var_name)))
-		{
-			free(var_name);
+		if (!ft_strncmp(str, current->content, ft_strlen(str)))
 			return (current);
-		}
 		current = current->next;
 	}
-	free(var_name);
 	return (NULL);
 }
 
