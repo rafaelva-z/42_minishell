@@ -27,7 +27,7 @@
 # include <termios.h>
 # include <signal.h>
 
-# define CURSOR		"\e[94m@minishell>\e[0m "
+# define CURSOR		"@minishell> "
 
 // Exit Status
 
