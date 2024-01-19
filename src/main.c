@@ -58,7 +58,6 @@ static void	get_prompt(char **prompt)
 	t_envp	*shell;
 
 	shell = get_env_struct();
-	set_signals(HNDLR_MAIN);
 	if (shell->cursor)
 		*prompt = readline(shell->cursor);
 	else
