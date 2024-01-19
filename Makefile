@@ -6,7 +6,7 @@
 #    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/18 17:56:18 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/19 01:30:57 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,6 @@ SRCS		=	$(addprefix ./src/,				\
 				main.c							\
 				free_memory.c					\
 				signals.c						\
-				redir_utils.c					\
-				utils.c							\
-				utils2.c						\
-				utils3.c						\
 				here_doc.c						\
      			error_handling.c				\
 				$(addprefix built-ins/, 		\
@@ -62,6 +58,12 @@ SRCS		=	$(addprefix ./src/,				\
 				redir_add_spaces.c				\
 				redir_check.c					\
 				tokenizer.c						\
+				)								\
+				$(addprefix utils/,				\
+				redir_utils.c					\
+				utils.c							\
+				utils2.c						\
+				utils3.c						\
 				)								\
 				)								\
 
