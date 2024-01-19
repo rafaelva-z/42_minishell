@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/19 14:36:28 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/19 15:51:43 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	here_doc_loop(t_redirection *rdir, int fd[2])
 void	here_doc(t_redirection *rdir, int fd[2])
 {
 	set_signals(HNDLR_CHILD_HD);
-	rl_clear_history();	
+	rl_clear_history();
 	here_doc_loop(rdir, fd);
 	close(fd[0]);
 	close(fd[1]);

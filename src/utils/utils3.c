@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:25:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/19 14:39:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/19 15:52:35 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,31 @@ int	count_cmds(char **cmds)
 	return (i);
 }
 
-void *safe_malloc(int bytes)
+void	*safe_malloc(int bytes)
 {
-	void *alloc;
+	void	*alloc;
 
 	alloc = malloc(bytes);
 	if (!alloc)
 		free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL, 0);
 	return (alloc);
+}
+
+char	*get_var_name(char *var)
+{
+	int		i;
+	int		j;
+	char	*new_var;
+
+	if (!var)
+		return (NULL);
+	i = 0;
+	j = -1;
+	while (var[i] && var[i] != '=')
+		i++;
+	new_var = safe_malloc(i + 1);
+	while (++j < i)
+		new_var[j] = var[j];
+	new_var[j] = '\0';
+	return (new_var);
 }

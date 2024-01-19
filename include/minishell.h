@@ -142,6 +142,7 @@ int			get_pipe_count(char *str);
 int			count_commands(char **tokens, size_t pipe);
 int			count_cmds(char **cmds);
 void		*safe_malloc(int bytes);
+char		*get_var_name(char *var);
 
 // quote_check.c
 

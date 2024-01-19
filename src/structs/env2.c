@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:22:08 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/19 15:10:13 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/19 15:51:55 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,24 @@ t_env_var	*get_env_var(const char *str)
 {
 	t_envp		*shell;
 	t_env_var	*current;
+	char		*var_name;
 
 	if (!str)
 		return (NULL);
+	var_name = NULL;
 	shell = get_env_struct();
 	current = shell->vars;
 	while (current)
 	{
-		if (!ft_strncmp(str, current->content, ft_strlen(str)))
+		var_name = get_var_name(current->content);
+		if (!ft_strncmp(str, var_name, ft_strlen(var_name) + 1))
+		{
+			if (var_name)
+				free(var_name);
 			return (current);
+		}
+		if (var_name)
+			free(var_name);
 		current = current->next;
 	}
 	return (NULL);
