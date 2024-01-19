@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 21:25:48 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/16 00:49:59 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/19 14:39:59 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,14 @@ int	count_cmds(char **cmds)
 	while (cmds[i])
 		i++;
 	return (i);
+}
+
+void *safe_malloc(int bytes)
+{
+	void *alloc;
+
+	alloc = malloc(bytes);
+	if (!alloc)
+		free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL, 0);
+	return (alloc);
 }

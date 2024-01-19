@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/18 16:48:15 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/19 14:16:44 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static void	sighandler_child_heredoc(int signal)
 	if (signal == SIGINT)
 	{
 		g_signal = SIGINT;
-		rl_clear_signals();
 		close(STDIN_FILENO);
 	}
 }

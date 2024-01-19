@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:28:32 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/18 14:14:47 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/19 15:05:58 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	set_env_var(const char *name, const char *value)
 
 	if (!name)
 		return ;
-	current = get_env_var(name);
 	if (value)
 		var_name = ft_strjoin(name, "=");
 	else
 		var_name = ft_strdup(name);
+	current = get_env_var(name);
 	if (!current)
 		ft_lstadd_back(&get_env_struct()->vars,
 			ft_lstnew(ft_strjoin_free(var_name, value, 1)));

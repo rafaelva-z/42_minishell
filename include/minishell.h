@@ -141,6 +141,7 @@ void		set_shlvl(void);
 int			get_pipe_count(char *str);
 int			count_commands(char **tokens, size_t pipe);
 int			count_cmds(char **cmds);
+void		*safe_malloc(int bytes);
 
 // quote_check.c
 

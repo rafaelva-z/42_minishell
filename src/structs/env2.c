@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:22:08 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/18 13:38:40 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/19 15:10:13 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,15 @@ char	*get_env_var_value(const char *str)
 	char	*var;
 
 	i = 0;
-	if (!str || !get_env_var(str))
+	var = NULL;
+	if (!str || !get_env_var(str) || !get_env_var(str)->content)
 		return (NULL);
 	var = get_env_var(str)->content;
 	if (!var)
 		return (NULL);
-	var = ft_strchr(var, '=') + 1;
-	if (!var[i])
+	var = ft_strchr(var, '=');
+	if (!var || !var[i])
 		return (NULL);
+	var++;
 	return (&var[i]);
 }

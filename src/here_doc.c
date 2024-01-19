@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 20:27:31 by fda-estr          #+#    #+#             */
-/*   Updated: 2024/01/17 18:46:57 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/19 14:36:28 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	here_doc_loop(t_redirection *rdir, int fd[2])
 				== 0 && len == (int)(ft_strlen(s))))
 		{
 			if (!s)
-				s = malloc(1);
+				s = safe_malloc(1);
 			break ;
 		}
 		else if (!s)
@@ -47,13 +47,9 @@ static void	here_doc_loop(t_redirection *rdir, int fd[2])
 */
 void	here_doc(t_redirection *rdir, int fd[2])
 {
-	struct termios	term;
-
-	tcgetattr(STDIN_FILENO, &term);
 	set_signals(HNDLR_CHILD_HD);
-	rl_cleanup_after_signal();
+	rl_clear_history();	
 	here_doc_loop(rdir, fd);
-	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	close(fd[0]);
 	close(fd[1]);
 	free_and_exit(NULL, NULL, 0, 0);
