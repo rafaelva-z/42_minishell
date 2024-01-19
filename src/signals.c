@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:56:23 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/16 00:39:23 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/18 16:48:15 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,19 @@ static void	sighandler_child_heredoc(int signal)
 */
 static void	sighandler_loop(int signal)
 {
+	t_envp	*shell;
+
+	shell = get_env_struct();
 	if (signal == SIGINT)
+	{
 		g_signal = SIGINT;
-	get_env_struct()->exit_status = ES_SIGINT;
+		shell->exit_status = ES_SIGINT;
+	}
+	else if (signal == SIGQUIT)
+	{
+		g_signal = SIGQUIT;
+		shell->exit_status = ES_SIGQUIT;
+	}
 }
 
 /**
@@ -72,6 +82,7 @@ void	set_signals(int process)
 	(void)block_mask;
 	sigemptyset(&sig_int.sa_mask);
 	sigemptyset(&sig_quit.sa_mask);
+	sig_quit.sa_handler = SIG_IGN;
 	if (process == HNDLR_MAIN)
 	{
 		g_signal = 0;
@@ -80,8 +91,10 @@ void	set_signals(int process)
 	else if (process == HNDLR_CHILD_HD)
 		sig_int.sa_handler = sighandler_child_heredoc;
 	else if (process == HNDLR_LOOP)
+	{
+		sig_quit.sa_handler = sighandler_loop;
 		sig_int.sa_handler = sighandler_loop;
-	sig_quit.sa_handler = SIG_IGN;
+	}
 	sig_int.sa_flags = 0;
 	sig_quit.sa_flags = 0;
 	sigaction(SIGINT, &sig_int, NULL);

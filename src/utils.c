@@ -6,7 +6,7 @@
 /*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/09 13:42:26 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/16 12:14:26 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/18 13:50:41 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
  * @brief print the given content (char *). To be used with ft_lstiter
  * @param content the content to print (char *)
 */
-void	var_printcontent(void *content)
+void	env_var_print(void *content)
 {
-	printf("%s\n", (char *)content);
+	if (content && ft_strchr(content, '='))
+		printf("%s\n", (char *)content);
 }
 
 /**

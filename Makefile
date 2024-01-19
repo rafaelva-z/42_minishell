@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+         #
+#    By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/07 16:21:22 by rvaz              #+#    #+#              #
-#    Updated: 2024/01/15 20:26:21 by rvaz             ###   ########.fr        #
+#    Updated: 2024/01/18 17:56:18 by rvaz             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@echo "$(TAG) Making Program"
+	@echo "$(TAG) By: fda-estr & rvaz"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFLAGS) -o $(NAME)
 
 $(LIBFT):

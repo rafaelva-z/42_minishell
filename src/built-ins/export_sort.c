@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_sort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rvaz <rvaz@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 19:56:58 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/13 13:34:03 by rvaz             ###   ########.fr       */
+/*   Updated: 2024/01/18 13:55:03 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ int	export_sort_print(void)
 		tmp = tmp->next;
 	}
 	quicksort_str(cont_str, 0, i);
-	j = 0;
-	while (j <= i)
-		printf("%s\n", cont_str[j++]);
+	j = -1;
+	while (++j <= i)
+		printf("declare -x %s\n", cont_str[j]);
 	free(cont_str);
 	return (0);
 }

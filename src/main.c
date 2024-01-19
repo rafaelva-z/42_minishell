@@ -84,6 +84,8 @@ static void	shell_loop_start(char **prompt)
 	set_env_var("_", "/usr/bin/env");
 	if (g_signal == SIGINT)
 		write(1, "\n", 1);
+	if (g_signal == SIGQUIT)
+		display_error("Quit\n", ES_SIGQUIT);
 	set_signals(HNDLR_MAIN);
 	get_prompt(prompt);
 }

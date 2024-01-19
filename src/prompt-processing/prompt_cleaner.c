@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_cleaner.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fda-estr <fda-estr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rvaz <rvaz@student.42lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 13:18:31 by rvaz              #+#    #+#             */
-/*   Updated: 2024/01/17 20:15:08 by fda-estr         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:26:18 by rvaz             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ static char	*space_trim(const char *prompt)
 	j = 0;
 	tmp = ft_calloc(ft_strlen(prompt) + 1, 1);
 	if (!tmp)
-		free_and_exit(NULL, "minishell: memory alocation failed",
-			ES_ALLOC_FAIL, 0);
+		free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL, 0);
 	while (prompt[i])
 		space_trim_loop(prompt, tmp, &i, &j);
 	tmp[j] = '\0';
@@ -70,8 +69,7 @@ int	prompt_cleaner(char **prompt)
 	free(spc_trim);
 	free(*prompt);
 	if (!trim)
-		free_and_exit(NULL, "minishell: memory alocation failed",
-			ES_ALLOC_FAIL, 0);
+		free_and_exit(NULL, ERR_ALLOC, ES_ALLOC_FAIL, 0);
 	*prompt = trim;
 	return (0);
 }
